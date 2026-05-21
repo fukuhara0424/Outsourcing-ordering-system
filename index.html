@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<title>検品・たたみ 外注管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#1A9E72;--gd:#0e6e50;--gl:#E0F5EE;--gt:#07503E;
+  --b:#2F7ED8;--bl:#E4F0FB;--bt:#0A3E7A;
+  --a:#B07212;--al:#FAF0DC;--at:#5E3B06;
+  --p:#6E55A0;--pl:#EDE8F8;--pt:#3E2E60;
+  --r:#D64040;--rl:#FCEAEA;--rt:#721818;
+  --gyl:#F0EDE6;--gyt:#3E3D3A;
+  --bg:#F5F4F0;--sf:#FFF;
+  --bd:rgba(0,0,0,.09);--bd2:rgba(0,0,0,.16);
+  --tx:#19190F;--txm:#62605B;--txh:#999790;
+  --rr:10px;--rl2:14px;
+  --fn:'Noto Sans JP',sans-serif;--mo:'DM Mono',monospace;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);
+  --sh2:0 8px 28px rgba(0,0,0,.12);
+  --sbw:215px;--tph:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--fn);background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font-family:var(--fn);cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:var(--fn);font-size:13px;color:var(--tx);background:var(--sf);border:1px solid var(--bd2);border-radius:var(--rr);padding:8px 11px;width:100%;transition:border-color .15s,box-shadow .15s;outline:none;-webkit-appearance:none;appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(26,158,114,.13)}
+textarea{resize:vertical}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;font-size:13px;border-radius:var(--rr);border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-weight:500;transition:all .15s;white-space:nowrap;flex-shrink:0;line-height:1}
+.btn:hover{background:var(--bg)}.btn:active{transform:scale(.97)}
+.btn svg{flex-shrink:0}
+.btn-primary{background:var(--g);color:#fff;border-color:var(--g)}.btn-primary:hover{background:var(--gd)}
+.btn-amber{background:var(--a);color:#fff;border-color:var(--a)}.btn-amber:hover{background:#8a5a0e}
+.btn-purple{background:var(--p);color:#fff;border-color:var(--p)}.btn-purple:hover{background:#5c4488}
+.btn-red{background:var(--r);color:#fff;border-color:var(--r)}.btn-red:hover{background:#b03030}
+.btn-danger{background:var(--rl);color:var(--rt);border-color:rgba(214,64,64,.25)}.btn-danger:hover{background:#f5c2c2}
+.btn-sm{padding:5px 11px;font-size:12px}.btn-xs{padding:3px 8px;font-size:11px}
+.act-buttons{display:flex;gap:6px;flex-wrap:wrap;min-width:220px}
+.act-btn{padding:6px 10px;font-size:12px;border-radius:18px;gap:5px}
+.act-btn.danger{margin-left:4px}
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.bg-blue{background:var(--bl);color:var(--bt)}.bg-green{background:var(--gl);color:var(--gt)}
+.bg-amber{background:var(--al);color:var(--at)}.bg-purple{background:var(--pl);color:var(--pt)}
+.bg-red{background:var(--rl);color:var(--rt)}.bg-gray{background:var(--gyl);color:var(--gyt)}
+/* cards */
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1.1rem 1.3rem;box-shadow:var(--sh)}
+.stat-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:.9rem 1.1rem;box-shadow:var(--sh)}
+.slbl{font-size:11px;color:var(--txh);margin-bottom:4px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.sval{font-size:22px;font-weight:700;line-height:1}
+.ssub{font-size:11px;color:var(--txm);margin-top:2px}
+/* table */
+.tw{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);overflow:hidden;box-shadow:var(--sh)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{padding:9px 13px;text-align:left;font-size:10px;font-weight:700;color:var(--txh);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--bd);background:var(--bg)}
+td{padding:10px 13px;border-bottom:1px solid var(--bd);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafaf8}
+/* progress */
+.pbar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--bd)}
+.pbar-fill{height:100%;border-radius:3px;transition:width .4s}
+/* notices */
+.notice{display:flex;align-items:flex-start;gap:8px;padding:10px 13px;border-left:3px solid;border-radius:0 var(--rr) var(--rr) 0;font-size:13px;line-height:1.5}
+.notice svg{flex-shrink:0;margin-top:1px}
+.notice.blue{background:var(--bl);border-color:var(--b);color:var(--bt)}
+.notice.green{background:var(--gl);border-color:var(--g);color:var(--gt)}
+.notice.amber{background:var(--al);border-color:var(--a);color:var(--at)}
+.notice.purple{background:var(--pl);border-color:var(--p);color:var(--pt)}
+.notice.red{background:var(--rl);border-color:var(--r);color:var(--rt)}
+/* forms */
+.fg{margin-bottom:.82rem}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--txm);margin-bottom:4px}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* avatar */
+.av{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0}
+/* layout */
+#app{display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:var(--tph);position:sticky;top:0;z-index:50;box-shadow:var(--sh)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-ic{width:34px;height:34px;background:var(--g);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-nm{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.topbar-r{display:flex;align-items:center;gap:8px}
+.sidebar{width:var(--sbw);background:var(--sf);border-right:1px solid var(--bd);padding:1rem .7rem;display:flex;flex-direction:column;gap:2px;position:fixed;top:var(--tph);bottom:0;left:0;z-index:40;overflow-y:auto;transition:transform .25s ease}
+.nav-it{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--rr);font-size:13px;font-weight:500;color:var(--txm);cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left}
+.nav-it:hover{background:var(--bg);color:var(--tx)}.nav-it.on{background:var(--gl);color:var(--gt);font-weight:700}
+.nav-it svg{flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--r);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px;min-width:20px;text-align:center}
+.main{margin-left:var(--sbw);padding:1.6rem 1.8rem;flex:1;min-width:0}
+.pg-title{font-size:19px;font-weight:700;margin-bottom:1.3rem;letter-spacing:-.02em}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;gap:8px;flex-wrap:wrap}
+.sec-title{font-size:14px;font-weight:700}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.3rem}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:39}
+.sb-overlay.on{display:block}
+.menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:var(--rr);border:1px solid var(--bd2);background:var(--sf)}
+/* login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:1rem}
+.login-box{width:100%;max-width:360px}
+.login-hd{text-align:center;margin-bottom:1.8rem}
+.login-ic{width:54px;height:54px;background:var(--g);border-radius:15px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 6px 20px rgba(26,158,114,.3)}
+.demo-hint{background:var(--gyl);border:1px solid var(--bd);border-radius:var(--rr);padding:10px 14px;margin-top:1.1rem;font-size:12px;color:var(--txm);line-height:1.9}
+.demo-hint code{font-family:var(--mo);background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--tx)}
+/* overlay */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;align-items:flex-start;justify-content:center;padding:40px 14px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{background:var(--sf);border-radius:var(--rl2);border:1px solid var(--bd);padding:1.5rem;width:100%;max-width:540px;margin-bottom:40px;box-shadow:0 24px 64px rgba(0,0,0,.14)}
+.modal.sm{max-width:430px}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;gap:8px}
+.modal-title{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
+.x-btn{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--txm);cursor:pointer;transition:background .12s;flex-shrink:0;font-size:18px;line-height:1}
+.x-btn:hover{background:var(--bg)}
+.modal-ft{display:flex;justify-content:flex-end;gap:8px;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--bd);flex-wrap:wrap}
+/* partner cards */
+.partner-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:var(--sh);flex-wrap:wrap}
+/* job card */
+.job-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1.1rem 1.3rem;margin-bottom:12px;box-shadow:var(--sh);transition:border-color .15s,box-shadow .15s}
+.job-card:hover{border-color:rgba(26,158,114,.4);box-shadow:0 4px 16px rgba(0,0,0,.09)}
+/* size */
+.size-row-item{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.size-name-in{max-width:80px;text-align:center;font-family:var(--mo);font-weight:700}
+.size-ct-in{max-width:88px;text-align:center;font-family:var(--mo)}
+.size-total{display:flex;align-items:center;gap:8px;padding-top:8px;border-top:1px dashed var(--bd2);margin-top:2px}
+.size-pill{background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:2px 9px;font-size:11px;font-family:var(--mo);white-space:nowrap}
+.size-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+/* images */
+.upload-zone{border:2px dashed var(--bd2);border-radius:var(--rl2);padding:1.1rem;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg)}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--g);background:var(--gl)}
+.upload-zone p{font-size:13px;color:var(--txm);margin-top:4px}
+.upload-zone span{font-size:11px;color:var(--txh)}
+.img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}
+.img-grid.c3{grid-template-columns:repeat(3,1fr)}
+.img-thumb{position:relative;border-radius:var(--rr);overflow:hidden;border:1px solid var(--bd);aspect-ratio:1}
+.img-thumb img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block}
+.img-del{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1;border:none}
+.img-del:hover{background:var(--r)}
+.lb-download{display:none;position:fixed;right:18px;top:18px;z-index:101;background:#fff;color:var(--tx);border:1px solid var(--bd2);box-shadow:var(--sh2)}
+/* B品 */
+.breport-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:10px;box-shadow:var(--sh)}
+.breport-card.pending{border-left:3px solid var(--a)}
+.breport-card.bhin{border-left:3px solid var(--r)}
+.breport-card.ryohin{border-left:3px solid var(--g)}
+.cat-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-right:4px;margin-bottom:4px}
+.cat-print{background:#FFF0F0;color:#8B1A1A}.cat-seams{background:#F0F4FF;color:#1A3A8B}
+.cat-design{background:#F5F0FF;color:#4A1A8B}.cat-stain{background:#FFF8F0;color:#8B4A1A}
+.cat-size{background:#F0FFF4;color:#1A6B3A}.cat-other{background:#F5F5F5;color:#444}
+/* FAQ */
+.faq-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:8px;box-shadow:var(--sh);cursor:pointer;transition:border-color .15s}
+.faq-card:hover,.faq-card.open-faq{border-color:var(--g)}
+.faq-q{font-weight:700;font-size:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.faq-a{font-size:13px;color:var(--txm);margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}
+/* anim */
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.fi{animation:fadeIn .2s ease both}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.pulse{animation:pulse 2s ease infinite}
+/* responsive */
+@media(max-width:768px){
+  :root{--sbw:240px;--tph:52px}
+  .sidebar{transform:translateX(-100%);box-shadow:var(--sh2)}
+  .sidebar.open{transform:translateX(0)}
+  .menu-btn{display:flex}
+  .main{margin-left:0;padding:1rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .fg2{grid-template-columns:1fr}
+  .img-grid{grid-template-columns:repeat(3,1fr)}
+  .img-grid.c3{grid-template-columns:repeat(2,1fr)}
+  table{font-size:12px}
+  th,td{padding:8px 9px}
+  .btn-sm{padding:5px 9px;font-size:12px}
+  .btn-xs{padding:3px 7px;font-size:11px}
+  .brand-nm{font-size:14px}
+  .topbar{padding:0 1rem}
+  .partner-card{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .sval{font-size:18px}
+  .pg-title{font-size:17px}
+  .modal{padding:1.1rem}
+  .img-grid,.img-grid.c3{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- ===== MODALS ===== -->
+<!-- 案件 -->
+<div class="overlay" id="ov-job">
+  <div class="modal">
+    <div class="modal-hd"><div class="modal-title" id="jm-title">案件を割り振る</div><div class="x-btn" onclick="closeOv('ov-job')">×</div></div>
+    <div class="fg"><label>案件名 *</label><input id="j-name" placeholder="例：春夏コレクション検品"/></div>
+    <div class="fg"><label>外注先 *</label><select id="j-partner"></select></div>
+    <div class="fg2">
+      <div class="fg" style="margin-bottom:0"><label>依頼日 *</label><input type="date" id="j-date"/></div>
+      <div class="fg" style="margin-bottom:0"><label>納期</label><input type="date" id="j-due"/></div>
+    </div>
+    <div class="fg" style="margin-top:.82rem"><label>作業内容</label>
+      <select id="j-type"><option>検品・たたみ</option><option>検品のみ</option><option>たたみのみ</option></select>
+    </div>
+    <div class="fg2" style="margin-top:.82rem">
+      <div class="fg" style="margin-bottom:0"><label>メーカー</label><input id="j-maker" placeholder="例：Hanes"/></div>
+      <div class="fg" style="margin-bottom:0"><label>品番</label><input id="j-sku" placeholder="例：5010-01"/></div>
+    </div>
+    <div class="fg" style="margin-top:.82rem">
+      <label>サイズ別枚数 <span style="font-size:11px;font-weight:400;color:var(--txh)">（サイズ名は自由入力）</span></label>
+      <div id="size-rows"></div>
+      <button class="btn btn-sm" style="margin-top:6px" onclick="addSizeRow()">＋ サイズを追加</button>
+      <div class="size-total">
+        <span style="font-size:12px;color:var(--txm);font-weight:600">合計：</span>
+        <span id="sz-sum" style="font-size:16px;font-weight:700;font-family:var(--mo);color:var(--g)">0</span>
+        <span style="font-size:12px;color:var(--txm)">枚</span>
+      </div>
+    </div>
+    <div class="fg"><label>検品詳細・特記事項</label><textarea id="j-detail" rows="2" placeholder="チェック項目など"></textarea></div>
+    <div class="fg"><label>外注先への指示 <span style="font-size:11px;font-weight:400;color:var(--txh)">(外注先に表示)</span></label><textarea id="j-instr" rows="2" placeholder="優先順位・注意点など"></textarea></div>
+    <div class="fg">
+      <label>デザイン画像</label>
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('img-input').click()" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" style="margin:0 auto;display:block"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <p>クリックまたはドラッグ＆ドロップ</p><span>PNG / JPG / WEBP</span>
+      </div>
+      <input type="file" id="img-input" accept="image/*" multiple style="display:none" onchange="onFileSelect(event)"/>
+      <div class="img-grid" id="img-preview"></div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn" onclick="closeOv('ov-job')">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveJob()">✓ <span id="j-save-lbl">割り振る</span></button>
+    </div>
+  </div>
+</div>
+<!-- 指示 -->
+<div class="overlay" id="ov-instr">
+  <div class="modal sm">
+    <div class="modal-hd"><div class="modal-title">指示を送る</div><div class="x-btn" onclick="closeOv('ov-instr')">×</div></div>
+    <div class="notice blue" id="instr-to" style="margin-bottom:1rem"></div>
+    <div class="fg"><label>指示・メッセージ</label><textarea id="instr-text" rows="4" placeholder="例：Sサイズを優先してください"></textarea></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-instr')">キャンセル</button><button class="btn btn-primary" onclick="saveInstr()">送信</button></div>
+  </div>
+</div>
+<!-- 外注先追加 -->
+<div class="overlay" id="ov-pa">
+  <div class="modal sm">
+    <div class="modal-hd"><div class="modal-title">外注先を追加</div><div class="x-btn" onclick="closeOv('ov-pa')">×</div></div>
+    <div class="fg"><label>外注先名 *</label><input id="pa-name" placeholder="例：○○就労支援センター"/></div>
+    <div class="fg"><label>担当者名</label><input id="pa-contact" placeholder="担当者名"/></div>
+    <div class="fg"><label>ログインID *</label><input id="pa-id" placeholder="例：center01"/></div>
+    <div class="fg"><label>パスワード *</label><input id="pa-pass" type="password" placeholder="パスワードを設定"/></div>
+    <div class="notice amber" style="margin-top:.5rem"><span>🔒 IDとパスワードを外注先に共有してください。</span></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-pa')">キャンセル</button><button class="btn btn-primary" onclick="savePA()">追加する</button></div>
+  </div>
+</div>
+<!-- 外注先編集 -->
+<div class="overlay" id="ov-pe">
+  <div class="modal sm">
+    <div class="modal-hd"><div class="modal-title">外注先を編集</div><div class="x-btn" onclick="closeOv('ov-pe')">×</div></div>
+    <div class="fg"><label>外注先名 *</label><input id="pe-name"/></div>
+    <div class="fg"><label>担当者名</label><input id="pe-contact"/></div>
+    <div class="fg"><label>ログインID *</label><input id="pe-id"/></div>
+    <div class="fg">
+      <label>パスワード <span style="font-size:11px;font-weight:400;color:var(--txh)">（変更する場合のみ入力）</span></label>
+      <div style="position:relative">
+        <input id="pe-pass" type="password" placeholder="新しいパスワード（空欄=変更なし）" style="padding-right:44px"/>
+        <button type="button" onclick="togglePw('pe-pass',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--txm);font-size:12px;padding:2px">表示</button>
+      </div>
+    </div>
+    <div class="notice amber" style="margin-top:.5rem"><span>⚠ IDを変更した場合は外注先に再通知してください。</span></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-pe')">キャンセル</button><button class="btn btn-primary" onclick="savePE()">更新する</button></div>
+  </div>
+</div>
+<!-- 最終確認 -->
+<div class="overlay" id="ov-confirm">
+  <div class="modal sm">
+    <div class="modal-hd"><div class="modal-title">最終確認 — 案件を完了にする</div><div class="x-btn" onclick="closeOv('ov-confirm')">×</div></div>
+    <div id="confirm-info" style="margin-bottom:1rem"></div>
+    <div class="notice purple" style="margin-bottom:1rem"><span>🛡 外注先から「全て検品済」の報告が届いています。</span></div>
+    <div class="fg"><label>最終確認メモ（任意）</label><textarea id="confirm-note" rows="2" placeholder="確認者・内容など"></textarea></div>
+    <div class="notice amber"><span>⚠ 完了にすると案件は履歴に移動します。</span></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-confirm')">まだ確認中</button><button class="btn btn-primary" onclick="finalComplete()">✓ 完了にする</button></div>
+  </div>
+</div>
+<!-- 進捗報告 -->
+<div class="overlay" id="ov-report">
+  <div class="modal sm">
+    <div class="modal-hd"><div class="modal-title">進捗を報告</div><div class="x-btn" onclick="closeOv('ov-report')">×</div></div>
+    <div class="notice green" id="rep-job-nm" style="margin-bottom:1rem"></div>
+    <div class="fg"><label>完了枚数（現時点）</label><input type="number" id="rep-done" min="0"/></div>
+    <div class="fg"><label>報告メモ（任意）</label><textarea id="rep-note" rows="2" placeholder="問題点・確認事項など"></textarea></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-report')">キャンセル</button><button class="btn btn-primary" onclick="saveReport()">報告する</button></div>
+  </div>
+</div>
+<!-- 全て検品済 -->
+<div class="overlay" id="ov-checked">
+  <div class="modal sm">
+    <div class="modal-hd"><div class="modal-title">全て検品済として報告</div><div class="x-btn" onclick="closeOv('ov-checked')">×</div></div>
+    <div class="notice amber" id="chk-job-nm" style="margin-bottom:1rem"></div>
+    <div class="notice purple" style="margin-bottom:1rem"><span>📋 管理者が最終確認後、案件が完了になります。</span></div>
+    <div class="fg"><label>最終完了枚数</label><input type="number" id="chk-done" min="0"/></div>
+    <div class="fg"><label>コメント（任意）</label><textarea id="chk-note" rows="2"></textarea></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-checked')">キャンセル</button><button class="btn btn-purple" onclick="submitChecked()">☑ 全て検品済として報告する</button></div>
+  </div>
+</div>
+<!-- B品報告 -->
+<div class="overlay" id="ov-breport">
+  <div class="modal">
+    <div class="modal-hd"><div class="modal-title">⚠ B品疑い報告</div><div class="x-btn" onclick="closeOv('ov-breport')">×</div></div>
+    <div class="notice red" style="margin-bottom:1rem"><span>写真を撮影し、カテゴリと内容を記入して送信してください。管理者が判定します。</span></div>
+    <div class="fg"><label>案件</label><select id="br-job"></select></div>
+    <div class="fg">
+      <label>カテゴリ * <span style="font-size:11px;font-weight:400;color:var(--txh)">（複数選択可）</span></label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="br-cats">
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="プリント" style="width:auto;padding:0"> プリント</label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="縫製" style="width:auto;padding:0"> 縫製</label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="デザイン" style="width:auto;padding:0"> デザイン</label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="汚れ・染み" style="width:auto;padding:0"> 汚れ・染み</label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="サイズ・形状" style="width:auto;padding:0"> サイズ・形状</label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="その他" style="width:auto;padding:0"> その他</label>
+      </div>
+    </div>
+    <div class="fg"><label>詳細説明 *</label><textarea id="br-desc" rows="3" placeholder="例：袖のプリントがにじんでいる、縫い目がほつれている など"></textarea></div>
+    <div class="fg">
+      <label>写真（複数可）*</label>
+      <div class="upload-zone" id="br-zone" onclick="document.getElementById('br-img-in').click()" ondragover="onDragOverBR(event)" ondrop="onDropBR(event)" ondragleave="onDragLeaveBR()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" style="margin:0 auto;display:block"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <p>タップして写真を撮影 / 選択</p><span>PNG / JPG / WEBP</span>
+      </div>
+      <input type="file" id="br-img-in" accept="image/*" multiple capture="environment" style="display:none" onchange="onBRFileSelect(event)"/>
+      <div class="img-grid c3" id="br-preview"></div>
+    </div>
+    <div class="fg"><label>サイズ（わかれば）</label><input id="br-size" placeholder="例：M"/></div>
+    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-breport')">キャンセル</button><button class="btn btn-red" onclick="submitBReport()">⚠ B品疑いとして送信</button></div>
+  </div>
+</div>
+<!-- B品判定 -->
+<div class="overlay" id="ov-judge">
+  <div class="modal">
+    <div class="modal-hd"><div class="modal-title">B品・良品 判定</div><div class="x-btn" onclick="closeOv('ov-judge')">×</div></div>
+    <div id="judge-content"></div>
+    <div class="fg"><label>判定コメント（任意）</label><textarea id="judge-comment" rows="2" placeholder="判定理由・対処方法など"></textarea></div>
+    <div class="fg"><label>FAQに追加</label>
+      <select id="judge-faq"><option value="no">FAQに追加しない</option><option value="yes">FAQに追加する（外注先に公開）</option></select>
+    </div>
+    <div class="modal-ft">
+      <button class="btn" onclick="closeOv('ov-judge')">キャンセル</button>
+      <button class="btn" style="background:var(--gl);color:var(--gt);border-color:var(--g)" onclick="doJudge('良品')">✓ 良品</button>
+      <button class="btn btn-red" onclick="doJudge('B品')">✕ B品</button>
+    </div>
+  </div>
+</div>
+<!-- ライトボックス -->
+<div class="overlay" id="ov-img" onclick="closeOv('ov-img')" style="align-items:center;justify-content:center;padding:0;background:rgba(0,0,0,.82)">
+  <button class="btn lb-download" id="lb-download" onclick="event.stopPropagation();downloadCurrentImage()">↓ ダウンロード</button>
+  <img id="lb-img" style="max-width:93vw;max-height:93vh;border-radius:var(--rl2);cursor:zoom-out"/>
+</div>
+
+<script>
+// ──────────────────────────────
+//  ICONS (inline SVG strings)
+// ──────────────────────────────
+const IC={
+  shirt:'👕',
+  list:'📋',
+  shield:'🛡',
+  db:'🗄',
+  help:'❓',
+  building:'🏢',
+  history:'📆',
+  edit:'✏',
+  trash:'🗑',
+  msg:'💬',
+  check:'✓',
+  x:'✕',
+  plus:'＋',
+  login:'→',
+  logout:'←',
+  menu:'☰',
+  alert:'⚠',
+  clock:'⏱',
+  gavel:'⚖',
+  book:'📖',
+  info:'ℹ',
+  user:'👤',
+  tag:'🏷',
+  chevdown:'▾',
+  chevup:'▴',
+  bulb:'💡',
+  inbox:'📥',
+  circleCheck:'✅',
+  helpBig:'❓',
+  bookBig:'📖',
+};
+function ic(name,style=''){const e=IC[name]||'';return style?'<span style="'+style+'">'+e+'<\/span>':e;}
+
+// ──────────────────────────────
+//  DATA
+// ──────────────────────────────
+const COLORS=['#1A9E72','#2F7ED8','#D85A30','#D4537E','#B07212','#639922'];
+const CAT_CSS={
+  'プリント':'cat-print','縫製':'cat-seams','デザイン':'cat-design',
+  '汚れ・染み':'cat-stain','サイズ・形状':'cat-size','その他':'cat-other'
+};
+
+const db={
+  partners:[
+    {id:1,name:'あおぞら就労支援',contact:'田中 裕子',uid:'aozora',pass:'aozora',color:'#1A9E72'},
+    {id:2,name:'ひまわりワークス',contact:'佐藤 健太',uid:'himawari',pass:'himawari',color:'#2F7ED8'},
+    {id:3,name:'なごみ就労支援',contact:'山田 花',uid:'nagomi',pass:'nagomi',color:'#D85A30'},
+  ],
+  jobs:[
+    {id:1,name:'春夏コレクション検品',partnerId:1,date:'2026-05-01',dueDate:'2026-05-28',
+     maker:'Hanes',sku:'5010-01',
+     sizes:[{name:'S',count:80},{name:'M',count:100},{name:'L',count:80},{name:'XL',count:40}],
+     total:300,done:180,type:'検品・たたみ',detail:'ボタン確認・縫い目チェック',
+     status:'進行中',checkedAt:'',completedAt:'',instruction:'丁寧に1枚ずつ確認してください',images:[],reports:[]},
+    {id:2,name:'アウトレット品整理',partnerId:2,date:'2026-05-10',dueDate:'2026-05-16',
+     maker:'Gildan',sku:'G200',sizes:[{name:'S',count:50},{name:'M',count:60},{name:'L',count:40}],
+     total:150,done:150,type:'検品のみ',detail:'汚れ・傷チェック',
+     status:'完了',checkedAt:'2026-05-14',completedAt:'2026-05-15',instruction:'',images:[],reports:[]},
+    {id:3,name:'新作Tシャツたたみ',partnerId:3,date:'2026-05-15',dueDate:'2026-05-25',
+     maker:'United Athle',sku:'5001-01',
+     sizes:[{name:'XS',count:20},{name:'S',count:40},{name:'M',count:80},{name:'L',count:60}],
+     total:200,done:60,type:'たたみのみ',detail:'サイズ別・色別に仕分け',
+     status:'検品済確認中',checkedAt:'2026-05-20',completedAt:'',
+     instruction:'Sサイズから順に処理してください',images:[],
+     reports:[{date:'2026-05-20',count:200,note:'全て完了しました',type:'checked'}]},
+  ],
+  breports:[
+    {id:101,jobId:1,partnerId:1,date:'2026-05-18',cats:['プリント'],
+     desc:'袖のロゴプリントがにじんでいる。全体的にインクが広がっている。',
+     size:'M',images:[],status:'B品',judgeComment:'プリント工程の不良。B品として仕分け。',faqPublic:true,judgedAt:'2026-05-18'},
+    {id:102,jobId:1,partnerId:1,date:'2026-05-19',cats:['縫製'],
+     desc:'脇の縫い目がほつれている。約3cm程度。',
+     size:'L',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''},
+    {id:103,jobId:3,partnerId:3,date:'2026-05-20',cats:['汚れ・染み','その他'],
+     desc:'首元に茶色い染みあり。取れなさそう。',
+     size:'S',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''},
+  ],
+  faqs:[
+    {id:201,cats:['プリント'],question:'袖のプリントがにじんでいる',
+     answer:'プリント工程の不良品です。B品として赤タグをつけて分けてください。軽微なにじみ（1mm以内）は良品扱い。',
+     images:[],createdAt:'2026-05-18',sourceReportId:101},
+  ],
+  nextJobId:10,nextPartnerId:10,nextBRId:200,nextFaqId:300,
+};
+
+// ──────────────────────────────
+//  SESSION (localStorage 24h)
+// ──────────────────────────────
+const SK='insp_v4';
+function saveSession(s){try{localStorage.setItem(SK,JSON.stringify({...s,ts:Date.now()}));}catch(e){}}
+function loadSession(){
+  try{
+    const r=localStorage.getItem(SK);if(!r)return null;
+    const s=JSON.parse(r);
+    if(Date.now()-s.ts>86400000){try{localStorage.removeItem(SK);}catch(e){}return null;}
+    if(s.role==='admin')return {role:'admin'};
+    if(s.role==='partner'&&db.partners.some(p=>p.id===s.partnerId))return s;
+    try{localStorage.removeItem(SK);}catch(e){}
+    return null;
+  }catch{return null;}
+}
+function clearSession(){try{localStorage.removeItem(SK);}catch(e){}}
+
+// ──────────────────────────────
+//  STATE
+// ──────────────────────────────
+let session=loadSession();
+let curTab='jobs';
+let editJobId=null,instrJobId=null,reportJobId=null,confirmJobId=null,checkedJobId=null,editPartnerId=null,judgeRId=null;
+let pendingImages=[],brPendingImages=[],modalSizes=[];
+
+// ──────────────────────────────
+//  HELPERS
+// ──────────────────────────────
+function today(){return new Date().toISOString().slice(0,10)}
+function gp(id){return db.partners.find(p=>p.id===id)}
+function gj(id){return db.jobs.find(j=>j.id===id)}
+function gbr(id){return db.breports.find(r=>r.id===id)}
+function szTotal(sz){return(sz||[]).reduce((s,r)=>s+(parseInt(r.count)||0),0)}
+function pct(j){return j.total?Math.round(j.done/j.total*100):0}
+function barClr(p){return p>=80?'#1A9E72':p>=40?'#B07212':'#2F7ED8'}
+function stBadge(s){return s==='完了'?'bg-green':s==='検品済確認中'?'bg-purple':s==='一時停止'?'bg-amber':'bg-blue'}
+function openOv(id){document.getElementById(id).classList.add('open')}
+function closeOv(id){document.getElementById(id).classList.remove('open')}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/\u003C/g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function catBadge(c){return`<span class="cat-badge ${CAT_CSS[c]||'cat-other'}">${esc(c)}\u003C/span>`}
+function pendingBRCount(){return db.breports.filter(r=>r.status==='pending').length;}
+function togglePw(id,btn){const el=document.getElementById(id);el.type=el.type==='password'?'text':'password';btn.textContent=el.type==='password'?'表示':'隠す';}
+
+// ──────────────────────────────
+//  SIZE ROWS
+// ──────────────────────────────
+function addSizeRow(n='',c=''){modalSizes.push({name:n,count:c});renderSizeRows();}
+function removeSizeRow(i){modalSizes.splice(i,1);renderSizeRows();}
+function renderSizeRows(){
+  const el=document.getElementById('size-rows');if(!el)return;
+  el.innerHTML=modalSizes.map((r,i)=>`
+    <div class="size-row-item">
+      <input class="size-name-in" value="${esc(r.name)}" placeholder="サイズ" oninput="modalSizes[${i}].name=this.value"/>
+      <input type="number" min="0" class="size-ct-in" value="${r.count||''}" placeholder="枚数" oninput="modalSizes[${i}].count=parseInt(this.value)||0;recalcSum()"/>
+      <button class="btn btn-xs btn-danger" onclick="removeSizeRow(${i})">${IC.x}\u003C/button>
+    \u003C/div>`).join('');
+  recalcSum();
+}
+function recalcSum(){const s=modalSizes.reduce((a,r)=>a+(parseInt(r.count)||0),0);const el=document.getElementById('sz-sum');if(el)el.textContent=s.toLocaleString();}
+
+// ──────────────────────────────
+//  IMAGE HELPERS
+// ──────────────────────────────
+const IMG_MAX=1600,IMG_Q=.78;
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();
+    r.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        const scale=Math.min(1,IMG_MAX/Math.max(img.width,img.height));
+        const w=Math.round(img.width*scale),h=Math.round(img.height*scale);
+        const c=document.createElement('canvas');c.width=w;c.height=h;
+        const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.drawImage(img,0,0,w,h);
+        resolve(c.toDataURL('image/jpeg',IMG_Q));
+      };
+      img.onerror=reject;img.src=r.result;
+    };
+    r.onerror=reject;r.readAsDataURL(file);
+  });
+}
+function readFilesTo(files,arr,renderFn){
+  Array.from(files).forEach(f=>{
+    if(!f.type.startsWith('image/'))return;
+    compressImage(f).then(src=>{arr.push(src);renderFn();}).catch(()=>alert('画像の読み込みに失敗しました'));
+  });
+}
+function onFileSelect(e){readFilesTo(e.target.files,pendingImages,renderPreview);e.target.value='';}
+function onDragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('drag');}
+function onDragLeave(){document.getElementById('upload-zone').classList.remove('drag');}
+function onDrop(e){e.preventDefault();document.getElementById('upload-zone').classList.remove('drag');readFilesTo(e.dataTransfer.files,pendingImages,renderPreview);}
+function delPendingImg(i){pendingImages.splice(i,1);renderPreview();}
+function renderPreview(){const el=document.getElementById('img-preview');if(!el)return;el.innerHTML=pendingImages.map((s,i)=>`<div class="img-thumb"><img src="${s}" onclick="openLB('${s}')"/><button class="img-del" onclick="delPendingImg(${i})">×\u003C/button>\u003C/div>`).join('');}
+function onBRFileSelect(e){readFilesTo(e.target.files,brPendingImages,renderBRPrev);e.target.value='';}
+function onDragOverBR(e){e.preventDefault();document.getElementById('br-zone').classList.add('drag');}
+function onDragLeaveBR(){document.getElementById('br-zone').classList.remove('drag');}
+function onDropBR(e){e.preventDefault();document.getElementById('br-zone').classList.remove('drag');readFilesTo(e.dataTransfer.files,brPendingImages,renderBRPrev);}
+function delBRImg(i){brPendingImages.splice(i,1);renderBRPrev();}
+function renderBRPrev(){const el=document.getElementById('br-preview');if(!el)return;el.innerHTML=brPendingImages.map((s,i)=>`<div class="img-thumb"><img src="${s}" onclick="openLB('${s}')"/><button class="img-del" onclick="delBRImg(${i})">×\u003C/button>\u003C/div>`).join('');}
+function openLB(src){
+  document.getElementById('lb-img').src=src;
+  const dl=document.getElementById('lb-download');
+  if(dl)dl.style.display=session&&session.role==='admin'?'inline-flex':'none';
+  openOv('ov-img');
+}
+function downloadCurrentImage(){
+  const src=document.getElementById('lb-img').src;if(!src)return;
+  const a=document.createElement('a');a.href=src;a.download='inspection-image-'+Date.now()+'.jpg';
+  document.body.appendChild(a);a.click();a.remove();
+}
+function openBRImg(rid,idx){const r=gbr(rid);if(r&&r.images[idx])openLB(r.images[idx]);}
+function openJobImg(jid,idx){const j=gj(jid);if(j&&j.images[idx])openLB(j.images[idx]);}
+function openFAQImg(fid,idx){const f=db.faqs.find(f=>f.id===fid);if(f&&f.images&&f.images[idx])openLB(f.images[idx]);}
+
+// ──────────────────────────────
+//  RENDER
+// ──────────────────────────────
+function render(){
+  const app=document.getElementById('app');
+  if(!session){app.innerHTML=renderLogin();setupLogin();return;}
+  if(session.role==='admin'){app.innerHTML=renderAdmin();setupAdmin();}
+  else{app.innerHTML=renderPartner();}
+}
+
+// ── LOGIN ──
+function renderLogin(){
+  return `<div class="login-wrap"><div class="login-box fi">
+    <div class="login-hd">
+      <div class="login-ic">${IC.shirt.replace('18','26').replace('18','26')}\u003C/div>
+      <div style="font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:5px">検品・たたみ 外注管理\u003C/div>
+      <div style="font-size:13px;color:var(--txm)">IDとパスワードを入力してください\u003C/div>
+    \u003C/div>
+    <div class="card" style="padding:1.5rem">
+      <div class="fg"><label>ログインID\u003C/label><input type="text" id="l-id" placeholder="ログインID" autocomplete="username"/>\u003C/div>
+      <div class="fg"><label>パスワード\u003C/label>
+        <div style="position:relative">
+          <input type="password" id="l-pass" placeholder="パスワード" autocomplete="current-password" style="padding-right:44px"/>
+          <button type="button" onclick="togglePw('l-pass',this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--txm);font-size:12px">表示\u003C/button>
+        \u003C/div>
+      \u003C/div>
+      <div id="l-err" style="font-size:12px;color:var(--rt);margin-bottom:8px;display:none">${ic('alert')} IDまたはパスワードが正しくありません\u003C/div>
+      <button class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;padding:10px;font-size:14px">${ic('login')} サインイン\u003C/button>
+    \u003C/div>
+    <div class="demo-hint"><strong style="color:var(--tx)">デモ用ログイン情報\u003C/strong><br>
+      管理者 ID: <code>admin\u003C/code> / PW: <code>admin\u003C/code><br>
+      外注先A ID: <code>aozora\u003C/code> / PW: <code>aozora\u003C/code><br>
+      外注先B ID: <code>himawari\u003C/code> / PW: <code>himawari\u003C/code><br>
+      外注先C ID: <code>nagomi\u003C/code> / PW: <code>nagomi\u003C/code>
+    \u003C/div>
+  \u003C/div>\u003C/div>`;
+}
+function setupLogin(){
+  const go=()=>{
+    const uid=document.getElementById('l-id').value.trim();
+    const pw=document.getElementById('l-pass').value;
+    const err=document.getElementById('l-err');err.style.display='none';
+    if(uid==='admin'&&pw==='admin'){session={role:'admin'};saveSession(session);render();return;}
+    const p=db.partners.find(p=>p.uid===uid&&p.pass===pw);
+    if(p){session={role:'partner',partnerId:p.id};saveSession(session);render();}
+    else err.style.display='block';
+  };
+  document.getElementById('login-btn').onclick=go;
+  ['l-id','l-pass'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')go();}));
+}
+
+// ── ADMIN SHELL ──
+function renderAdmin(){
+  const pc=pendingBRCount();
+  const confirmPc=db.jobs.filter(j=>j.status==='検品済確認中').length;
+  const tabs=[
+    {id:'jobs',ico:'list',lbl:'案件管理'},
+    {id:'confirm',ico:'shield',lbl:'最終確認',badge:confirmPc},
+    {id:'bdb',ico:'db',lbl:'B品データベース',badge:pc},
+    {id:'faq',ico:'help',lbl:'FAQ管理'},
+    {id:'partners',ico:'building',lbl:'外注先管理'},
+    {id:'history',ico:'history',lbl:'完了履歴'},
+  ];
+  const nav=tabs.map(t=>`<button class="nav-it${curTab===t.id?' on':''}" data-tab="${t.id}">${ic(t.ico)}${t.lbl}${t.badge?`<span class="nav-badge pulse">${t.badge}\u003C/span>`:''}\u003C/button>`).join('');
+  const bodyFns={jobs:adminJobs,confirm:adminConfirm,bdb:adminBDB,faq:adminFAQ,partners:adminPartners,history:adminHistory};
+  const body=(bodyFns[curTab]||adminJobs)();
+  return `
+<div class="topbar">
+  <div class="brand">
+    <button class="menu-btn btn" id="menu-btn">${ic('menu')}\u003C/button>
+    <div class="brand-ic" style="width:34px;height:34px">${IC.shirt.replace(/18/g,'18')}\u003C/div>
+    <div class="brand-nm">検品・たたみ 外注管理\u003C/div>
+  \u003C/div>
+  <div class="topbar-r">
+    <span style="font-size:11px;color:var(--txm);background:var(--gyl);padding:4px 10px;border-radius:20px;font-weight:600">${ic('shield')} 管理者\u003C/span>
+    <button class="btn btn-sm" onclick="logout()">${ic('logout')} <span style="display:none" class="show-md">ログアウト\u003C/span>\u003C/button>
+  \u003C/div>
+\u003C/div>
+<div class="sb-overlay" id="sb-overlay">\u003C/div>
+<div style="display:flex;min-height:calc(100vh - var(--tph))">
+  <div class="sidebar" id="sidebar">${nav}<div style="margin-top:auto;padding:8px 10px;font-size:11px;color:var(--txh)">外注管理 v4.1\u003C/div>\u003C/div>
+  <div class="main fi">${body}\u003C/div>
+\u003C/div>`;
+}
+function setupAdmin(){
+  document.querySelectorAll('.nav-it').forEach(el=>{el.onclick=()=>{curTab=el.dataset.tab;closeSB();render();};});
+  const mb=document.getElementById('menu-btn'),sb=document.getElementById('sidebar'),sbo=document.getElementById('sb-overlay');
+  if(mb)mb.onclick=()=>{sb.classList.toggle('open');sbo.classList.toggle('on');};
+  if(sbo)sbo.onclick=closeSB;
+}
+function closeSB(){const sb=document.getElementById('sidebar'),sbo=document.getElementById('sb-overlay');if(sb)sb.classList.remove('open');if(sbo)sbo.classList.remove('on');}
+
+// ── 案件管理 ──
+function adminJobs(){
+  const active=db.jobs.filter(j=>j.status!=='完了');
+  const tot=db.jobs.reduce((s,j)=>s+j.total,0),done=db.jobs.reduce((s,j)=>s+j.done,0);
+  const rows=active.map(j=>{
+    const p=gp(j.partnerId),pc=pct(j);
+    return `<tr>
+      <td><div style="font-weight:600">${esc(j.name)}\u003C/div><div style="font-size:11px;color:var(--txh)">${j.type}${j.maker?' · '+esc(j.maker):''}\u003C/div>\u003C/td>
+      <td>${p?`<div style="display:flex;align-items:center;gap:6px"><div class="av" style="background:${p.color};width:24px;height:24px;font-size:10px">${p.name.slice(0,2)}\u003C/div>${esc(p.name)}\u003C/div>`:'—'}\u003C/td>
+      <td style="font-size:12px;color:var(--txm);white-space:nowrap">${j.dueDate||'—'}\u003C/td>
+      <td style="text-align:right;font-weight:600">${j.total.toLocaleString()}\u003C/td>
+      <td style="text-align:right;font-weight:600;color:var(--g)">${j.done.toLocaleString()}\u003C/td>
+      <td style="min-width:80px"><div style="display:flex;align-items:center;gap:5px"><div class="pbar" style="flex:1"><div class="pbar-fill" style="width:${pc}%;background:${barClr(pc)}">\u003C/div>\u003C/div><span style="font-size:11px;font-family:var(--mo);min-width:28px;text-align:right">${pc}%\u003C/span>\u003C/div>\u003C/td>
+      <td><span class="badge ${stBadge(j.status)}" style="font-size:10px">${j.status==='検品済確認中'?ic('clock')+'確認待':j.status}\u003C/span>\u003C/td>
+      <td><div class="act-buttons">
+        ${j.status==='検品済確認中'?`<button class="btn btn-purple act-btn" onclick="openConfirm(${j.id})" title="外注先の完了報告を確認して案件を完了にします">${ic('shield')} 確認\u003C/button>`:''}
+        <button class="btn act-btn" onclick="openInstr(${j.id})" title="外注先へ指示・メッセージを送ります">${ic('msg')} 指示\u003C/button>
+        <button class="btn act-btn" onclick="openEdit(${j.id})" title="案件内容や枚数を編集します">${ic('edit')} 編集\u003C/button>
+        <button class="btn btn-danger act-btn danger" onclick="delJob(${j.id})" title="この案件を削除します">${ic('trash')} 削除\u003C/button>
+      \u003C/div>\u003C/td>
+    \u003C/tr>`;
+  }).join('');
+  return `<div class="pg-title">案件管理\u003C/div>
+<div class="stats-grid">
+  <div class="stat-card"><div class="slbl">進行中\u003C/div><div class="sval">${active.length}\u003C/div><div class="ssub">件\u003C/div>\u003C/div>
+  <div class="stat-card"><div class="slbl">総依頼枚数\u003C/div><div class="sval">${tot.toLocaleString()}\u003C/div><div class="ssub">枚\u003C/div>\u003C/div>
+  <div class="stat-card"><div class="slbl">完了枚数\u003C/div><div class="sval" style="color:var(--g)">${done.toLocaleString()}\u003C/div><div class="ssub">枚\u003C/div>\u003C/div>
+  <div class="stat-card"><div class="slbl">完了率\u003C/div><div class="sval">${tot?Math.round(done/tot*100):0}<span style="font-size:13px;color:var(--txm)">%\u003C/span>\u003C/div>\u003C/div>
+\u003C/div>
+<div class="sec-hd"><div class="sec-title">進行中の案件\u003C/div><button class="btn btn-primary btn-sm" onclick="openAdd()">${ic('plus')} 案件を割り振る\u003C/button>\u003C/div>
+<div class="tw" style="overflow-x:auto"><table>
+  <thead><tr><th>案件名\u003C/th><th>外注先\u003C/th><th>納期\u003C/th><th style="text-align:right">依頼\u003C/th><th style="text-align:right">完了\u003C/th><th>進捗\u003C/th><th>状態\u003C/th><th>操作\u003C/th>\u003C/tr>\u003C/thead>
+  <tbody>${rows||'<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txh)">進行中の案件はありません\u003C/td>\u003C/tr>'}\u003C/tbody>
+\u003C/table>\u003C/div>`;
+}
+
+// ── 最終確認 ──
+function adminConfirm(){
+  const pend=db.jobs.filter(j=>j.status==='検品済確認中');
+  if(!pend.length)return`<div class="pg-title">最終確認\u003C/div><div style="text-align:center;padding:3rem;color:var(--txh)">${ic('circleCheck','color:var(--g);margin-bottom:10px;display:block')}<br>確認待ちの案件はありません\u003C/div>`;
+  const cards=pend.map(j=>{
+    const p=gp(j.partnerId),lr=j.reports.filter(r=>r.type==='checked').slice(-1)[0];
+    const szP=j.sizes&&j.sizes.length?`<div class="size-pills" style="margin-top:5px">${j.sizes.filter(r=>r.count>0).map(r=>`<span class="size-pill">${esc(r.name)}: ${r.count}\u003C/span>`).join('')}\u003C/div>`:'';
+    return `<div class="card" style="margin-bottom:14px;border:1.5px solid var(--p)">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <div><div style="font-weight:700;font-size:15px">${esc(j.name)}\u003C/div><div style="font-size:12px;color:var(--txm)">${j.type}${j.maker?' · '+esc(j.maker):''}\u003C/div>${szP}\u003C/div>
+        <span class="badge bg-purple">${ic('clock')} 確認待ち\u003C/span>
+      \u003C/div>
+      ${p?`<div style="display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:8px"><div class="av" style="background:${p.color};width:22px;height:22px;font-size:9px">${p.name.slice(0,2)}\u003C/div>${esc(p.name)}\u003C/div>`:''}
+      ${lr?`<div class="notice purple" style="margin-bottom:8px"><span><strong>報告:\u003C/strong> ${lr.count.toLocaleString()} 枚${lr.note?` — ${esc(lr.note)}`:''}\u003C/span>\u003C/div>`:''}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn btn-primary btn-sm" onclick="openConfirm(${j.id})">${ic('check')} 最終確認して完了\u003C/button>
+        <button class="btn btn-sm" onclick="openInstr(${j.id})">${ic('msg')} 指示\u003C/button>
+      \u003C/div>
+    \u003C/div>`;
+  }).join('');
+  return `<div class="pg-title">最終確認 <span class="badge bg-purple" style="font-size:12px;margin-left:6px">${pend.length}件\u003C/span>\u003C/div>
+<div class="notice purple" style="margin-bottom:1.1rem">${ic('info')}<span>外注先から「全て検品済」の報告が届いています。\u003C/span>\u003C/div>${cards}`;
+}
+
+// ── B品データベース ──
+function adminBDB(){
+  const pending=db.breports.filter(r=>r.status==='pending');
+  const judged=db.breports.filter(r=>r.status!=='pending');
+  const bhinCt=db.breports.filter(r=>r.status==='B品').length;
+  const mkCard=(r,showBtn)=>{
+    const p=gp(r.partnerId),j=gj(r.jobId);
+    const imgs=r.images.length?`<div class="img-grid c3" style="margin-top:8px">${r.images.map((s,i)=>`<div class="img-thumb"><img src="${s}" onclick="openBRImg(${r.id},${i})"/>\u003C/div>`).join('')}\u003C/div>`:'';
+    const stBadgeStr=r.status==='pending'?`<span class="badge bg-amber">${ic('clock')} 判定待ち\u003C/span>`:r.status==='B品'?`<span class="badge bg-red">✕ B品\u003C/span>`:`<span class="badge bg-green">✓ 良品\u003C/span>`;
+    return `<div class="breport-card ${r.status==='pending'?'pending':r.status==='B品'?'bhin':'ryohin'}">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+        <div>
+          <div style="font-weight:600;font-size:13px">${j?esc(j.name):'—'}${r.size?' · '+esc(r.size):''}\u003C/div>
+          <div style="font-size:11px;color:var(--txm)">${p?esc(p.name):'—'} · ${r.date}\u003C/div>
+        \u003C/div>
+        <div style="display:flex;gap:5px;align-items:center">${stBadgeStr}${r.faqPublic?`<span class="badge bg-blue">${ic('book')} FAQ\u003C/span>`:''}\u003C/div>
+      \u003C/div>
+      <div style="margin-bottom:5px">${(r.cats||[]).map(catBadge).join('')}\u003C/div>
+      <div style="font-size:13px;margin-bottom:4px">${esc(r.desc)}\u003C/div>
+      ${r.judgeComment?`<div class="notice ${r.status==='B品'?'red':'green'}" style="margin-top:6px">${ic('msg')}<span>${esc(r.judgeComment)}\u003C/span>\u003C/div>`:''}
+      ${imgs}
+      ${showBtn?`<div style="margin-top:10px"><button class="btn btn-amber btn-sm" onclick="openJudge(${r.id})">${ic('gavel')} B品・良品を判定する\u003C/button>\u003C/div>`:''}
+    \u003C/div>`;
+  };
+  return `<div class="pg-title">B品データベース\u003C/div>
+<div class="stats-grid">
+  <div class="stat-card"><div class="slbl">判定待ち\u003C/div><div class="sval" style="color:var(--a)">${pending.length}\u003C/div><div class="ssub">件\u003C/div>\u003C/div>
+  <div class="stat-card"><div class="slbl">B品判定\u003C/div><div class="sval" style="color:var(--r)">${bhinCt}\u003C/div><div class="ssub">件\u003C/div>\u003C/div>
+  <div class="stat-card"><div class="slbl">良品判定\u003C/div><div class="sval" style="color:var(--g)">${judged.length-bhinCt}\u003C/div><div class="ssub">件\u003C/div>\u003C/div>
+  <div class="stat-card"><div class="slbl">FAQ掲載\u003C/div><div class="sval" style="color:var(--b)">${db.faqs.length}\u003C/div><div class="ssub">件\u003C/div>\u003C/div>
+\u003C/div>
+${pending.length?`<div class="sec-title" style="margin-bottom:.7rem">判定待ち <span class="badge bg-amber" style="font-size:11px">${pending.length}件\u003C/span>\u003C/div>${pending.map(r=>mkCard(r,true)).join('')}`:`<div class="notice green" style="margin-bottom:1rem">${ic('check')}<span>判定待ちはありません。\u003C/span>\u003C/div>`}
+${judged.length?`<div class="sec-title" style="margin:1.2rem 0 .7rem">判定済み\u003C/div>${judged.map(r=>mkCard(r,false)).join('')}`:''}`;
+}
+
+// ── FAQ管理 ──
+function adminFAQ(){
+  const cards=db.faqs.map(f=>{
+    const imgs=f.images&&f.images.length?`<div class="img-grid c3" style="margin-top:8px">${f.images.map((src,i)=>`<div class="img-thumb"><img src="${src}" onclick="openFAQImg(${f.id},${i})" title="画像を拡大"/>\u003C/div>`).join('')}\u003C/div>`:'';
+    return `<div class="faq-card">
+    <div class="faq-q">
+      <div><div style="margin-bottom:4px">${(f.cats||[]).map(catBadge).join('')}\u003C/div>Q. ${esc(f.question)}\u003C/div>
+      <button class="btn btn-xs btn-danger" onclick="delFAQ(${f.id})">${ic('trash')}\u003C/button>
+    \u003C/div>
+    <div class="faq-a">A. ${esc(f.answer)}${imgs}<div style="font-size:11px;color:var(--txh);margin-top:5px">登録日: ${f.createdAt}\u003C/div>\u003C/div>
+  \u003C/div>`;
+  }).join('');
+  return `<div class="pg-title">FAQ管理\u003C/div>
+<div class="notice blue" style="margin-bottom:1rem">${ic('info')}<span>B品データベースで「FAQに追加」した項目が外注先の「FAQ」タブに反映されます。\u003C/span>\u003C/div>
+${db.faqs.length?cards:`<div style="text-align:center;padding:3rem;color:var(--txh)">${ic('bookBig','display:block;margin-bottom:10px')}<br>FAQはまだありません。B品判定時に追加できます。\u003C/div>`}`;
+}
+
+// ── 外注先管理 ──
+function adminPartners(){
+  const cards=db.partners.map(p=>{
+    const pj=db.jobs.filter(j=>j.partnerId===p.id);
+    const active=pj.filter(j=>j.status!=='完了').length,total=pj.reduce((s,j)=>s+j.done,0);
+    return `<div class="partner-card">
+      <div class="av" style="background:${p.color};width:44px;height:44px;font-size:14px;flex-shrink:0">${p.name.slice(0,2)}\u003C/div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:14px">${esc(p.name)}\u003C/div>
+        <div style="font-size:12px;color:var(--txm);margin-top:2px">${ic('user')} ${esc(p.contact||'—')}\u003C/div>
+        <div style="font-size:12px;color:var(--txm)">ID: <code style="font-family:var(--mo);background:var(--bg);padding:1px 6px;border-radius:5px;font-size:11px;border:1px solid var(--bd)">${esc(p.uid)}\u003C/code>\u003C/div>
+      \u003C/div>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <div style="text-align:right"><div style="font-size:10px;color:var(--txh);font-weight:600">進行中\u003C/div><div style="font-size:17px;font-weight:700">${active}件\u003C/div>\u003C/div>
+        <div style="text-align:right"><div style="font-size:10px;color:var(--txh);font-weight:600">累計完了\u003C/div><div style="font-size:17px;font-weight:700;color:var(--g)">${total.toLocaleString()}枚\u003C/div>\u003C/div>
+        <button class="btn btn-xs" onclick="openEditP(${p.id})" title="編集">${ic('edit')} 編集\u003C/button>
+        <button class="btn btn-xs btn-danger" onclick="delP(${p.id})">${ic('trash')}\u003C/button>
+      \u003C/div>
+    \u003C/div>`;
+  }).join('');
+  return `<div class="pg-title">外注先管理\u003C/div>
+<div class="notice blue" style="margin-bottom:1rem">${ic('info')}<span>各外注先はIDとパスワードでログインし、自分の案件のみ閲覧できます。他の外注先情報は一切見えません。\u003C/span>\u003C/div>
+<div class="sec-hd"><div class="sec-title">登録済み外注先\u003C/div><button class="btn btn-primary btn-sm" onclick="openOv('ov-pa')">${ic('plus')} 外注先を追加\u003C/button>\u003C/div>
+${cards||'<div style="text-align:center;padding:3rem;color:var(--txh)">外注先が登録されていません\u003C/div>'}`;
+}
+
+// ── 完了履歴 ──
+function adminHistory(){
+  const done=db.jobs.filter(j=>j.status==='完了');
+  const rows=done.map(j=>{const p=gp(j.partnerId),lr=j.reports.slice(-1)[0];
+    return `<tr><td><div style="font-weight:600">${esc(j.name)}\u003C/div><div style="font-size:11px;color:var(--txh)">${j.type}${j.maker?' · '+esc(j.maker):''}\u003C/div>\u003C/td>
+      <td>${p?esc(p.name):'—'}\u003C/td><td style="font-size:12px;white-space:nowrap">${j.date}\u003C/td>
+      <td style="font-size:12px;white-space:nowrap">${j.completedAt||'—'}\u003C/td>
+      <td style="text-align:right"><strong style="color:var(--g)">${j.done.toLocaleString()}\u003C/strong>/${j.total.toLocaleString()}\u003C/td>
+      <td style="font-size:12px;color:var(--txm)">${lr?esc(lr.note):'—'}\u003C/td>\u003C/tr>`;
+  }).join('');
+  return `<div class="pg-title">完了履歴\u003C/div>
+<div class="tw" style="overflow-x:auto"><table>
+  <thead><tr><th>案件名\u003C/th><th>外注先\u003C/th><th>依頼日\u003C/th><th>完了日\u003C/th><th style="text-align:right">枚数\u003C/th><th>最終報告\u003C/th>\u003C/tr>\u003C/thead>
+  <tbody>${rows||'<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--txh)">完了案件はありません\u003C/td>\u003C/tr>'}\u003C/tbody>
+\u003C/table>\u003C/div>`;
+}
+
+// ─────────────────────────────
+//  PARTNER VIEW
+// ─────────────────────────────
+function renderPartner(){
+  const p=gp(session.partnerId);
+  const ptab=session.ptab||'myjobs';
+  const ptabs=[
+    {id:'myjobs',ico:'list',lbl:'担当案件'},
+    {id:'breport',ico:'alert',lbl:'B品報告'},
+    {id:'pfaq',ico:'help',lbl:'FAQ'},
+  ];
+  const pnav=ptabs.map(t=>`<button class="nav-it${ptab===t.id?' on':''}" onclick="setPTab('${t.id}')">${ic(t.ico)}${t.lbl}\u003C/button>`).join('');
+  const pbody=ptab==='myjobs'?partnerJobs(p):ptab==='breport'?partnerBReport(p):partnerFAQ();
+  return `
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-ic">${IC.shirt.replace(/18/g,'18')}\u003C/div>
+    <div class="brand-nm">検品・たたみ 管理\u003C/div>
+  \u003C/div>
+  <div class="topbar-r">
+    <div style="display:flex;align-items:center;gap:7px">
+      <div class="av" style="background:${p.color};width:28px;height:28px;font-size:11px">${p.name.slice(0,2)}\u003C/div>
+      <span style="font-size:13px;font-weight:600">${esc(p.name)}\u003C/span>
+    \u003C/div>
+    <button class="btn btn-sm" onclick="logout()">${ic('logout')}\u003C/button>
+  \u003C/div>
+\u003C/div>
+<div style="display:flex;min-height:calc(100vh - var(--tph))">
+  <div class="sidebar" id="p-sidebar">${pnav}\u003C/div>
+  <div class="main fi">${pbody}\u003C/div>
+\u003C/div>`;
+}
+function setPTab(t){session.ptab=t;saveSession(session);render();}
+
+function partnerJobs(p){
+  const myJobs=db.jobs.filter(j=>j.partnerId===session.partnerId&&j.status!=='完了');
+  const doneJobs=db.jobs.filter(j=>j.partnerId===session.partnerId&&j.status==='完了');
+  const totPcs=myJobs.reduce((s,j)=>s+j.total,0),donePcs=myJobs.reduce((s,j)=>s+j.done,0);
+  const rate=totPcs?Math.round(donePcs/totPcs*100):0;
+  const cards=myJobs.length?myJobs.map(j=>{
+    const pc=pct(j),isChk=j.status==='検品済確認中';
+    const szP=j.sizes&&szTotal(j.sizes)?`<div class="size-pills" style="margin-bottom:8px">${j.sizes.filter(r=>r.count>0).map(r=>`<span class="size-pill">${esc(r.name)}: ${r.count}\u003C/span>`).join('')}\u003C/div>`:'';
+    const imgs=j.images&&j.images.length?`<div class="img-grid c3" style="margin-bottom:8px">${j.images.map((s,i)=>`<div class="img-thumb"><img src="${s}" onclick="openJobImg(${j.id},${i})"/>\u003C/div>`).join('')}\u003C/div>`:'';
+    return `<div class="job-card fi" style="${isChk?'border-color:var(--p)':''}">
+      <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <div>
+          <div style="font-weight:700;font-size:15px">${esc(j.name)}\u003C/div>
+          <div style="font-size:12px;color:var(--txm)">${j.type}${j.dueDate?' · 納期: <strong>'+j.dueDate+'\u003C/strong>':''}\u003C/div>
+          ${j.maker?`<div style="font-size:12px;color:var(--txm)">${ic('tag')} ${esc(j.maker)}${j.sku?' 品番:'+esc(j.sku):''}\u003C/div>`:''}
+        \u003C/div>
+        <span class="badge ${stBadge(j.status)}">${isChk?ic('clock')+' 確認待ち':j.status}\u003C/span>
+      \u003C/div>
+      ${szP}
+      ${j.detail?`<div style="font-size:12px;color:var(--txm);background:var(--bg);padding:7px 10px;border-radius:var(--rr);margin-bottom:8px;border:1px solid var(--bd)">📋 ${esc(j.detail)}\u003C/div>`:''}
+      ${j.instruction?`<div class="notice blue" style="margin-bottom:8px">${ic('msg')}<span><strong>指示：\u003C/strong>${esc(j.instruction)}\u003C/span>\u003C/div>`:''}
+      ${imgs}
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+        <div class="pbar" style="flex:1;height:8px"><div class="pbar-fill" style="width:${pc}%;background:${barClr(pc)}">\u003C/div>\u003C/div>
+        <span style="font-size:13px;font-weight:700;font-family:var(--mo);min-width:36px;text-align:right">${pc}%\u003C/span>
+      \u003C/div>
+      <div style="font-size:12px;color:var(--txm);margin-bottom:12px">完了: ${j.done.toLocaleString()} / ${j.total.toLocaleString()} 枚\u003C/div>
+      ${isChk?`<div class="notice purple">${ic('shield')}<span>全て検品済として報告済です。管理者の最終確認をお待ちください。\u003C/span>\u003C/div>`:
+      `<div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-sm" onclick="openReport(${j.id})">✏ 進捗を報告\u003C/button>
+        <button class="btn btn-purple btn-sm" onclick="openChecked(${j.id})">☑ 全て検品済として報告\u003C/button>
+      \u003C/div>`}
+    \u003C/div>`;
+  }).join(''):`<div style="text-align:center;padding:3rem;color:var(--txh)">${ic('inbox','display:block;margin-bottom:10px')}<br>担当案件はありません\u003C/div>`;
+  const histCards=doneJobs.map(j=>`<div class="job-card" style="opacity:.7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <div><div style="font-weight:600">${esc(j.name)}\u003C/div><div style="font-size:11px;color:var(--txh)">${j.type} · 完了日: ${j.completedAt||'—'}\u003C/div>\u003C/div>
+    <div style="display:flex;align-items:center;gap:8px"><span class="badge bg-green">完了\u003C/span><span style="font-size:13px;color:var(--g);font-weight:700">${j.done.toLocaleString()} 枚\u003C/span>\u003C/div>
+  \u003C/div>`).join('');
+  return `<div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="stat-card"><div class="slbl">担当中\u003C/div><div class="sval">${myJobs.length}\u003C/div><div class="ssub">件\u003C/div>\u003C/div>
+    <div class="stat-card"><div class="slbl">担当総枚数\u003C/div><div class="sval">${totPcs.toLocaleString()}\u003C/div><div class="ssub">枚\u003C/div>\u003C/div>
+    <div class="stat-card"><div class="slbl">完了率\u003C/div><div class="sval">${rate}<span style="font-size:13px;color:var(--txm)">%\u003C/span>\u003C/div>\u003C/div>
+  \u003C/div>
+  <div class="sec-title" style="margin-bottom:.8rem">担当中の案件\u003C/div>${cards}
+  ${doneJobs.length?`<div class="sec-title" style="margin:1.2rem 0 .8rem">完了済み\u003C/div>${histCards}`:''}`;
+}
+
+function partnerBReport(p){
+  const myBR=db.breports.filter(r=>r.partnerId===session.partnerId);
+  const mkCard=r=>{
+    const j=gj(r.jobId);
+    const imgs=r.images.length?`<div class="img-grid c3" style="margin-top:6px">${r.images.map((s,i)=>`<div class="img-thumb"><img src="${s}" onclick="openBRImg(${r.id},${i})"/>\u003C/div>`).join('')}\u003C/div>`:'';
+    const stBStr=r.status==='pending'?`<span class="badge bg-amber">${ic('clock')} 判定待ち\u003C/span>`:r.status==='B品'?`<span class="badge bg-red">✕ B品\u003C/span>`:`<span class="badge bg-green">✓ 良品\u003C/span>`;
+    return `<div class="breport-card ${r.status==='pending'?'pending':r.status==='B品'?'bhin':'ryohin'}">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+        <div><div style="font-weight:600;font-size:13px">${j?esc(j.name):'—'}${r.size?' · サイズ: '+esc(r.size):''}\u003C/div>
+        <div style="font-size:11px;color:var(--txh)">${r.date}\u003C/div>\u003C/div>
+        ${stBStr}
+      \u003C/div>
+      <div style="margin-bottom:5px">${(r.cats||[]).map(catBadge).join('')}\u003C/div>
+      <div style="font-size:13px;margin-bottom:4px">${esc(r.desc)}\u003C/div>
+      ${r.judgeComment?`<div class="notice ${r.status==='B品'?'red':'green'}" style="margin-top:6px">${ic('msg')}<span><strong>管理者コメント：\u003C/strong>${esc(r.judgeComment)}\u003C/span>\u003C/div>`:''}
+      ${imgs}
+    \u003C/div>`;
+  };
+  return `<div class="pg-title">B品疑い報告\u003C/div>
+<div class="notice red" style="margin-bottom:1rem">⚠<span>B品と思われる商品を写真付きで報告してください。管理者が判定します。\u003C/span>\u003C/div>
+<div class="sec-hd"><div class="sec-title">報告を送る\u003C/div><button class="btn btn-red btn-sm" onclick="openBReport()">📷 B品疑いを報告する\u003C/button>\u003C/div>
+${myBR.length?`<div class="sec-title" style="margin-bottom:.8rem">報告履歴\u003C/div>${myBR.map(mkCard).join('')}`:'<div style="text-align:center;padding:2rem;color:var(--txh);font-size:13px">まだ報告はありません\u003C/div>'}`;
+}
+
+function partnerFAQ(){
+  if(!db.faqs.length)return`<div class="pg-title">FAQを見る\u003C/div><div style="text-align:center;padding:3rem;color:var(--txh)">${ic('helpBig','display:block;margin-bottom:10px')}<br>まだFAQは登録されていません\u003C/div>`;
+  const allCats=[...new Set(db.faqs.flatMap(f=>f.cats||[]))];
+  const fc=session.faqCat||'all';
+  const filtered=fc==='all'?db.faqs:db.faqs.filter(f=>(f.cats||[]).includes(fc));
+  const catBtns=`<button class="btn btn-sm${fc==='all'?' btn-primary':''}" onclick="setFAQCat('all')">すべて\u003C/button>`+
+    allCats.map(c=>`<button class="btn btn-sm${fc===c?' btn-primary':''}" onclick="setFAQCat('${esc(c)}')">${esc(c)}\u003C/button>`).join('');
+  const cards=filtered.map(f=>{
+    const isOpen=session.openFaq===f.id;
+    const imgs=f.images&&f.images.length?`<div class="img-grid c3" style="margin-top:8px">${f.images.map((src,i)=>`<div class="img-thumb"><img src="${src}" onclick="event.stopPropagation();openFAQImg(${f.id},${i})" title="画像を拡大"/>\u003C/div>`).join('')}\u003C/div>`:'';
+    return `<div class="faq-card${isOpen?' open-faq':''}" onclick="toggleFAQ(${f.id})">
+      <div class="faq-q">
+        <div><div style="margin-bottom:4px">${(f.cats||[]).map(catBadge).join('')}\u003C/div>Q. ${esc(f.question)}\u003C/div>
+        <span style="color:var(--txm);flex-shrink:0">${ic(isOpen?'chevup':'chevdown')}\u003C/span>
+      \u003C/div>
+      ${isOpen?`<div class="faq-a">A. ${esc(f.answer)}${imgs}<div style="font-size:11px;color:var(--txh);margin-top:5px">登録日: ${f.createdAt}\u003C/div>\u003C/div>`:''}
+    \u003C/div>`;
+  }).join('');
+  return `<div class="pg-title">FAQ — よくある判定事例\u003C/div>
+<div class="notice green" style="margin-bottom:1rem">${ic('bulb')}<span>管理者が判定した事例を参考に、自己判断の精度を上げましょう。\u003C/span>\u003C/div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem">${catBtns}\u003C/div>
+${cards||'<div style="text-align:center;padding:2rem;color:var(--txh)">該当するFAQはありません\u003C/div>'}`;
+}
+function setFAQCat(c){session.faqCat=c;saveSession(session);render();}
+function toggleFAQ(id){session.openFaq=session.openFaq===id?null:id;saveSession(session);render();}
+
+// ─────────────────────────────
+//  ACTIONS
+// ─────────────────────────────
+function logout(){clearSession();session=null;curTab='jobs';render();}
+
+function openAdd(){
+  editJobId=null;pendingImages=[];
+  modalSizes=[{name:'S',count:''},{name:'M',count:''},{name:'L',count:''},{name:'XL',count:''}];
+  document.getElementById('jm-title').textContent='案件を割り振る';
+  document.getElementById('j-save-lbl').textContent='割り振る';
+  document.getElementById('j-partner').innerHTML=db.partners.map(p=>`<option value="${p.id}">${esc(p.name)}\u003C/option>`).join('');
+  ['j-name','j-maker','j-sku','j-detail','j-instr'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('j-date').value=today();document.getElementById('j-due').value='';
+  renderSizeRows();renderPreview();openOv('ov-job');
+}
+function openEdit(id){
+  editJobId=id;const j=gj(id);
+  pendingImages=j.images?[...j.images]:[];
+  modalSizes=j.sizes?j.sizes.map(r=>({...r})):[];
+  document.getElementById('jm-title').textContent='案件を編集';
+  document.getElementById('j-save-lbl').textContent='更新する';
+  document.getElementById('j-partner').innerHTML=db.partners.map(p=>`<option value="${p.id}"${p.id===j.partnerId?' selected':''}>${esc(p.name)}\u003C/option>`).join('');
+  document.getElementById('j-name').value=j.name;document.getElementById('j-date').value=j.date;
+  document.getElementById('j-due').value=j.dueDate||'';document.getElementById('j-maker').value=j.maker||'';
+  document.getElementById('j-sku').value=j.sku||'';document.getElementById('j-detail').value=j.detail;
+  document.getElementById('j-instr').value=j.instruction;
+  renderSizeRows();renderPreview();openOv('ov-job');
+}
+function saveJob(){
+  const name=document.getElementById('j-name').value.trim();
+  const partnerId=parseInt(document.getElementById('j-partner').value);
+  const date=document.getElementById('j-date').value,dueDate=document.getElementById('j-due').value;
+  const type=document.getElementById('j-type').value;
+  const maker=document.getElementById('j-maker').value.trim(),sku=document.getElementById('j-sku').value.trim();
+  const detail=document.getElementById('j-detail').value.trim(),instruction=document.getElementById('j-instr').value.trim();
+  const sizes=modalSizes.filter(r=>r.name).map(r=>({name:r.name,count:parseInt(r.count)||0}));
+  const total=szTotal(sizes);
+  if(!name||!partnerId||!date){alert('案件名・外注先・依頼日は必須です');return;}
+  if(!total){alert('サイズ別枚数を入力してください');return;}
+  const images=[...pendingImages];
+  if(editJobId)Object.assign(gj(editJobId),{name,partnerId,date,dueDate,total,type,maker,sku,detail,instruction,sizes,images});
+  else db.jobs.push({id:db.nextJobId++,name,partnerId,date,dueDate,total,done:0,type,maker,sku,detail,status:'進行中',checkedAt:'',completedAt:'',instruction,sizes,images,reports:[]});
+  closeOv('ov-job');render();
+}
+function delJob(id){if(!confirm('この案件を削除しますか？'))return;db.jobs=db.jobs.filter(j=>j.id!==id);render();}
+
+function openInstr(id){
+  instrJobId=id;const j=gj(id),p=gp(j.partnerId);
+  document.getElementById('instr-to').innerHTML=`🏢 送信先: <strong>${p?esc(p.name):'—'}\u003C/strong> · ${esc(j.name)}`;
+  document.getElementById('instr-text').value=j.instruction||'';openOv('ov-instr');
+}
+function saveInstr(){gj(instrJobId).instruction=document.getElementById('instr-text').value.trim();closeOv('ov-instr');render();}
+
+function savePA(){
+  const name=document.getElementById('pa-name').value.trim(),contact=document.getElementById('pa-contact').value.trim();
+  const uid=document.getElementById('pa-id').value.trim(),pass=document.getElementById('pa-pass').value.trim();
+  if(!name||!uid||!pass){alert('外注先名・ID・パスワードは必須です');return;}
+  if(uid==='admin'){alert('"admin"は使用できません');return;}
+  if(db.partners.find(p=>p.uid===uid)){alert('このIDはすでに使用されています');return;}
+  db.partners.push({id:db.nextPartnerId++,name,contact,uid,pass,color:COLORS[db.partners.length%COLORS.length]});
+  closeOv('ov-pa');render();
+}
+function openEditP(id){
+  editPartnerId=id;const p=gp(id);
+  document.getElementById('pe-name').value=p.name;
+  document.getElementById('pe-contact').value=p.contact||'';
+  document.getElementById('pe-id').value=p.uid;
+  document.getElementById('pe-pass').value='';
+  openOv('ov-pe');
+}
+function savePE(){
+  const name=document.getElementById('pe-name').value.trim(),contact=document.getElementById('pe-contact').value.trim();
+  const uid=document.getElementById('pe-id').value.trim(),pass=document.getElementById('pe-pass').value.trim();
+  if(!name||!uid){alert('名前とIDは必須です');return;}
+  if(uid==='admin'){alert('"admin"は使用できません');return;}
+  if(db.partners.find(p=>p.uid===uid&&p.id!==editPartnerId)){alert('このIDはすでに使用されています');return;}
+  const p=gp(editPartnerId);p.name=name;p.contact=contact;p.uid=uid;if(pass)p.pass=pass;
+  closeOv('ov-pe');render();
+}
+function delP(id){if(!confirm('この外注先を削除しますか？'))return;db.partners=db.partners.filter(p=>p.id!==id);render();}
+
+function openReport(id){
+  reportJobId=id;const j=gj(id);
+  document.getElementById('rep-job-nm').innerHTML=`👕 <strong>${esc(j.name)}\u003C/strong> · 依頼: ${j.total.toLocaleString()} 枚`;
+  document.getElementById('rep-done').value=j.done;document.getElementById('rep-done').max=j.total;
+  document.getElementById('rep-note').value='';openOv('ov-report');
+}
+function saveReport(){
+  const j=gj(reportJobId);j.done=Math.min(parseInt(document.getElementById('rep-done').value)||0,j.total);
+  j.reports.push({date:today(),count:j.done,note:document.getElementById('rep-note').value.trim(),type:'progress'});closeOv('ov-report');render();
+}
+function openChecked(id){
+  checkedJobId=id;const j=gj(id);
+  document.getElementById('chk-job-nm').innerHTML=`👕 <strong>${esc(j.name)}\u003C/strong> · 依頼: ${j.total.toLocaleString()} 枚`;
+  document.getElementById('chk-done').value=j.total;document.getElementById('chk-note').value='';openOv('ov-checked');
+}
+function submitChecked(){
+  const j=gj(checkedJobId);j.done=Math.min(parseInt(document.getElementById('chk-done').value)||0,j.total);
+  j.status='検品済確認中';j.checkedAt=today();j.reports.push({date:today(),count:j.done,note:document.getElementById('chk-note').value.trim()||'全て検品済として報告',type:'checked'});closeOv('ov-checked');render();
+}
+function openConfirm(id){
+  confirmJobId=id;const j=gj(id),p=gp(j.partnerId),lr=j.reports.filter(r=>r.type==='checked').slice(-1)[0];
+  document.getElementById('confirm-info').innerHTML=`<div style="font-weight:700;font-size:15px;margin-bottom:4px">${esc(j.name)}\u003C/div>
+    <div style="font-size:13px;color:var(--txm)">${j.type}${j.maker?' · '+esc(j.maker):''}\u003C/div>
+    ${p?`<div style="font-size:13px;color:var(--txm)">外注先: ${esc(p.name)}\u003C/div>`:''}
+    ${lr?`<div style="font-size:13px;margin-top:4px">報告枚数: <strong style="color:var(--g)">${lr.count.toLocaleString()} 枚\u003C/strong>\u003C/div>`:''}`;
+  document.getElementById('confirm-note').value='';openOv('ov-confirm');
+}
+function finalComplete(){
+  const j=gj(confirmJobId);j.status='完了';j.completedAt=today();
+  j.reports.push({date:today(),count:j.done,note:document.getElementById('confirm-note').value.trim()||'管理者最終確認OK',type:'final'});closeOv('ov-confirm');render();
+}
+
+function openBReport(){
+  brPendingImages=[];
+  const myJobs=db.jobs.filter(j=>j.partnerId===session.partnerId&&j.status==='進行中');
+  if(!myJobs.length){alert('進行中の案件がありません');return;}
+  document.getElementById('br-job').innerHTML=myJobs.map(j=>`<option value="${j.id}">${esc(j.name)}\u003C/option>`).join('');
+  document.querySelectorAll('#br-cats input[type=checkbox]').forEach(cb=>cb.checked=false);
+  document.getElementById('br-desc').value='';document.getElementById('br-size').value='';
+  renderBRPrev();openOv('ov-breport');
+}
+function submitBReport(){
+  const jobId=parseInt(document.getElementById('br-job').value);
+  const cats=[...document.querySelectorAll('#br-cats input:checked')].map(cb=>cb.value);
+  const desc=document.getElementById('br-desc').value.trim();
+  const size=document.getElementById('br-size').value.trim();
+  if(!cats.length){alert('カテゴリを1つ以上選択してください');return;}
+  if(!desc){alert('詳細説明を入力してください');return;}
+  if(!brPendingImages.length){alert('写真を1枚以上追加してください');return;}
+  db.breports.push({id:db.nextBRId++,jobId,partnerId:session.partnerId,date:today(),cats,desc,size,images:[...brPendingImages],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''});
+  closeOv('ov-breport');render();
+}
+function openJudge(id){
+  judgeRId=id;const r=gbr(id),j=gj(r.jobId),p=gp(r.partnerId);
+  const imgs=r.images.length?`<div class="img-grid c3" style="margin-bottom:1rem">${r.images.map((s,i)=>`<div class="img-thumb"><img src="${s}" onclick="openBRImg(${r.id},${i})"/>\u003C/div>`).join('')}\u003C/div>`:'';
+  document.getElementById('judge-content').innerHTML=`
+    <div style="margin-bottom:.85rem">
+      <div style="font-size:12px;color:var(--txm);margin-bottom:4px">${p?esc(p.name):'—'} · ${j?esc(j.name):'—'}${r.size?' · サイズ: '+esc(r.size):''} · ${r.date}\u003C/div>
+      <div style="margin-bottom:6px">${(r.cats||[]).map(catBadge).join('')}\u003C/div>
+      <div class="card" style="font-size:13px;margin-bottom:8px">${esc(r.desc)}\u003C/div>
+    \u003C/div>${imgs}`;
+  document.getElementById('judge-comment').value='';document.getElementById('judge-faq').value='no';openOv('ov-judge');
+}
+function doJudge(verdict){
+  const r=gbr(judgeRId);
+  const comment=document.getElementById('judge-comment').value.trim();
+  const faqPub=document.getElementById('judge-faq').value==='yes';
+  r.status=verdict;r.judgeComment=comment;r.faqPublic=faqPub;r.judgedAt=today();
+  if(faqPub&&verdict==='B品'){
+    db.faqs.push({id:db.nextFaqId++,cats:r.cats||[],question:r.desc.slice(0,60)+(r.desc.length>60?'…':''),
+      answer:comment||'B品として仕分けてください。',images:r.images,createdAt:today(),sourceReportId:r.id});
+  }
+  closeOv('ov-judge');render();
+}
+function delFAQ(id){if(!confirm('このFAQを削除しますか？'))return;db.faqs=db.faqs.filter(f=>f.id!==id);render();}
+
+document.querySelectorAll('.overlay').forEach(ov=>{ov.addEventListener('click',e=>{if(e.target===ov)ov.classList.remove('open');});});
+render();
+</script>
+</body>
+</html>

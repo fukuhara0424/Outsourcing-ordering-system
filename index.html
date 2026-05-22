@@ -106,8 +106,6 @@ tr:hover td{background:#fafaf8}
 .login-box{width:100%;max-width:360px}
 .login-hd{text-align:center;margin-bottom:1.8rem}
 .login-ic{width:54px;height:54px;background:var(--g);border-radius:15px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 6px 20px rgba(26,158,114,.3)}
-.demo-hint{background:var(--gyl);border:1px solid var(--bd);border-radius:var(--rr);padding:10px 14px;margin-top:1.1rem;font-size:12px;color:var(--txm);line-height:1.9}
-.demo-hint code{font-family:var(--mo);background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--tx)}
 /* overlay */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;align-items:flex-start;justify-content:center;padding:40px 14px;overflow-y:auto}
 .overlay.open{display:flex}
@@ -421,41 +419,10 @@ const db={
     {id:2,name:'ひまわりワークス',contact:'佐藤 健太',uid:'himawari',pass:'himawari',color:'#2F7ED8'},
     {id:3,name:'なごみ就労支援',contact:'山田 花',uid:'nagomi',pass:'nagomi',color:'#D85A30'},
   ],
-  jobs:[
-    {id:1,name:'春夏コレクション検品',partnerId:1,date:'2026-05-01',dueDate:'2026-05-28',
-     maker:'Hanes',sku:'5010-01',
-     sizes:[{name:'S',count:80},{name:'M',count:100},{name:'L',count:80},{name:'XL',count:40}],
-     total:300,done:180,type:'検品・たたみ',detail:'ボタン確認・縫い目チェック',
-     status:'進行中',checkedAt:'',completedAt:'',instruction:'丁寧に1枚ずつ確認してください',images:[],reports:[]},
-    {id:2,name:'アウトレット品整理',partnerId:2,date:'2026-05-10',dueDate:'2026-05-16',
-     maker:'Gildan',sku:'G200',sizes:[{name:'S',count:50},{name:'M',count:60},{name:'L',count:40}],
-     total:150,done:150,type:'検品のみ',detail:'汚れ・傷チェック',
-     status:'完了',checkedAt:'2026-05-14',completedAt:'2026-05-15',instruction:'',images:[],reports:[]},
-    {id:3,name:'新作Tシャツたたみ',partnerId:3,date:'2026-05-15',dueDate:'2026-05-25',
-     maker:'United Athle',sku:'5001-01',
-     sizes:[{name:'XS',count:20},{name:'S',count:40},{name:'M',count:80},{name:'L',count:60}],
-     total:200,done:60,type:'たたみのみ',detail:'サイズ別・色別に仕分け',
-     status:'検品済確認中',checkedAt:'2026-05-20',completedAt:'',
-     instruction:'Sサイズから順に処理してください',images:[],
-     reports:[{date:'2026-05-20',count:200,note:'全て完了しました',type:'checked'}]},
-  ],
-  breports:[
-    {id:101,jobId:1,partnerId:1,date:'2026-05-18',cats:['プリント'],
-     desc:'袖のロゴプリントがにじんでいる。全体的にインクが広がっている。',
-     size:'M',images:[],status:'B品',judgeComment:'プリント工程の不良。B品として仕分け。',faqPublic:true,judgedAt:'2026-05-18'},
-    {id:102,jobId:1,partnerId:1,date:'2026-05-19',cats:['縫製'],
-     desc:'脇の縫い目がほつれている。約3cm程度。',
-     size:'L',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''},
-    {id:103,jobId:3,partnerId:3,date:'2026-05-20',cats:['汚れ・染み','その他'],
-     desc:'首元に茶色い染みあり。取れなさそう。',
-     size:'S',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''},
-  ],
-  faqs:[
-    {id:201,cats:['プリント'],question:'袖のプリントがにじんでいる',
-     answer:'プリント工程の不良品です。B品として赤タグをつけて分けてください。軽微なにじみ（1mm以内）は良品扱い。',
-     images:[],createdAt:'2026-05-18',sourceReportId:101},
-  ],
-  nextJobId:10,nextPartnerId:10,nextBRId:200,nextFaqId:300,
+  jobs:[],
+  breports:[],
+  faqs:[],
+  nextJobId:1,nextPartnerId:10,nextBRId:1,nextFaqId:1,
 };
 
 // ──────────────────────────────
@@ -601,12 +568,6 @@ function renderLogin(){
       \u003C/div>
       <div id="l-err" style="font-size:12px;color:var(--rt);margin-bottom:8px;display:none">${ic('alert')} IDまたはパスワードが正しくありません\u003C/div>
       <button class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;padding:10px;font-size:14px">${ic('login')} サインイン\u003C/button>
-    \u003C/div>
-    <div class="demo-hint"><strong style="color:var(--tx)">デモ用ログイン情報\u003C/strong><br>
-      管理者 ID: <code>admin\u003C/code> / PW: <code>admin\u003C/code><br>
-      外注先A ID: <code>aozora\u003C/code> / PW: <code>aozora\u003C/code><br>
-      外注先B ID: <code>himawari\u003C/code> / PW: <code>himawari\u003C/code><br>
-      外注先C ID: <code>nagomi\u003C/code> / PW: <code>nagomi\u003C/code>
     \u003C/div>
   \u003C/div>\u003C/div>`;
 }

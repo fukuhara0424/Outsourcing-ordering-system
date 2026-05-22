@@ -65,8 +65,12 @@ create table public.b_reports (
   cats text[] not null default '{}',
   description text not null,
   size text,
+  qty integer not null default 1 check (qty >= 0),
   images jsonb not null default '[]'::jsonb,
   status text not null default 'pending' check (status in ('pending', 'B品', '良品')),
+  action_status text not null default '処理未'
+    check (action_status in ('処理未', '再検品依頼', '処理済', '完了')),
+  action_note text,
   judge_comment text,
   faq_public boolean not null default false,
   judged_at date,
@@ -198,4 +202,3 @@ with check (bucket_id = 'inspection-images' and auth.uid() is not null);
 create policy "inspection images admin delete"
 on storage.objects for delete
 using (bucket_id = 'inspection-images' and public.is_admin());
-

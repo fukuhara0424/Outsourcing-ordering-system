@@ -509,8 +509,7 @@ function renderLogin(app){
   var errDiv=document.createElement('div');errDiv.id='l-err';errDiv.style.cssText='font-size:12px;color:var(--rt);margin-bottom:8px;display:none';errDiv.textContent='⚠ IDまたはパスワードが正しくありません';
   var btn=document.createElement('button');btn.className='btn btn-primary';btn.style.cssText='width:100%;justify-content:center;padding:10px;font-size:14px';btn.textContent='→ サインイン';btn.id='login-btn';
   card.appendChild(fg1);card.appendChild(fg2);card.appendChild(errDiv);card.appendChild(btn);
-  var hint=document.createElement('div');hint.className='demo-hint';
-  hint.innerHTML='<strong style="color:var(--tx)">デモ用ログイン情報</strong><br>管理者 ID: <code>admin</code> / PW: <code>admin</code><br>外注先A ID: <code>aozora</code> / PW: <code>aozora</code><br>外注先B ID: <code>himawari</code> / PW: <code>himawari</code><br>外注先C ID: <code>nagomi</code> / PW: <code>nagomi</code>';
+  var hint=document.createElement('div');hint.style.display='none';
   box.appendChild(hd);box.appendChild(card);box.appendChild(hint);
   wrap.appendChild(box);app.appendChild(wrap);
   function go(){
@@ -1069,6 +1068,77 @@ function doJudge(verdict){
   closeOv('ov-judge');saveDB();render();
 }
 function delFAQ(id){if(!confirm('このFAQを削除しますか？'))return;db.faqs=db.faqs.filter(function(f){return f.id!==id;});saveDB();render();}
+
+function downloadAllData(){
+  var now=new Date();
+  var pad=function(n){return n<10?'0'+n:String(n);};
+  var ts=now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'_'+pad(now.getHours())+pad(now.getMinutes());
+
+  /* --- CSV helper --- */
+  function toCSV(headers, rows){
+    var lines=[headers.map(function(h){return '"'+String(h).replace(/"/g,'""')+'"';}).join(',')];
+    rows.forEach(function(row){
+      lines.push(row.map(function(v){
+        var s=v===null||v===undefined?'':String(v);
+        return '"'+s.replace(/"/g,'""')+'"';
+      }).join(','));
+    });
+    return '\uFEFF'+lines.join('\r\n'); /* BOM for Excel */
+  }
+
+  /* --- Sheet 1: 案件一覧 --- */
+  var jobHeaders=['案件ID','案件名','外注先','外注先ID','依頼日','納期','作業内容','メーカー','品番',
+    'サイズ別枚数','依頼枚数','完了枚数','完了率(%)','状態','指示','検品詳細','完了日'];
+  var jobRows=db.jobs.map(function(j){
+    var p=gp(j.partnerId);
+    var szStr=j.sizes?j.sizes.filter(function(r){return r.count>0;}).map(function(r){return r.name+':'+r.count;}).join(' / '):'';
+    var pc=j.total?Math.round(j.done/j.total*100):0;
+    return [j.id,j.name,p?p.name:'',p?p.uid:'',j.date,j.dueDate||'',j.type,j.maker||'',j.sku||'',
+      szStr,j.total,j.done,pc,j.status,j.instruction||'',j.detail||'',j.completedAt||''];
+  });
+  downloadCSV(toCSV(jobHeaders,jobRows),'案件一覧_'+ts+'.csv');
+
+  /* --- Sheet 2: 外注先一覧 (PW除く) --- */
+  setTimeout(function(){
+    var pHeaders=['外注先ID','外注先名','担当者名','ログインID','進行中案件数','累計完了枚数'];
+    var pRows=db.partners.map(function(p){
+      var pj=db.jobs.filter(function(j){return j.partnerId===p.id;});
+      var active=pj.filter(function(j){return j.status!=='完了';}).length;
+      var total=0;pj.forEach(function(j){total+=j.done;});
+      return [p.id,p.name,p.contact||'',p.uid,active,total];
+    });
+    downloadCSV(toCSV(pHeaders,pRows),'外注先一覧_'+ts+'.csv');
+  },300);
+
+  /* --- Sheet 3: B品レポート --- */
+  setTimeout(function(){
+    var brHeaders=['報告ID','案件名','外注先','報告日','カテゴリ','詳細説明','サイズ','判定結果','判定コメント','FAQ掲載','判定日'];
+    var brRows=db.breports.map(function(r){
+      var j=gj(r.jobId);var p=gp(r.partnerId);
+      return [r.id,j?j.name:'',p?p.name:'',r.date,(r.cats||[]).join(' / '),r.desc,r.size||'',
+        r.status==='pending'?'判定待ち':r.status,r.judgeComment||'',r.faqPublic?'はい':'いいえ',r.judgedAt||''];
+    });
+    downloadCSV(toCSV(brHeaders,brRows),'B品レポート_'+ts+'.csv');
+  },600);
+
+  /* --- Sheet 4: FAQ一覧 --- */
+  setTimeout(function(){
+    var faqHeaders=['FAQ_ID','カテゴリ','質問','回答','登録日','元報告ID'];
+    var faqRows=db.faqs.map(function(f){
+      return [f.id,(f.cats||[]).join(' / '),f.question,f.answer,f.createdAt,f.sourceReportId||''];
+    });
+    downloadCSV(toCSV(faqHeaders,faqRows),'FAQ一覧_'+ts+'.csv');
+  },900);
+}
+
+function downloadCSV(csvStr,filename){
+  var blob=new Blob([csvStr],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download=filename;a.style.display='none';
+  document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},1000);
+}
 
 document.querySelectorAll('.overlay').forEach(function(ov){
   ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open');});

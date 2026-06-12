@@ -256,35 +256,24 @@ window.onerror=function(msg,src,line,col,err){
 
 var COLORS=['#1A9E72','#2F7ED8','#D85A30','#D4537E','#B07212','#639922'];
 var CAT_CSS={'プリント':'cp','縫製':'cs','デザイン':'cd','汚れ・染み':'cst','サイズ・形状':'csz','その他':'co'};
-var SK='insp_v6';var DK='insp_db_v6';
+var SK='insp_v6';var DK='insp_db_v6';var CK='insp_clean_upload_20260612';
 var COMPANY='プリントショップエレメンツ';
 
 var db={
-  partners:[
-    {id:1,name:'あおぞら就労支援',contact:'田中 裕子',uid:'aozora',pass:'aozora',color:'#1A9E72',rateNoPack:20,ratePack:35},
-    {id:2,name:'ひまわりワークス',contact:'佐藤 健太',uid:'himawari',pass:'himawari',color:'#2F7ED8',rateNoPack:22,ratePack:38},
-    {id:3,name:'なごみ就労支援',contact:'山田 花',uid:'nagomi',pass:'nagomi',color:'#D85A30',rateNoPack:21,ratePack:36}
-  ],
-  jobs:[
-    {id:1,name:'春夏コレクション検品',partnerId:1,date:'2026-05-01',dueDate:'2026-05-28',maker:'Hanes',sku:'5010-01',sizes:[{name:'S',count:80},{name:'M',count:100},{name:'L',count:80},{name:'XL',count:40}],total:300,done:180,type:'検品・たたみ',pack:false,detail:'ボタン確認・縫い目チェック',status:'進行中',checkedAt:'',completedAt:'',instruction:'丁寧に1枚ずつ確認してください',images:[],reports:[]},
-    {id:2,name:'アウトレット品整理',partnerId:2,date:'2026-05-10',dueDate:'2026-05-16',maker:'Gildan',sku:'G200',sizes:[{name:'S',count:50},{name:'M',count:60},{name:'L',count:40}],total:150,done:150,type:'検品のみ',pack:true,detail:'汚れ・傷チェック',status:'完了',checkedAt:'2026-05-14',completedAt:'2026-05-15',instruction:'',images:[],reports:[]},
-    {id:3,name:'新作Tシャツたたみ',partnerId:3,date:'2026-05-15',dueDate:'2026-05-25',maker:'United Athle',sku:'5001-01',sizes:[{name:'XS',count:20},{name:'S',count:40},{name:'M',count:80},{name:'L',count:60}],total:200,done:60,type:'たたみのみ',pack:false,detail:'サイズ別・色別に仕分け',status:'検品済確認中',checkedAt:'2026-05-20',completedAt:'',instruction:'Sサイズから順に処理してください',images:[],reports:[{date:'2026-05-20',count:200,note:'全て完了しました',type:'checked'}]}
-  ],
-  breports:[
-    {id:101,jobId:1,partnerId:1,date:'2026-05-18',cats:['プリント'],desc:'袖のロゴプリントがにじんでいる。全体的にインクが広がっている。',size:'M',images:[],status:'B品',judgeComment:'プリント工程の不良。B品として仕分け。',faqPublic:true,judgedAt:'2026-05-18'},
-    {id:102,jobId:1,partnerId:1,date:'2026-05-19',cats:['縫製'],desc:'脇の縫い目がほつれている。約3cm程度。',size:'L',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''},
-    {id:103,jobId:3,partnerId:3,date:'2026-05-20',cats:['汚れ・染み'],desc:'首元に茶色い染みあり。',size:'S',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''}
-  ],
-  faqs:[{id:201,cats:['プリント'],question:'袖のプリントがにじんでいる',answer:'プリント工程の不良品です。B品として赤タグをつけて分けてください。軽微なにじみ（1mm以内）は良品扱い。',images:[],createdAt:'2026-05-18',sourceReportId:101}],
-  nextJobId:10,nextPartnerId:10,nextBRId:200,nextFaqId:300
+  partners:[],
+  jobs:[],
+  breports:[],
+  faqs:[],
+  nextJobId:1,nextPartnerId:1,nextBRId:1,nextFaqId:1
 };
 
 function svsn(s){try{localStorage.setItem(SK,JSON.stringify({d:s,t:Date.now()}));}catch(e){}}
 function ldsn(){try{var r=localStorage.getItem(SK);if(!r)return null;var o=JSON.parse(r);if(Date.now()-o.t>86400000){localStorage.removeItem(SK);return null;}return o.d;}catch(e){return null;}}
 function clsn(){try{localStorage.removeItem(SK);}catch(e){}}
 function svdb(){try{localStorage.setItem(DK,JSON.stringify(db));}catch(e){}}
-function lddb(){try{var r=localStorage.getItem(DK);if(!r)return;var d=JSON.parse(r);if(d&&d.partners&&Array.isArray(d.partners)&&d.partners.length>0){db.partners=d.partners;db.jobs=d.jobs||db.jobs;db.breports=d.breports||db.breports;db.faqs=d.faqs||db.faqs;db.nextJobId=d.nextJobId||db.nextJobId;db.nextPartnerId=d.nextPartnerId||db.nextPartnerId;db.nextBRId=d.nextBRId||db.nextBRId;db.nextFaqId=d.nextFaqId||db.nextFaqId;}}catch(e){}}
+function lddb(){try{var r=localStorage.getItem(DK);if(!r)return;var d=JSON.parse(r);if(d&&Array.isArray(d.partners)){db.partners=d.partners;db.jobs=Array.isArray(d.jobs)?d.jobs:[];db.breports=Array.isArray(d.breports)?d.breports:[];db.faqs=Array.isArray(d.faqs)?d.faqs:[];db.nextJobId=d.nextJobId||1;db.nextPartnerId=d.nextPartnerId||1;db.nextBRId=d.nextBRId||1;db.nextFaqId=d.nextFaqId||1;}}catch(e){}}
 
+try{if(!localStorage.getItem(CK)){localStorage.removeItem(DK);localStorage.setItem(CK,'1');}}catch(e){}
 lddb();
 function normalizeDB(){
   db.partners.forEach(function(p){if(p.rateNoPack===undefined)p.rateNoPack=20;if(p.ratePack===undefined)p.ratePack=35;});
@@ -508,7 +497,9 @@ function renderAdmin(app){
   var sbf=mkEl('div',{style:'margin-top:auto;padding:8px 10px'});
   var dlBtn=mkEl('button',{className:'btn btn-sm',style:'width:100%;justify-content:center;margin-bottom:6px;font-size:12px;background:var(--gl);color:var(--gt);border-color:var(--g)',textContent:'📥 データをダウンロード'});
   dlBtn.onclick=downloadAll;
-  sbf.appendChild(dlBtn);sbf.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:'検品、たたみ管理 v5.0'}));
+  var clearBtn=mkEl('button',{className:'btn btn-sm btn-del',style:'width:100%;justify-content:center;margin-bottom:6px;font-size:12px',textContent:'🧹 全データ削除'});
+  clearBtn.onclick=clearAllData;
+  sbf.appendChild(dlBtn);sbf.appendChild(clearBtn);sbf.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:'検品、たたみ管理 v5.0'}));
   sb.appendChild(sbf);
   var mn=mkEl('div',{className:'mn fi'});mn.id='mn';
   outer.appendChild(sb);outer.appendChild(mn);app.appendChild(outer);
@@ -986,6 +977,17 @@ function doJudge(verdict){
   cv('ov-jg');svdb();render();
 }
 function delFAQ(id){if(!confirm('このFAQを削除しますか？'))return;db.faqs=db.faqs.filter(function(f){return f.id!==id;});svdb();render();}
+function clearAllData(){
+  if(session.role!=='admin')return;
+  if(!confirm('全ての外注先・案件・履歴・B品報告・FAQ・単価設定を削除します。元に戻せません。実行しますか？'))return;
+  var word=prompt('確認のため「削除」と入力してください。');
+  if(word!=='削除'){alert('削除をキャンセルしました。');return;}
+  db.partners=[];db.jobs=[];db.breports=[];db.faqs=[];
+  db.nextJobId=1;db.nextPartnerId=1;db.nextBRId=1;db.nextFaqId=1;
+  try{localStorage.setItem(DK,JSON.stringify(db));}catch(e){}
+  alert('全データを削除しました。');
+  curTab='jobs';render();
+}
 function downloadAll(){
   var now=new Date();var pad=function(n){return n<10?'0'+n:String(n);};
   var ts=now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'_'+pad(now.getHours())+pad(now.getMinutes());

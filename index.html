@@ -3,27 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>検品・たたみ 外注管理</title>
+<title>検品、たたみ管理</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --g:#1A9E72;--gd:#0e6e50;--gl:#E0F5EE;--gt:#07503E;
-  --b:#2F7ED8;--bl:#E4F0FB;--bt:#0A3E7A;
-  --a:#B07212;--al:#FAF0DC;--at:#5E3B06;
-  --p:#6E55A0;--pl:#EDE8F8;--pt:#3E2E60;
-  --r:#D64040;--rl:#FCEAEA;--rt:#721818;
-  --gyl:#F0EDE6;--gyt:#3E3D3A;
-  --bg:#F5F4F0;--sf:#FFF;
-  --bd:rgba(0,0,0,.09);--bd2:rgba(0,0,0,.16);
-  --tx:#19190F;--txm:#62605B;--txh:#999790;
-  --rr:10px;--rl2:14px;
-  --fn:'Noto Sans JP',sans-serif;--mo:'DM Mono',monospace;
-  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);
-  --sh2:0 8px 28px rgba(0,0,0,.12);
-  --sbw:215px;--tph:56px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+:root{--g:#1A9E72;--gd:#0e6e50;--gl:#E0F5EE;--gt:#07503E;--b:#2F7ED8;--bl:#E4F0FB;--bt:#0A3E7A;--a:#B07212;--al:#FAF0DC;--at:#5E3B06;--p:#6E55A0;--pl:#EDE8F8;--pt:#3E2E60;--r:#D64040;--rl:#FCEAEA;--rt:#721818;--gyl:#F0EDE6;--bg:#F5F4F0;--sf:#FFF;--bd:rgba(0,0,0,.09);--bd2:rgba(0,0,0,.16);--tx:#19190F;--txm:#62605B;--txh:#999790;--rr:10px;--rl2:14px;--fn:'Noto Sans JP',sans-serif;--mo:'DM Mono',monospace;--sh:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);--sh2:0 8px 28px rgba(0,0,0,.12);--sbw:215px;--tph:64px}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
 body{font-family:var(--fn);background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
 button{font-family:var(--fn);cursor:pointer;border:none;background:none}
 input,select,textarea{font-family:var(--fn);font-size:13px;color:var(--tx);background:var(--sf);border:1px solid var(--bd2);border-radius:var(--rr);padding:8px 11px;width:100%;transition:border-color .15s,box-shadow .15s;outline:none;-webkit-appearance:none;appearance:none}
@@ -32,256 +16,202 @@ textarea{resize:vertical}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M7 10l5 5 5-5z'/%3E%3C%2Fsvg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;font-size:13px;border-radius:var(--rr);border:1px solid var(--bd2);background:var(--sf);color:var(--tx);font-weight:500;transition:all .15s;white-space:nowrap;flex-shrink:0;cursor:pointer}
 .btn:hover{background:var(--bg)}.btn:active{transform:scale(.97)}
-.btn-primary{background:var(--g);color:#fff;border-color:var(--g)}.btn-primary:hover{background:var(--gd)}
-.btn-purple{background:var(--p);color:#fff;border-color:var(--p)}.btn-purple:hover{background:#5c4488}
-.btn-red{background:var(--r);color:#fff;border-color:var(--r)}.btn-red:hover{background:#b03030}
-.btn-danger{background:var(--rl);color:var(--rt);border-color:rgba(214,64,64,.25)}.btn-danger:hover{background:#f5c2c2}
+.btn-g{background:var(--g);color:#fff;border-color:var(--g)}.btn-g:hover{background:var(--gd)}
+.btn-p{background:var(--p);color:#fff;border-color:var(--p)}.btn-p:hover{background:#5c4488}
+.btn-r{background:var(--r);color:#fff;border-color:var(--r)}.btn-r:hover{background:#b03030}
+.btn-del{background:var(--rl);color:var(--rt);border-color:rgba(214,64,64,.25)}
 .btn-sm{padding:5px 11px;font-size:12px}.btn-xs{padding:3px 8px;font-size:11px}
 .badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
-.bg-blue{background:var(--bl);color:var(--bt)}.bg-green{background:var(--gl);color:var(--gt)}
-.bg-amber{background:var(--al);color:var(--at)}.bg-purple{background:var(--pl);color:var(--pt)}
-.bg-red{background:var(--rl);color:var(--rt)}.bg-gray{background:var(--gyl);color:var(--gyt)}
+.bl{background:var(--bl);color:var(--bt)}.bg{background:var(--gl);color:var(--gt)}.ba{background:var(--al);color:var(--at)}.bp{background:var(--pl);color:var(--pt)}.br{background:var(--rl);color:var(--rt)}
 .card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1.1rem 1.3rem;box-shadow:var(--sh)}
-.stat-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:.9rem 1.1rem;box-shadow:var(--sh)}
-.slbl{font-size:11px;color:var(--txh);margin-bottom:4px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
-.sval{font-size:22px;font-weight:700;line-height:1}
-.ssub{font-size:11px;color:var(--txm);margin-top:2px}
+.sc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:.9rem 1.1rem;box-shadow:var(--sh)}
+.sl{font-size:11px;color:var(--txh);margin-bottom:4px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.sv{font-size:22px;font-weight:700;line-height:1}.ss{font-size:11px;color:var(--txm);margin-top:2px}
 .tw{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);overflow:hidden;box-shadow:var(--sh)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{padding:9px 13px;text-align:left;font-size:10px;font-weight:700;color:var(--txh);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--bd);background:var(--bg)}
 td{padding:10px 13px;border-bottom:1px solid var(--bd);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#fafaf8}
+tr:last-child td{border-bottom:none}tr:hover td{background:#fafaf8}
 .pbar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--bd)}
-.pbar-fill{height:100%;border-radius:3px;transition:width .4s}
-.notice{display:flex;align-items:flex-start;gap:8px;padding:10px 13px;border-left:3px solid;border-radius:0 var(--rr) var(--rr) 0;font-size:13px;line-height:1.5}
-.notice.blue{background:var(--bl);border-color:var(--b);color:var(--bt)}
-.notice.green{background:var(--gl);border-color:var(--g);color:var(--gt)}
-.notice.amber{background:var(--al);border-color:var(--a);color:var(--at)}
-.notice.purple{background:var(--pl);border-color:var(--p);color:var(--pt)}
-.notice.red{background:var(--rl);border-color:var(--r);color:var(--rt)}
-.fg{margin-bottom:.82rem}
-.fg label{display:block;font-size:12px;font-weight:600;color:var(--txm);margin-bottom:4px}
+.pbar-f{height:100%;border-radius:3px;transition:width .4s}
+.nt{display:flex;align-items:flex-start;gap:8px;padding:10px 13px;border-left:3px solid;border-radius:0 var(--rr) var(--rr) 0;font-size:13px}
+.nt-b{background:var(--bl);border-color:var(--b);color:var(--bt)}.nt-g{background:var(--gl);border-color:var(--g);color:var(--gt)}.nt-a{background:var(--al);border-color:var(--a);color:var(--at)}.nt-p{background:var(--pl);border-color:var(--p);color:var(--pt)}.nt-r{background:var(--rl);border-color:var(--r);color:var(--rt)}
+.fg{margin-bottom:.82rem}.fg label{display:block;font-size:12px;font-weight:600;color:var(--txm);margin-bottom:4px}
 .fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .av{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0}
-#app{display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:var(--tph);position:sticky;top:0;z-index:50;box-shadow:var(--sh)}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-ic{width:34px;height:34px;background:var(--g);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.brand-nm{font-size:15px;font-weight:700}
-.topbar-r{display:flex;align-items:center;gap:8px}
-.sidebar{width:var(--sbw);background:var(--sf);border-right:1px solid var(--bd);padding:1rem .7rem;display:flex;flex-direction:column;gap:2px;position:fixed;top:var(--tph);bottom:0;left:0;z-index:40;overflow-y:auto;transition:transform .25s ease}
-.nav-it{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--rr);font-size:13px;font-weight:500;color:var(--txm);cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left}
-.nav-it:hover{background:var(--bg);color:var(--tx)}.nav-it.on{background:var(--gl);color:var(--gt);font-weight:700}
-.nav-badge{margin-left:auto;background:var(--r);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px;min-width:20px;text-align:center}
-.main{margin-left:var(--sbw);padding:1.6rem 1.8rem;flex:1;min-width:0}
-.pg-title{font-size:19px;font-weight:700;margin-bottom:1.3rem}
-.sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;gap:8px;flex-wrap:wrap}
-.sec-title{font-size:14px;font-weight:700}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.3rem}
-.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:39}
-.sb-overlay.on{display:block}
-.menu-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:var(--rr);border:1px solid var(--bd2);background:var(--sf);font-size:18px}
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:1rem}
-.login-box{width:100%;max-width:360px}
-.login-hd{text-align:center;margin-bottom:1.8rem}
-.login-ic{width:54px;height:54px;background:var(--g);border-radius:15px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:28px;box-shadow:0 6px 20px rgba(26,158,114,.3)}
-.demo-hint{background:var(--gyl);border:1px solid var(--bd);border-radius:var(--rr);padding:10px 14px;margin-top:1.1rem;font-size:12px;color:var(--txm);line-height:1.9}
-.demo-hint code{font-family:var(--mo);background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-size:11px;color:var(--tx)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;align-items:flex-start;justify-content:center;padding:40px 14px;overflow-y:auto}
-.overlay.open{display:flex}
-.modal{background:var(--sf);border-radius:var(--rl2);border:1px solid var(--bd);padding:1.5rem;width:100%;max-width:540px;margin-bottom:40px;box-shadow:0 24px 64px rgba(0,0,0,.14)}
-.modal.sm{max-width:430px}
-.modal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;gap:8px}
-.modal-title{font-size:15px;font-weight:700}
-.x-btn{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--txm);cursor:pointer;font-size:18px;line-height:1;border:none;background:none}
-.x-btn:hover{background:var(--bg)}
-.modal-ft{display:flex;justify-content:flex-end;gap:8px;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--bd);flex-wrap:wrap}
-.partner-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:var(--sh);flex-wrap:wrap}
-.job-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1.1rem 1.3rem;margin-bottom:12px;box-shadow:var(--sh);transition:border-color .15s}
-.job-card:hover{border-color:rgba(26,158,114,.4)}
-.size-row-item{display:flex;align-items:center;gap:7px;margin-bottom:6px}
-.size-name-in{max-width:80px;text-align:center;font-family:var(--mo);font-weight:700}
-.size-ct-in{max-width:88px;text-align:center;font-family:var(--mo)}
-.size-total{display:flex;align-items:center;gap:8px;padding-top:8px;border-top:1px dashed var(--bd2);margin-top:2px}
-.size-pill{background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:2px 9px;font-size:11px;font-family:var(--mo);white-space:nowrap}
-.size-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
-.upload-zone{border:2px dashed var(--bd2);border-radius:var(--rl2);padding:1.1rem;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg)}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--g);background:var(--gl)}
-.upload-zone p{font-size:13px;color:var(--txm);margin-top:4px}
-.upload-zone span{font-size:11px;color:var(--txh)}
-.img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}
-.img-grid.c3{grid-template-columns:repeat(3,1fr)}
-.img-thumb{position:relative;border-radius:var(--rr);overflow:hidden;border:1px solid var(--bd);aspect-ratio:1}
-.img-thumb img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block}
-.img-del{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1;border:none}
-.img-del:hover{background:var(--r)}
-.breport-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:10px;box-shadow:var(--sh)}
-.breport-card.pending{border-left:3px solid var(--a)}
-.breport-card.bhin{border-left:3px solid var(--r)}
-.breport-card.ryohin{border-left:3px solid var(--g)}
-.cat-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-right:4px;margin-bottom:4px}
-.cat-print{background:#FFF0F0;color:#8B1A1A}.cat-seams{background:#F0F4FF;color:#1A3A8B}
-.cat-design{background:#F5F0FF;color:#4A1A8B}.cat-stain{background:#FFF8F0;color:#8B4A1A}
-.cat-size{background:#F0FFF4;color:#1A6B3A}.cat-other{background:#F5F5F5;color:#444}
-.faq-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:8px;box-shadow:var(--sh);cursor:pointer}
-.faq-card:hover,.faq-card.open-faq{border-color:var(--g)}
-.faq-q{font-weight:700;font-size:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.faq-a{font-size:13px;color:var(--txm);margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.fi{animation:fadeIn .2s ease both}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.pulse{animation:pulse 2s ease infinite}
-@media(max-width:768px){
-  :root{--sbw:240px;--tph:52px}
-  .sidebar{transform:translateX(-100%);box-shadow:var(--sh2)}
-  .sidebar.open{transform:translateX(0)}
-  .menu-btn{display:flex}
-  .main{margin-left:0;padding:1rem}
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .fg2{grid-template-columns:1fr}
-  .img-grid{grid-template-columns:repeat(3,1fr)}
-  table{font-size:12px}
-  th,td{padding:8px 9px}
-  .partner-card{flex-direction:column;align-items:flex-start}
-  .brand-nm{font-size:14px}
-  .topbar{padding:0 1rem}
-  .modal{padding:1.1rem}
-}
-@media(max-width:480px){
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .sval{font-size:18px}
-  .pg-title{font-size:17px}
-  .img-grid,.img-grid.c3{grid-template-columns:repeat(2,1fr)}
-}
+.topbar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:var(--tph);height:auto;position:sticky;top:0;z-index:50;box-shadow:var(--sh)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.bric{width:34px;height:34px;background:var(--g);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-copy{min-width:0}
+.company-name{font-size:10px;font-weight:700;color:var(--g);letter-spacing:.04em;line-height:1.2;margin-bottom:2px}
+.brnm{font-size:15px;font-weight:700;line-height:1.25;min-width:0;overflow-wrap:break-word}
+.topr{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0;flex-shrink:1}
+.role-badge{font-size:11px;color:var(--txm);background:var(--gyl);padding:4px 10px;border-radius:20px;font-weight:600}
+.partner-pill{display:flex;align-items:center;gap:7px;min-width:0}
+.partner-name{font-size:13px;font-weight:600;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb{width:var(--sbw);background:var(--sf);border-right:1px solid var(--bd);padding:1rem .7rem;display:flex;flex-direction:column;gap:2px;position:fixed;top:var(--tph);bottom:0;left:0;z-index:40;overflow-y:auto;transition:transform .25s ease}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--rr);font-size:13px;font-weight:500;color:var(--txm);cursor:pointer;transition:all .12s;border:none;background:none;width:100%;text-align:left}
+.ni:hover{background:var(--bg);color:var(--tx)}.ni.on{background:var(--gl);color:var(--gt);font-weight:700}
+.nbg{margin-left:auto;background:var(--r);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px}
+.mn{margin-left:var(--sbw);padding:1.6rem 1.8rem;flex:1;min-width:0}
+.pgt{font-size:19px;font-weight:700;margin-bottom:1.3rem}
+.scd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;gap:8px;flex-wrap:wrap}
+.sct{font-size:14px;font-weight:700}
+.sgr{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.3rem}
+.sbo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:39}
+.sbo.on{display:block}
+.mbtn{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:var(--rr);border:1px solid var(--bd2);background:var(--sf);font-size:18px}
+.lw{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:1rem}
+.lb{width:100%;max-width:360px}
+.lhd{text-align:center;margin-bottom:1.8rem}
+.lic{width:54px;height:54px;background:var(--g);border-radius:15px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:28px;box-shadow:0 6px 20px rgba(26,158,114,.3)}
+.login-company{font-size:13px;font-weight:700;color:var(--g);letter-spacing:.04em;margin-bottom:5px}
+.login-footer{text-align:center;font-size:11px;color:var(--txh);margin-top:14px}
+.site-footer{margin-left:var(--sbw);border-top:1px solid var(--bd);padding:14px 1.8rem;color:var(--txh);font-size:11px;background:rgba(255,255,255,.5)}
+.site-footer strong{color:var(--txm);font-size:12px}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:100;align-items:flex-start;justify-content:center;padding:40px 14px;overflow-y:auto}
+.ov.open{display:flex}
+.mo{background:var(--sf);border-radius:var(--rl2);border:1px solid var(--bd);padding:1.5rem;width:100%;max-width:540px;margin-bottom:40px;box-shadow:0 24px 64px rgba(0,0,0,.14)}
+.mo.sm{max-width:430px}
+.mhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;gap:8px}
+.mtt{font-size:15px;font-weight:700}
+.xbt{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--txm);cursor:pointer;font-size:18px;line-height:1;border:none;background:none}
+.xbt:hover{background:var(--bg)}
+.mft{display:flex;justify-content:flex-end;gap:8px;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--bd);flex-wrap:wrap}
+.pc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:var(--sh);flex-wrap:wrap}
+.jc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1.1rem 1.3rem;margin-bottom:12px;box-shadow:var(--sh);transition:border-color .15s}
+.jc:hover{border-color:rgba(26,158,114,.4)}
+.szr{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.sni{max-width:80px;text-align:center;font-family:var(--mo);font-weight:700}
+.sci{max-width:88px;text-align:center;font-family:var(--mo)}
+.stt{display:flex;align-items:center;gap:8px;padding-top:8px;border-top:1px dashed var(--bd2);margin-top:2px}
+.sp{background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:2px 9px;font-size:11px;font-family:var(--mo);white-space:nowrap}
+.sps{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.uz{border:2px dashed var(--bd2);border-radius:var(--rl2);padding:1.1rem;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg)}
+.uz:hover,.uz.drag{border-color:var(--g);background:var(--gl)}
+.ig{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}
+.ig.c3{grid-template-columns:repeat(3,1fr)}
+.it{position:relative;border-radius:var(--rr);overflow:hidden;border:1px solid var(--bd);aspect-ratio:1}
+.it img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block}
+.idl{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1;border:none}
+.brc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:10px;box-shadow:var(--sh)}
+.brc.pnd{border-left:3px solid var(--a)}.brc.bh{border-left:3px solid var(--r)}.brc.ry{border-left:3px solid var(--g)}
+.cb{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-right:4px;margin-bottom:4px}
+.cp{background:#FFF0F0;color:#8B1A1A}.cs{background:#F0F4FF;color:#1A3A8B}.cd{background:#F5F0FF;color:#4A1A8B}.cst{background:#FFF8F0;color:#8B4A1A}.csz{background:#F0FFF4;color:#1A6B3A}.co{background:#F5F5F5;color:#444}
+#br-cats label{position:relative;transition:all .15s}
+#br-cats input[type=checkbox]{appearance:auto;-webkit-appearance:auto;width:16px!important;height:16px;padding:0!important;accent-color:var(--g);flex-shrink:0}
+#br-cats label:has(input:checked){background:var(--gl)!important;border-color:var(--g)!important;color:var(--gt);box-shadow:0 0 0 3px rgba(26,158,114,.14);font-weight:700}
+#br-cats label:has(input:checked)::after{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--g);color:#fff;font-size:12px;font-weight:700}
+.fqc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);padding:1rem 1.2rem;margin-bottom:8px;box-shadow:var(--sh);cursor:pointer}
+.fqc:hover,.fqc.opn{border-color:var(--g)}
+.fqq{font-weight:700;font-size:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.fqa{font-size:13px;color:var(--txm);margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.fi{animation:fi .2s ease both}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.5}}
+.pu{animation:pu 2s ease infinite}
+@media(max-width:768px){:root{--sbw:250px;--tph:68px}.sb{transform:translateX(-100%);box-shadow:var(--sh2)}.sb.open{transform:translateX(0)}.mbtn{display:flex;width:36px;height:36px}.mn{margin-left:0;padding:1rem}.site-footer{margin-left:0;padding:13px 1rem}.sgr{grid-template-columns:1fr 1fr;gap:8px}.sc{padding:.85rem .95rem}.fg2{grid-template-columns:1fr}.ig{grid-template-columns:repeat(3,1fr)}table{font-size:12px}th,td{padding:8px 9px}.pc{flex-direction:column;align-items:flex-start}.brnm{font-size:14px}.company-name{font-size:9px}.topbar{padding:8px 1rem}.topr{gap:6px}.role-badge{display:none}.mo{padding:1.1rem}.resp-cards{background:transparent;border:none;border-radius:0;box-shadow:none;overflow:visible}.resp-cards table,.resp-cards tbody,.resp-cards tr,.resp-cards td{display:block;width:100%}.resp-cards thead{display:none}.resp-cards tr{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl2);box-shadow:var(--sh);margin-bottom:10px;overflow:hidden}.resp-cards tr:hover td{background:transparent}.resp-cards td{border-bottom:1px solid var(--bd);padding:9px 12px;text-align:left!important;white-space:normal!important;word-break:normal;overflow-wrap:anywhere}.resp-cards td:last-child{border-bottom:none}.resp-cards td:not(.mobile-main){display:grid;grid-template-columns:78px minmax(0,1fr);align-items:center;gap:10px}.resp-cards td:not(.mobile-main)::before{content:attr(data-label);font-size:11px;font-weight:700;color:var(--txh)}.resp-cards .mobile-main{padding:12px}.resp-cards .mobile-main::before{content:none}.resp-cards .pbar{min-width:120px}.resp-cards .mobile-actions>div{justify-content:flex-start!important}.scd .btn{width:100%;justify-content:center}.sct{font-size:15px}}
+@media(max-width:480px){:root{--tph:66px}.topbar{padding:7px .75rem;gap:8px}.brand{gap:8px}.bric{width:32px;height:32px;border-radius:8px}.brnm{font-size:13px;max-width:118px}.topr .btn{padding:7px 10px;font-size:12px}.partner-name{display:none}.sgr{grid-template-columns:1fr 1fr}.sv{font-size:20px}.sl{font-size:10px}.pgt{font-size:18px;margin-bottom:1rem}.ig,.ig.c3{grid-template-columns:repeat(2,1fr)}.mn{padding:.85rem}.resp-cards td:not(.mobile-main){grid-template-columns:64px minmax(0,1fr)}}
 </style>
 </head>
 <body>
-<div id="app"></div>
-
-<!-- モーダルHTML群 (JSから分離) -->
-<div id="modals" style="display:none">
-
-<div class="overlay" id="ov-job">
-  <div class="modal">
-    <div class="modal-hd"><div class="modal-title" id="jm-title">案件を割り振る</div><button class="x-btn" onclick="closeOv('ov-job')">×</button></div>
+<div id="app"><p id="loading-msg" style="padding:2rem;color:#666;font-size:16px">読み込み中...</p></div>
+<div id="mod" style="display:none">
+<div class="ov" id="ov-job">
+  <div class="mo">
+    <div class="mhd"><div class="mtt" id="jm-t">案件を割り振る</div><button class="xbt" id="jm-x">×</button></div>
     <div class="fg"><label>案件名 *</label><input id="j-name" placeholder="例：春夏コレクション検品"/></div>
     <div class="fg"><label>外注先 *</label><select id="j-partner"></select></div>
-    <div class="fg2">
-      <div class="fg" style="margin-bottom:0"><label>依頼日 *</label><input type="date" id="j-date"/></div>
-      <div class="fg" style="margin-bottom:0"><label>納期</label><input type="date" id="j-due"/></div>
-    </div>
-    <div class="fg" style="margin-top:.82rem"><label>作業内容</label>
-      <select id="j-type"><option>検品・たたみ</option><option>検品のみ</option><option>たたみのみ</option></select>
-    </div>
-    <div class="fg2" style="margin-top:.82rem">
-      <div class="fg" style="margin-bottom:0"><label>メーカー</label><input id="j-maker" placeholder="例：Hanes"/></div>
-      <div class="fg" style="margin-bottom:0"><label>品番</label><input id="j-sku" placeholder="例：5010-01"/></div>
-    </div>
+    <div class="fg2"><div class="fg" style="margin-bottom:0"><label>依頼日 *</label><input type="date" id="j-date"/></div><div class="fg" style="margin-bottom:0"><label>納期</label><input type="date" id="j-due"/></div></div>
+    <div class="fg" style="margin-top:.82rem"><label>作業内容</label><select id="j-type"><option>検品・たたみ</option><option>検品のみ</option><option>たたみのみ</option></select></div>
+    <div class="fg"><label>袋詰め</label><select id="j-pack"><option value="no">袋詰めなし</option><option value="yes">袋詰めあり</option></select></div>
+    <div class="fg2" style="margin-top:.82rem"><div class="fg" style="margin-bottom:0"><label>メーカー</label><input id="j-maker" placeholder="例：Hanes"/></div><div class="fg" style="margin-bottom:0"><label>品番</label><input id="j-sku" placeholder="例：5010-01"/></div></div>
     <div class="fg" style="margin-top:.82rem">
       <label>サイズ別枚数 <span style="font-size:11px;font-weight:400;color:var(--txh)">（サイズ名は自由入力）</span></label>
-      <div id="size-rows"></div>
-      <button class="btn btn-sm" style="margin-top:6px" onclick="addSizeRow()">＋ サイズを追加</button>
-      <div class="size-total">
-        <span style="font-size:12px;color:var(--txm);font-weight:600">合計：</span>
-        <span id="sz-sum" style="font-size:16px;font-weight:700;font-family:var(--mo);color:var(--g)">0</span>
-        <span style="font-size:12px;color:var(--txm)">枚</span>
-      </div>
+      <div id="sz-rows"></div>
+      <button class="btn btn-sm" id="sz-add">＋ サイズを追加</button>
+      <div class="stt"><span style="font-size:12px;color:var(--txm);font-weight:600">合計：</span><span id="sz-sum" style="font-size:16px;font-weight:700;font-family:var(--mo);color:var(--g)">0</span><span style="font-size:12px;color:var(--txm)">枚</span></div>
     </div>
     <div class="fg"><label>検品詳細・特記事項</label><textarea id="j-detail" rows="2" placeholder="チェック項目など"></textarea></div>
     <div class="fg"><label>外注先への指示</label><textarea id="j-instr" rows="2" placeholder="優先順位・注意点など"></textarea></div>
     <div class="fg">
       <label>デザイン画像</label>
-      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('img-input').click()" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave()">
-        <div style="font-size:28px">🖼</div>
-        <p>クリックまたはドラッグ＆ドロップ</p><span>PNG / JPG / WEBP</span>
-      </div>
-      <input type="file" id="img-input" accept="image/*" multiple style="display:none" onchange="onFileSelect(event)"/>
-      <div class="img-grid" id="img-preview"></div>
+      <div class="uz" id="j-uz"><div style="font-size:28px">🖼</div><p style="font-size:13px;color:var(--txm)">クリックまたはドラッグ＆ドロップ</p><span style="font-size:11px;color:var(--txh)">PNG/JPG/WEBP</span></div>
+      <input type="file" id="j-img" accept="image/*" multiple style="display:none"/>
+      <div class="ig" id="j-prev"></div>
     </div>
-    <div class="modal-ft">
-      <button class="btn" onclick="closeOv('ov-job')">キャンセル</button>
-      <button class="btn btn-primary" onclick="saveJob()">✓ <span id="j-save-lbl">割り振る</span></button>
-    </div>
+    <div class="mft"><button class="btn" id="jm-cancel">キャンセル</button><button class="btn btn-g" id="jm-save">✓ <span id="j-sl">割り振る</span></button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-instr">
-  <div class="modal sm">
-    <div class="modal-hd"><div class="modal-title">💬 指示を送る</div><button class="x-btn" onclick="closeOv('ov-instr')">×</button></div>
-    <div class="notice blue" id="instr-to" style="margin-bottom:1rem"></div>
+<div class="ov" id="ov-instr">
+  <div class="mo sm">
+    <div class="mhd"><div class="mtt">💬 指示を送る</div><button class="xbt" id="instr-x">×</button></div>
+    <div class="nt nt-b" id="instr-to" style="margin-bottom:1rem"></div>
     <div class="fg"><label>指示・メッセージ</label><textarea id="instr-text" rows="4" placeholder="例：Sサイズを優先してください"></textarea></div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-instr')">キャンセル</button><button class="btn btn-primary" onclick="saveInstr()">送信</button></div>
+    <div class="mft"><button class="btn" id="instr-cancel">キャンセル</button><button class="btn btn-g" id="instr-save">送信</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-pa">
-  <div class="modal sm">
-    <div class="modal-hd"><div class="modal-title">外注先を追加</div><button class="x-btn" onclick="closeOv('ov-pa')">×</button></div>
+<div class="ov" id="ov-pa">
+  <div class="mo sm">
+    <div class="mhd"><div class="mtt">外注先を追加</div><button class="xbt" id="pa-x">×</button></div>
     <div class="fg"><label>外注先名 *</label><input id="pa-name" placeholder="例：○○就労支援センター"/></div>
     <div class="fg"><label>担当者名</label><input id="pa-contact" placeholder="担当者名"/></div>
     <div class="fg"><label>ログインID *</label><input id="pa-id" placeholder="例：center01"/></div>
     <div class="fg"><label>パスワード *</label><input id="pa-pass" type="password" placeholder="パスワードを設定"/></div>
-    <div class="notice amber" style="margin-top:.5rem">🔒 IDとパスワードを外注先に共有してください。</div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-pa')">キャンセル</button><button class="btn btn-primary" onclick="savePA()">追加する</button></div>
+    <div class="fg2"><div class="fg" style="margin-bottom:0"><label>単価：袋詰めなし（円/枚）</label><input id="pa-rate-no" type="number" min="0" placeholder="例：20"/></div><div class="fg" style="margin-bottom:0"><label>単価：袋詰めあり（円/枚）</label><input id="pa-rate-yes" type="number" min="0" placeholder="例：35"/></div></div>
+    <div class="nt nt-a">🔒 IDとパスワードを外注先に共有してください。</div>
+    <div class="mft"><button class="btn" id="pa-cancel">キャンセル</button><button class="btn btn-g" id="pa-save">追加する</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-pe">
-  <div class="modal sm">
-    <div class="modal-hd"><div class="modal-title">外注先を編集</div><button class="x-btn" onclick="closeOv('ov-pe')">×</button></div>
+<div class="ov" id="ov-pe">
+  <div class="mo sm">
+    <div class="mhd"><div class="mtt">外注先を編集</div><button class="xbt" id="pe-x">×</button></div>
     <div class="fg"><label>外注先名 *</label><input id="pe-name"/></div>
     <div class="fg"><label>担当者名</label><input id="pe-contact"/></div>
     <div class="fg"><label>ログインID *</label><input id="pe-id"/></div>
-    <div class="fg">
-      <label>パスワード <span style="font-size:11px;font-weight:400;color:var(--txh)">（変更する場合のみ）</span></label>
-      <input id="pe-pass" type="password" placeholder="新しいパスワード（空欄=変更なし）"/>
-    </div>
-    <div class="notice amber" style="margin-top:.5rem">⚠ IDを変更した場合は外注先に再通知してください。</div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-pe')">キャンセル</button><button class="btn btn-primary" onclick="savePE()">更新する</button></div>
+    <div class="fg"><label>パスワード <span style="font-size:11px;font-weight:400;color:var(--txh)">（変更する場合のみ）</span></label><input id="pe-pass" type="password" placeholder="新しいパスワード（空欄=変更なし）"/></div>
+    <div class="fg2"><div class="fg" style="margin-bottom:0"><label>単価：袋詰めなし（円/枚）</label><input id="pe-rate-no" type="number" min="0"/></div><div class="fg" style="margin-bottom:0"><label>単価：袋詰めあり（円/枚）</label><input id="pe-rate-yes" type="number" min="0"/></div></div>
+    <div class="nt nt-a">⚠ IDを変更した場合は外注先に再通知してください。</div>
+    <div class="mft"><button class="btn" id="pe-cancel">キャンセル</button><button class="btn btn-g" id="pe-save">更新する</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-confirm">
-  <div class="modal sm">
-    <div class="modal-hd"><div class="modal-title">最終確認 — 案件を完了にする</div><button class="x-btn" onclick="closeOv('ov-confirm')">×</button></div>
-    <div id="confirm-info" style="margin-bottom:1rem"></div>
-    <div class="notice purple" style="margin-bottom:1rem">🛡 外注先から「全て検品済」の報告が届いています。</div>
-    <div class="fg"><label>最終確認メモ（任意）</label><textarea id="confirm-note" rows="2" placeholder="確認者・内容など"></textarea></div>
-    <div class="notice amber">⚠ 完了にすると案件は履歴に移動します。</div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-confirm')">まだ確認中</button><button class="btn btn-primary" onclick="finalComplete()">✓ 完了にする</button></div>
+<div class="ov" id="ov-confirm">
+  <div class="mo sm">
+    <div class="mhd"><div class="mtt">最終確認 — 案件を完了にする</div><button class="xbt" id="cf-x">×</button></div>
+    <div id="cf-info" style="margin-bottom:1rem"></div>
+    <div class="nt nt-p" style="margin-bottom:1rem">🛡 外注先から「全て検品済」の報告が届いています。</div>
+    <div class="fg"><label>最終確認メモ（任意）</label><textarea id="cf-note" rows="2" placeholder="確認者・内容など"></textarea></div>
+    <div class="nt nt-a">⚠ 完了にすると案件は履歴に移動します。</div>
+    <div class="mft"><button class="btn" id="cf-cancel">まだ確認中</button><button class="btn btn-g" id="cf-save">✓ 完了にする</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-report">
-  <div class="modal sm">
-    <div class="modal-hd"><div class="modal-title">進捗を報告</div><button class="x-btn" onclick="closeOv('ov-report')">×</button></div>
-    <div class="notice green" id="rep-job-nm" style="margin-bottom:1rem"></div>
+<div class="ov" id="ov-rep">
+  <div class="mo sm">
+    <div class="mhd"><div class="mtt">進捗を報告</div><button class="xbt" id="rep-x">×</button></div>
+    <div class="nt nt-g" id="rep-nm" style="margin-bottom:1rem"></div>
     <div class="fg"><label>完了枚数（現時点）</label><input type="number" id="rep-done" min="0"/></div>
     <div class="fg"><label>報告メモ（任意）</label><textarea id="rep-note" rows="2" placeholder="問題点・確認事項など"></textarea></div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-report')">キャンセル</button><button class="btn btn-primary" onclick="saveReport()">報告する</button></div>
+    <div class="mft"><button class="btn" id="rep-cancel">キャンセル</button><button class="btn btn-g" id="rep-save">報告する</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-checked">
-  <div class="modal sm">
-    <div class="modal-hd"><div class="modal-title">全て検品済として報告</div><button class="x-btn" onclick="closeOv('ov-checked')">×</button></div>
-    <div class="notice amber" id="chk-job-nm" style="margin-bottom:1rem"></div>
-    <div class="notice purple" style="margin-bottom:1rem">📋 管理者が最終確認後、案件が完了になります。</div>
+<div class="ov" id="ov-chk">
+  <div class="mo sm">
+    <div class="mhd"><div class="mtt">全て検品済として報告</div><button class="xbt" id="chk-x">×</button></div>
+    <div class="nt nt-a" id="chk-nm" style="margin-bottom:1rem"></div>
+    <div class="nt nt-p" style="margin-bottom:1rem">📋 管理者が最終確認後、案件が完了になります。</div>
     <div class="fg"><label>最終完了枚数</label><input type="number" id="chk-done" min="0"/></div>
     <div class="fg"><label>コメント（任意）</label><textarea id="chk-note" rows="2"></textarea></div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-checked')">キャンセル</button><button class="btn btn-purple" onclick="submitChecked()">☑ 全て検品済として報告する</button></div>
+    <div class="mft"><button class="btn" id="chk-cancel">キャンセル</button><button class="btn btn-p" id="chk-save">☑ 全て検品済として報告する</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-breport">
-  <div class="modal">
-    <div class="modal-hd"><div class="modal-title">⚠ B品疑い報告</div><button class="x-btn" onclick="closeOv('ov-breport')">×</button></div>
-    <div class="notice red" style="margin-bottom:1rem">写真を撮影し、カテゴリと内容を記入して送信してください。</div>
+<div class="ov" id="ov-br">
+  <div class="mo">
+    <div class="mhd"><div class="mtt">⚠ B品疑い報告</div><button class="xbt" id="br-x">×</button></div>
+    <div class="nt nt-r" style="margin-bottom:1rem">写真を撮影し、カテゴリと内容を記入して送信してください。</div>
     <div class="fg"><label>案件</label><select id="br-job"></select></div>
     <div class="fg">
       <label>カテゴリ（複数選択可）</label>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px" id="br-cats">
         <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="プリント" style="width:auto;padding:0"> プリント</label>
         <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="縫製" style="width:auto;padding:0"> 縫製</label>
         <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;background:var(--bg);padding:5px 10px;border-radius:20px;border:1px solid var(--bd2)"><input type="checkbox" value="デザイン" style="width:auto;padding:0"> デザイン</label>
@@ -293,858 +223,797 @@ tr:hover td{background:#fafaf8}
     <div class="fg"><label>詳細説明 *</label><textarea id="br-desc" rows="3" placeholder="例：袖のプリントがにじんでいる"></textarea></div>
     <div class="fg">
       <label>写真（複数可）*</label>
-      <div class="upload-zone" id="br-zone" onclick="document.getElementById('br-img-in').click()" ondragover="onDragOverBR(event)" ondrop="onDropBR(event)" ondragleave="onDragLeaveBR()">
-        <div style="font-size:28px">📷</div>
-        <p>タップして写真を撮影 / 選択</p><span>PNG / JPG / WEBP</span>
-      </div>
-      <input type="file" id="br-img-in" accept="image/*" multiple capture="environment" style="display:none" onchange="onBRFileSelect(event)"/>
-      <div class="img-grid c3" id="br-preview"></div>
+      <div class="uz" id="br-uz"><div style="font-size:28px">📷</div><p style="font-size:13px;color:var(--txm)">タップして写真を撮影 / 選択</p><span style="font-size:11px;color:var(--txh)">PNG/JPG/WEBP</span></div>
+      <input type="file" id="br-img" accept="image/*" multiple capture="environment" style="display:none"/>
+      <div class="ig c3" id="br-prev"></div>
     </div>
     <div class="fg"><label>サイズ（わかれば）</label><input id="br-size" placeholder="例：M"/></div>
-    <div class="modal-ft"><button class="btn" onclick="closeOv('ov-breport')">キャンセル</button><button class="btn btn-red" onclick="submitBReport()">⚠ B品疑いとして送信</button></div>
+    <div class="mft"><button class="btn" id="br-cancel">キャンセル</button><button class="btn btn-r" id="br-save">⚠ B品疑いとして送信</button></div>
   </div>
 </div>
-
-<div class="overlay" id="ov-judge">
-  <div class="modal">
-    <div class="modal-hd"><div class="modal-title">⚖ B品・良品 判定</div><button class="x-btn" onclick="closeOv('ov-judge')">×</button></div>
-    <div id="judge-content"></div>
-    <div class="fg"><label>判定コメント（任意）</label><textarea id="judge-comment" rows="2" placeholder="判定理由・対処方法など"></textarea></div>
-    <div class="fg"><label>FAQに追加</label>
-      <select id="judge-faq"><option value="no">FAQに追加しない</option><option value="yes">FAQに追加する（外注先に公開）</option></select>
-    </div>
-    <div class="modal-ft">
-      <button class="btn" onclick="closeOv('ov-judge')">キャンセル</button>
-      <button class="btn" style="background:var(--gl);color:var(--gt);border-color:var(--g)" onclick="doJudge('良品')">✓ 良品</button>
-      <button class="btn btn-red" onclick="doJudge('B品')">✕ B品</button>
+<div class="ov" id="ov-jg">
+  <div class="mo">
+    <div class="mhd"><div class="mtt">⚖ B品・良品 判定</div><button class="xbt" id="jg-x">×</button></div>
+    <div id="jg-content"></div>
+    <div class="fg"><label>判定コメント（任意）</label><textarea id="jg-comment" rows="2" placeholder="判定理由・対処方法など"></textarea></div>
+    <div class="fg"><label>FAQに追加</label><select id="jg-faq"><option value="no">FAQに追加しない</option><option value="yes">FAQに追加する（外注先に公開）</option></select></div>
+    <div class="mft">
+      <button class="btn" id="jg-cancel">キャンセル</button>
+      <button class="btn" id="jg-good" style="background:var(--gl);color:var(--gt);border-color:var(--g)">✓ 良品</button>
+      <button class="btn btn-r" id="jg-bad">✕ B品</button>
     </div>
   </div>
 </div>
-
-<div class="overlay" id="ov-img" onclick="closeOv('ov-img')" style="align-items:center;justify-content:center;padding:0;background:rgba(0,0,0,.82)">
+<div class="ov" id="ov-lb" style="align-items:center;justify-content:center;padding:0;background:rgba(0,0,0,.82)">
   <img id="lb-img" style="max-width:93vw;max-height:93vh;border-radius:var(--rl2);cursor:zoom-out"/>
 </div>
-
-</div><!-- end #modals -->
-
+</div>
 <script>
+window.onerror=function(msg,src,line,col,err){
+  var ae=document.getElementById('app');ae.textContent='ERROR: '+msg+' (line '+line+')';
+  return true;
+};
+
 var COLORS=['#1A9E72','#2F7ED8','#D85A30','#D4537E','#B07212','#639922'];
-var CAT_CSS={'プリント':'cat-print','縫製':'cat-seams','デザイン':'cat-design','汚れ・染み':'cat-stain','サイズ・形状':'cat-size','その他':'cat-other'};
+var CAT_CSS={'プリント':'cp','縫製':'cs','デザイン':'cd','汚れ・染み':'cst','サイズ・形状':'csz','その他':'co'};
+var SK='insp_v6';var DK='insp_db_v6';
+var COMPANY='プリントショップエレメンツ';
 
 var db={
   partners:[
-    {id:1,name:'あおぞら就労支援',contact:'田中 裕子',uid:'aozora',pass:'aozora',color:'#1A9E72'},
-    {id:2,name:'ひまわりワークス',contact:'佐藤 健太',uid:'himawari',pass:'himawari',color:'#2F7ED8'},
-    {id:3,name:'なごみ就労支援',contact:'山田 花',uid:'nagomi',pass:'nagomi',color:'#D85A30'}
+    {id:1,name:'あおぞら就労支援',contact:'田中 裕子',uid:'aozora',pass:'aozora',color:'#1A9E72',rateNoPack:20,ratePack:35},
+    {id:2,name:'ひまわりワークス',contact:'佐藤 健太',uid:'himawari',pass:'himawari',color:'#2F7ED8',rateNoPack:22,ratePack:38},
+    {id:3,name:'なごみ就労支援',contact:'山田 花',uid:'nagomi',pass:'nagomi',color:'#D85A30',rateNoPack:21,ratePack:36}
   ],
   jobs:[
-    {id:1,name:'春夏コレクション検品',partnerId:1,date:'2026-05-01',dueDate:'2026-05-28',maker:'Hanes',sku:'5010-01',sizes:[{name:'S',count:80},{name:'M',count:100},{name:'L',count:80},{name:'XL',count:40}],total:300,done:180,type:'検品・たたみ',detail:'ボタン確認・縫い目チェック',status:'進行中',checkedAt:'',completedAt:'',instruction:'丁寧に1枚ずつ確認してください',images:[],reports:[]},
-    {id:2,name:'アウトレット品整理',partnerId:2,date:'2026-05-10',dueDate:'2026-05-16',maker:'Gildan',sku:'G200',sizes:[{name:'S',count:50},{name:'M',count:60},{name:'L',count:40}],total:150,done:150,type:'検品のみ',detail:'汚れ・傷チェック',status:'完了',checkedAt:'2026-05-14',completedAt:'2026-05-15',instruction:'',images:[],reports:[]},
-    {id:3,name:'新作Tシャツたたみ',partnerId:3,date:'2026-05-15',dueDate:'2026-05-25',maker:'United Athle',sku:'5001-01',sizes:[{name:'XS',count:20},{name:'S',count:40},{name:'M',count:80},{name:'L',count:60}],total:200,done:60,type:'たたみのみ',detail:'サイズ別・色別に仕分け',status:'検品済確認中',checkedAt:'2026-05-20',completedAt:'',instruction:'Sサイズから順に処理してください',images:[],reports:[{date:'2026-05-20',count:200,note:'全て完了しました',type:'checked'}]}
+    {id:1,name:'春夏コレクション検品',partnerId:1,date:'2026-05-01',dueDate:'2026-05-28',maker:'Hanes',sku:'5010-01',sizes:[{name:'S',count:80},{name:'M',count:100},{name:'L',count:80},{name:'XL',count:40}],total:300,done:180,type:'検品・たたみ',pack:false,detail:'ボタン確認・縫い目チェック',status:'進行中',checkedAt:'',completedAt:'',instruction:'丁寧に1枚ずつ確認してください',images:[],reports:[]},
+    {id:2,name:'アウトレット品整理',partnerId:2,date:'2026-05-10',dueDate:'2026-05-16',maker:'Gildan',sku:'G200',sizes:[{name:'S',count:50},{name:'M',count:60},{name:'L',count:40}],total:150,done:150,type:'検品のみ',pack:true,detail:'汚れ・傷チェック',status:'完了',checkedAt:'2026-05-14',completedAt:'2026-05-15',instruction:'',images:[],reports:[]},
+    {id:3,name:'新作Tシャツたたみ',partnerId:3,date:'2026-05-15',dueDate:'2026-05-25',maker:'United Athle',sku:'5001-01',sizes:[{name:'XS',count:20},{name:'S',count:40},{name:'M',count:80},{name:'L',count:60}],total:200,done:60,type:'たたみのみ',pack:false,detail:'サイズ別・色別に仕分け',status:'検品済確認中',checkedAt:'2026-05-20',completedAt:'',instruction:'Sサイズから順に処理してください',images:[],reports:[{date:'2026-05-20',count:200,note:'全て完了しました',type:'checked'}]}
   ],
   breports:[
     {id:101,jobId:1,partnerId:1,date:'2026-05-18',cats:['プリント'],desc:'袖のロゴプリントがにじんでいる。全体的にインクが広がっている。',size:'M',images:[],status:'B品',judgeComment:'プリント工程の不良。B品として仕分け。',faqPublic:true,judgedAt:'2026-05-18'},
     {id:102,jobId:1,partnerId:1,date:'2026-05-19',cats:['縫製'],desc:'脇の縫い目がほつれている。約3cm程度。',size:'L',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''},
-    {id:103,jobId:3,partnerId:3,date:'2026-05-20',cats:['汚れ・染み'],desc:'首元に茶色い染みあり。取れなさそう。',size:'S',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''}
+    {id:103,jobId:3,partnerId:3,date:'2026-05-20',cats:['汚れ・染み'],desc:'首元に茶色い染みあり。',size:'S',images:[],status:'pending',judgeComment:'',faqPublic:false,judgedAt:''}
   ],
-  faqs:[
-    {id:201,cats:['プリント'],question:'袖のプリントがにじんでいる',answer:'プリント工程の不良品です。B品として赤タグをつけて分けてください。軽微なにじみ（1mm以内）は良品扱い。',images:[],createdAt:'2026-05-18',sourceReportId:101}
-  ],
+  faqs:[{id:201,cats:['プリント'],question:'袖のプリントがにじんでいる',answer:'プリント工程の不良品です。B品として赤タグをつけて分けてください。軽微なにじみ（1mm以内）は良品扱い。',images:[],createdAt:'2026-05-18',sourceReportId:101}],
   nextJobId:10,nextPartnerId:10,nextBRId:200,nextFaqId:300
 };
 
-var SK='insp_v5';
-var DB_KEY='insp_db_v5';
-function saveSession(s){try{localStorage.setItem(SK,JSON.stringify({data:s,ts:Date.now()}));}catch(e){}}
-function loadSession(){try{var r=localStorage.getItem(SK);if(!r)return null;var o=JSON.parse(r);if(Date.now()-o.ts>86400000){localStorage.removeItem(SK);return null;}return o.data;}catch(e){return null;}}
-function clearSession(){try{localStorage.removeItem(SK);}catch(e){}}
-function saveDB(){try{localStorage.setItem(DB_KEY,JSON.stringify(db));}catch(e){}}
-function loadDB(){try{var r=localStorage.getItem(DB_KEY);if(!r)return;var d=JSON.parse(r);if(d&&d.partners&&d.jobs){db.partners=d.partners;db.jobs=d.jobs;db.breports=d.breports||db.breports;db.faqs=d.faqs||db.faqs;db.nextJobId=d.nextJobId||db.nextJobId;db.nextPartnerId=d.nextPartnerId||db.nextPartnerId;db.nextBRId=d.nextBRId||db.nextBRId;db.nextFaqId=d.nextFaqId||db.nextFaqId;}}catch(e){}}
+function svsn(s){try{localStorage.setItem(SK,JSON.stringify({d:s,t:Date.now()}));}catch(e){}}
+function ldsn(){try{var r=localStorage.getItem(SK);if(!r)return null;var o=JSON.parse(r);if(Date.now()-o.t>86400000){localStorage.removeItem(SK);return null;}return o.d;}catch(e){return null;}}
+function clsn(){try{localStorage.removeItem(SK);}catch(e){}}
+function svdb(){try{localStorage.setItem(DK,JSON.stringify(db));}catch(e){}}
+function lddb(){try{var r=localStorage.getItem(DK);if(!r)return;var d=JSON.parse(r);if(d&&d.partners&&Array.isArray(d.partners)&&d.partners.length>0){db.partners=d.partners;db.jobs=d.jobs||db.jobs;db.breports=d.breports||db.breports;db.faqs=d.faqs||db.faqs;db.nextJobId=d.nextJobId||db.nextJobId;db.nextPartnerId=d.nextPartnerId||db.nextPartnerId;db.nextBRId=d.nextBRId||db.nextBRId;db.nextFaqId=d.nextFaqId||db.nextFaqId;}}catch(e){}}
 
-loadDB();
-var session=loadSession();
+lddb();
+function normalizeDB(){
+  db.partners.forEach(function(p){if(p.rateNoPack===undefined)p.rateNoPack=20;if(p.ratePack===undefined)p.ratePack=35;});
+  db.jobs.forEach(function(j){if(j.pack===undefined)j.pack=false;if(!j.completedAt&&j.status==='完了')j.completedAt=j.checkedAt||j.dueDate||j.date;});
+}
+normalizeDB();
+var session=ldsn();
 var curTab='jobs';
-var editJobId=null,instrJobId=null,reportJobId=null,confirmJobId=null,checkedJobId=null,editPartnerId=null,judgeRId=null;
-var pendingImages=[],brPendingImages=[],modalSizes=[];
+var editJobId=null,instrJobId=null,repJobId=null,cfJobId=null,chkJobId=null,editPid=null,jgRid=null;
+var pImgs=[],brImgs=[],mSizes=[],brJobLocked=false;
 
-function today(){return new Date().toISOString().slice(0,10);}
+function td(){return new Date().toISOString().slice(0,10);}
 function gp(id){for(var i=0;i<db.partners.length;i++){if(db.partners[i].id===id)return db.partners[i];}return null;}
 function gj(id){for(var i=0;i<db.jobs.length;i++){if(db.jobs[i].id===id)return db.jobs[i];}return null;}
 function gbr(id){for(var i=0;i<db.breports.length;i++){if(db.breports[i].id===id)return db.breports[i];}return null;}
-function szTotal(sz){var s=0;if(!sz)return 0;for(var i=0;i<sz.length;i++)s+=parseInt(sz[i].count)||0;return s;}
-function pct(j){return j.total?Math.round(j.done/j.total*100):0;}
-function barClr(p){return p>=80?'#1A9E72':p>=40?'#B07212':'#2F7ED8';}
-function stBadge(s){return s==='完了'?'bg-green':s==='検品済確認中'?'bg-purple':s==='一時停止'?'bg-amber':'bg-blue';}
-function openOv(id){document.getElementById(id).classList.add('open');}
-function closeOv(id){document.getElementById(id).classList.remove('open');}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function catBadge(c){return '<span class="cat-badge '+(CAT_CSS[c]||'cat-other')+'">'+esc(c)+'</span>';}
-function pendingBRCount(){var n=0;for(var i=0;i<db.breports.length;i++){if(db.breports[i].status==='pending')n++;}return n;}
+function szTot(sz){var s=0;if(!sz)return 0;for(var i=0;i<sz.length;i++)s+=parseInt(sz[i].count)||0;return s;}
+function pc(j){return j.total?Math.round(j.done/j.total*100):0;}
+function bc(p){return p>=80?'#1A9E72':p>=40?'#B07212':'#2F7ED8';}
+function stB(s){return s==='完了'?'bg':s==='検品済確認中'?'bp':s==='一時停止'?'ba':'bl';}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/\x3C/g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function catB(c){return mkEl('span',{className:'cb '+(CAT_CSS[c]||'co'),textContent:c});}
+function pndBR(){var n=0;for(var i=0;i<db.breports.length;i++){if(db.breports[i].status==='pending')n++;}return n;}
+function yen(n){return '¥'+(Math.round(n)||0).toLocaleString();}
+function ymOf(d){return (d||td()).slice(0,7);}
+function monthLabel(m){var a=m.split('-');return parseInt(a[0],10)+'年'+parseInt(a[1],10)+'月';}
+function recentMonths(n){var a=[],d=new Date(td()+'T00:00:00');d.setDate(1);for(var i=0;i<n;i++){var y=d.getFullYear(),m=d.getMonth()+1;a.push(y+'-'+(m<10?'0'+m:m));d.setMonth(d.getMonth()-1);}return a;}
+function jobMonth(j){return ymOf(j.date);}
+function jobRate(j){var p=gp(j.partnerId);if(!p)return 0;return j.pack?(parseInt(p.ratePack)||0):(parseInt(p.rateNoPack)||0);}
+function jobPay(j){return (parseInt(j.done)||0)*jobRate(j);}
+function monthlyJobs(month,partnerId){return db.jobs.filter(function(j){return jobMonth(j)===month&&(!partnerId||j.partnerId===partnerId);});}
+function monthlyPay(month,partnerId){var s=0;monthlyJobs(month,partnerId).forEach(function(j){s+=jobPay(j);});return s;}
 
-/* ---- DOM helper: create element ---- */
-function el(tag,attrs,children){
+function mkEl(tag,props,children){
   var e=document.createElement(tag);
-  if(attrs){for(var k in attrs){if(k==='className')e.className=attrs[k];else if(k==='style')e.style.cssText=attrs[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),attrs[k]);else e.setAttribute(k,attrs[k]);}}
+  if(props){
+    for(var k in props){
+      if(k==='className')e.className=props[k];
+      else if(k==='style')e.style.cssText=props[k];
+      else if(k==='textContent')e.textContent=props[k];
+      else if(k==='innerHTML')e.innerHTML=props[k];
+      else e[k]=props[k];
+    }
+  }
   if(children){
-    if(typeof children==='string')e.innerHTML=children;
-    else if(Array.isArray(children)){children.forEach(function(c){if(c instanceof Node)e.appendChild(c);else if(c){var t=document.createElement('span');t.innerHTML=String(c);while(t.firstChild)e.appendChild(t.firstChild);}});}
+    if(Array.isArray(children)){children.forEach(function(c){if(c)e.appendChild(c);});}
+    else e.appendChild(children);
   }
   return e;
 }
-function setHTML(id,html){var e=document.getElementById(id);if(e)e.innerHTML=html;}
-function appendTo(id,node){var e=document.getElementById(id);if(e&&node instanceof Node)e.appendChild(node);}
+function q(id){return document.getElementById(id);}
+function ov(id){q(id).classList.add('open');}
+function cv(id){q(id).classList.remove('open');}
 
-/* ---- SIZE ROWS ---- */
-function addSizeRow(n,c){modalSizes.push({name:n||'',count:c||''});renderSizeRows();}
-function removeSizeRow(i){modalSizes.splice(i,1);renderSizeRows();}
-function renderSizeRows(){
-  var el2=document.getElementById('size-rows');
-  if(!el2)return;
-  el2.innerHTML='';
-  for(var i=0;i<modalSizes.length;i++){
-    (function(idx){
-      var row=document.createElement('div');
-      row.className='size-row-item';
-      var ni=document.createElement('input');
-      ni.className='size-name-in';ni.value=modalSizes[idx].name;ni.placeholder='サイズ';
-      ni.addEventListener('input',function(){modalSizes[idx].name=this.value;});
-      var ci=document.createElement('input');
-      ci.type='number';ci.min='0';ci.className='size-ct-in';ci.value=modalSizes[idx].count||'';ci.placeholder='枚数';
-      ci.addEventListener('input',function(){modalSizes[idx].count=parseInt(this.value)||0;recalcSum();});
-      var del=document.createElement('button');
-      del.className='btn btn-xs btn-danger';del.textContent='✕';
-      del.addEventListener('click',function(){removeSizeRow(idx);});
-      row.appendChild(ni);row.appendChild(ci);row.appendChild(del);
-      el2.appendChild(row);
-    })(i);
-  }
-  recalcSum();
-}
-function recalcSum(){
-  var s=0;for(var i=0;i<modalSizes.length;i++)s+=parseInt(modalSizes[i].count)||0;
-  var el2=document.getElementById('sz-sum');if(el2)el2.textContent=s.toLocaleString();
+function initModals(){
+  var mod=q('mod');
+  if(!mod)return;
+  while(mod.firstChild)document.body.appendChild(mod.firstChild);
+  mod.remove();
+  document.querySelectorAll('.ov').forEach(function(el){
+    el.addEventListener('click',function(e){if(e.target===el)el.classList.remove('open');});
+  });
+  q('jm-x').onclick=function(){cv('ov-job');};
+  q('jm-cancel').onclick=function(){cv('ov-job');};
+  q('jm-save').onclick=saveJob;
+  q('sz-add').onclick=addSzRow;
+  q('j-uz').onclick=function(){q('j-img').click();};
+  q('j-uz').ondragover=function(e){e.preventDefault();q('j-uz').classList.add('drag');};
+  q('j-uz').ondragleave=function(){q('j-uz').classList.remove('drag');};
+  q('j-uz').ondrop=function(e){e.preventDefault();q('j-uz').classList.remove('drag');readImgs(e.dataTransfer.files,pImgs,renderPrev);};
+  q('j-img').onchange=function(e){readImgs(e.target.files,pImgs,renderPrev);e.target.value='';};
+  q('instr-x').onclick=function(){cv('ov-instr');};
+  q('instr-cancel').onclick=function(){cv('ov-instr');};
+  q('instr-save').onclick=saveInstr;
+  q('pa-x').onclick=function(){cv('ov-pa');};
+  q('pa-cancel').onclick=function(){cv('ov-pa');};
+  q('pa-save').onclick=savePA;
+  q('pe-x').onclick=function(){cv('ov-pe');};
+  q('pe-cancel').onclick=function(){cv('ov-pe');};
+  q('pe-save').onclick=savePE;
+  q('cf-x').onclick=function(){cv('ov-confirm');};
+  q('cf-cancel').onclick=function(){cv('ov-confirm');};
+  q('cf-save').onclick=finalComplete;
+  q('rep-x').onclick=function(){cv('ov-rep');};
+  q('rep-cancel').onclick=function(){cv('ov-rep');};
+  q('rep-save').onclick=saveRep;
+  q('chk-x').onclick=function(){cv('ov-chk');};
+  q('chk-cancel').onclick=function(){cv('ov-chk');};
+  q('chk-save').onclick=submitChk;
+  q('br-x').onclick=function(){cv('ov-br');};
+  q('br-cancel').onclick=function(){cv('ov-br');};
+  q('br-save').onclick=submitBR;
+  q('br-uz').onclick=function(){q('br-img').click();};
+  q('br-uz').ondragover=function(e){e.preventDefault();q('br-uz').classList.add('drag');};
+  q('br-uz').ondragleave=function(){q('br-uz').classList.remove('drag');};
+  q('br-uz').ondrop=function(e){e.preventDefault();q('br-uz').classList.remove('drag');readImgs(e.dataTransfer.files,brImgs,renderBRPrev);};
+  q('br-img').onchange=function(e){readImgs(e.target.files,brImgs,renderBRPrev);e.target.value='';};
+  q('jg-x').onclick=function(){cv('ov-jg');};
+  q('jg-cancel').onclick=function(){cv('ov-jg');};
+  q('jg-good').onclick=function(){doJudge('良品');};
+  q('jg-bad').onclick=function(){doJudge('B品');};
+  q('lb-img').parentElement.onclick=function(){cv('ov-lb');};
 }
 
-/* ---- IMAGE UPLOAD ---- */
-function readFilesTo(files,arr,cb){
+function readImgs(files,arr,cb){
   for(var i=0;i<files.length;i++){
     if(!files[i].type.match(/^image\//))continue;
-    (function(f){var r=new FileReader();r.onload=function(ev){arr.push(ev.target.result);cb();};r.readAsDataURL(f);})(files[i]);
+    (function(f){var r=new FileReader();r.onload=function(e){arr.push(e.target.result);cb();};r.readAsDataURL(f);})(files[i]);
   }
 }
-function onFileSelect(e){readFilesTo(e.target.files,pendingImages,renderPreview);e.target.value='';}
-function onDragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('drag');}
-function onDragLeave(){document.getElementById('upload-zone').classList.remove('drag');}
-function onDrop(e){e.preventDefault();document.getElementById('upload-zone').classList.remove('drag');readFilesTo(e.dataTransfer.files,pendingImages,renderPreview);}
-function delPendingImg(i){pendingImages.splice(i,1);renderPreview();}
-function renderPreview(){
-  var el2=document.getElementById('img-preview');if(!el2)return;el2.innerHTML='';
-  for(var i=0;i<pendingImages.length;i++){
-    (function(idx,src){
-      var wrap=document.createElement('div');wrap.className='img-thumb';
-      var img=document.createElement('img');img.src=src;img.onclick=function(){openLB(src);};
-      var del=document.createElement('button');del.className='img-del';del.textContent='×';
-      del.onclick=function(){delPendingImg(idx);};
-      wrap.appendChild(img);wrap.appendChild(del);el2.appendChild(wrap);
-    })(i,pendingImages[i]);
-  }
+function openLB(src){q('lb-img').src=src;ov('ov-lb');}
+function imgThumb(src,delFn){
+  var w=mkEl('div',{className:'it'});
+  var img=mkEl('img');img.src=src;img.onclick=function(){openLB(src);};
+  var d=mkEl('button',{className:'idl',textContent:'×'});d.onclick=delFn;
+  w.appendChild(img);w.appendChild(d);return w;
 }
-function onBRFileSelect(e){readFilesTo(e.target.files,brPendingImages,renderBRPrev);e.target.value='';}
-function onDragOverBR(e){e.preventDefault();document.getElementById('br-zone').classList.add('drag');}
-function onDragLeaveBR(){document.getElementById('br-zone').classList.remove('drag');}
-function onDropBR(e){e.preventDefault();document.getElementById('br-zone').classList.remove('drag');readFilesTo(e.dataTransfer.files,brPendingImages,renderBRPrev);}
-function delBRImg(i){brPendingImages.splice(i,1);renderBRPrev();}
+function renderPrev(){
+  var el=q('j-prev');if(!el)return;el.innerHTML='';
+  pImgs.forEach(function(s,i){el.appendChild(imgThumb(s,function(){pImgs.splice(i,1);renderPrev();}));});
+}
 function renderBRPrev(){
-  var el2=document.getElementById('br-preview');if(!el2)return;el2.innerHTML='';
-  for(var i=0;i<brPendingImages.length;i++){
-    (function(idx,src){
-      var wrap=document.createElement('div');wrap.className='img-thumb';
-      var img=document.createElement('img');img.src=src;img.onclick=function(){openLB(src);};
-      var del=document.createElement('button');del.className='img-del';del.textContent='×';
-      del.onclick=function(){delBRImg(idx);};
-      wrap.appendChild(img);wrap.appendChild(del);el2.appendChild(wrap);
-    })(i,brPendingImages[i]);
-  }
+  var el=q('br-prev');if(!el)return;el.innerHTML='';
+  brImgs.forEach(function(s,i){el.appendChild(imgThumb(s,function(){brImgs.splice(i,1);renderBRPrev();}));});
 }
-function openLB(src){document.getElementById('lb-img').src=src;openOv('ov-img');}
-function openBRImg(rid,idx){var r=gbr(rid);if(r&&r.images[idx])openLB(r.images[idx]);}
-function openJobImg(jid,idx){var j=gj(jid);if(j&&j.images[idx])openLB(j.images[idx]);}
 
-/* ---- RENDER ---- */
-/* JSはinnerHTMLでHTMLを文字列生成せず、createElement/textContentを使う */
-/* ただし複雑なUIは安全なinnerHTML(ユーザー入力はescで無害化)を使う */
+function addSzRow(n,c){mSizes.push({name:n||'',count:c||''});renderSzRows();}
+function renderSzRows(){
+  var el=q('sz-rows');if(!el)return;el.innerHTML='';
+  mSizes.forEach(function(r,i){
+    var row=mkEl('div',{className:'szr'});
+    var ni=mkEl('input',{className:'sni',placeholder:'サイズ'});ni.value=r.name;ni.oninput=function(){mSizes[i].name=this.value;};
+    var ci=mkEl('input',{type:'number',min:'0',className:'sci',placeholder:'枚数'});ci.value=r.count||'';ci.oninput=function(){mSizes[i].count=parseInt(this.value)||0;recalcSz();};
+    var d=mkEl('button',{className:'btn btn-xs btn-del',textContent:'✕'});
+    (function(idx){d.onclick=function(){mSizes.splice(idx,1);renderSzRows();};})(i);
+    row.appendChild(ni);row.appendChild(ci);row.appendChild(d);el.appendChild(row);
+  });
+  recalcSz();
+}
+function recalcSz(){
+  var s=mSizes.reduce(function(a,r){return a+(parseInt(r.count)||0);},0);
+  var el=q('sz-sum');if(el)el.textContent=s.toLocaleString();
+}
 
 function render(){
-  /* モーダルをbodyに移動 */
-  var mods=document.getElementById('modals');
-  if(mods&&mods.parentNode!==document.body){
-    while(mods.firstChild)document.body.appendChild(mods.firstChild);
-    mods.remove();
-  }
-  var app=document.getElementById('app');
+  var app=q('app');
   if(!session){renderLogin(app);return;}
   if(session.role==='admin')renderAdmin(app);
   else renderPartner(app);
 }
 
-/* ---- LOGIN ---- */
 function renderLogin(app){
   app.innerHTML='';
-  var wrap=document.createElement('div');wrap.className='login-wrap';
-  var box=document.createElement('div');box.className='login-box fi';
-  var hd=document.createElement('div');hd.className='login-hd';
-  var ic=document.createElement('div');ic.className='login-ic';ic.textContent='👕';
-  var title=document.createElement('div');title.style.cssText='font-size:21px;font-weight:700;margin-bottom:5px';title.textContent='検品・たたみ 外注管理';
-  var sub=document.createElement('div');sub.style.cssText='font-size:13px;color:var(--txm)';sub.textContent='IDとパスワードを入力してください';
-  hd.appendChild(ic);hd.appendChild(title);hd.appendChild(sub);
-  var card=document.createElement('div');card.className='card';card.style.padding='1.5rem';
-  var fg1=document.createElement('div');fg1.className='fg';
-  var lb1=document.createElement('label');lb1.textContent='ログインID';
-  var inp1=document.createElement('input');inp1.type='text';inp1.id='l-id';inp1.placeholder='ログインID';inp1.autocomplete='username';
-  fg1.appendChild(lb1);fg1.appendChild(inp1);
-  var fg2=document.createElement('div');fg2.className='fg';
-  var lb2=document.createElement('label');lb2.textContent='パスワード';
-  var inp2=document.createElement('input');inp2.type='password';inp2.id='l-pass';inp2.placeholder='パスワード';inp2.autocomplete='current-password';
-  fg2.appendChild(lb2);fg2.appendChild(inp2);
-  var errDiv=document.createElement('div');errDiv.id='l-err';errDiv.style.cssText='font-size:12px;color:var(--rt);margin-bottom:8px;display:none';errDiv.textContent='⚠ IDまたはパスワードが正しくありません';
-  var btn=document.createElement('button');btn.className='btn btn-primary';btn.style.cssText='width:100%;justify-content:center;padding:10px;font-size:14px';btn.textContent='→ サインイン';btn.id='login-btn';
-  card.appendChild(fg1);card.appendChild(fg2);card.appendChild(errDiv);card.appendChild(btn);
-  var hint=document.createElement('div');hint.style.display='none';
-  box.appendChild(hd);box.appendChild(card);box.appendChild(hint);
-  wrap.appendChild(box);app.appendChild(wrap);
+  var wrap=mkEl('div',{className:'lw'});
+  var box=mkEl('div',{className:'lb fi'});
+  var hd=mkEl('div',{className:'lhd'});
+  hd.appendChild(mkEl('div',{className:'lic',textContent:'👕'}));
+  hd.appendChild(mkEl('div',{className:'login-company',textContent:COMPANY}));
+  hd.appendChild(mkEl('div',{style:'font-size:21px;font-weight:700;margin-bottom:5px',textContent:'検品、たたみ管理'}));
+  hd.appendChild(mkEl('div',{style:'font-size:13px;color:var(--txm)',textContent:'IDとパスワードを入力してください'}));
+  var card=mkEl('div',{className:'card',style:'padding:1.5rem'});
+  var fg1=mkEl('div',{className:'fg'});fg1.appendChild(mkEl('label',{textContent:'ログインID'}));
+  var inp1=mkEl('input',{type:'text',placeholder:'ログインID'});inp1.autocomplete='username';
+  fg1.appendChild(inp1);
+  var fg2=mkEl('div',{className:'fg'});fg2.appendChild(mkEl('label',{textContent:'パスワード'}));
+  var inp2=mkEl('input',{type:'password',placeholder:'パスワード'});inp2.autocomplete='current-password';
+  fg2.appendChild(inp2);
+  var err=mkEl('div',{style:'font-size:12px;color:var(--rt);margin-bottom:8px;display:none',textContent:'⚠ IDまたはパスワードが正しくありません'});
+  var btn=mkEl('button',{className:'btn btn-g',style:'width:100%;justify-content:center;padding:10px;font-size:14px',textContent:'→ サインイン'});
+  card.appendChild(fg1);card.appendChild(fg2);card.appendChild(err);card.appendChild(btn);
+  box.appendChild(hd);box.appendChild(card);box.appendChild(mkEl('div',{className:'login-footer',textContent:COMPANY}));wrap.appendChild(box);app.appendChild(wrap);
   function go(){
-    var uid=document.getElementById('l-id').value.trim();
-    var pw=document.getElementById('l-pass').value;
-    var err=document.getElementById('l-err');err.style.display='none';
-    if(uid==='admin'&&pw==='admin'){session={role:'admin'};saveSession(session);render();return;}
+    var uid=inp1.value.trim();var pw=inp2.value;err.style.display='none';
+    if(uid==='admin'&&pw==='admin'){session={role:'admin'};svsn(session);render();return;}
     var p=null;for(var i=0;i<db.partners.length;i++){if(db.partners[i].uid===uid&&db.partners[i].pass===pw){p=db.partners[i];break;}}
-    if(p){session={role:'partner',partnerId:p.id};saveSession(session);render();}
+    if(p){session={role:'partner',partnerId:p.id};svsn(session);render();}
     else err.style.display='block';
   }
   btn.onclick=go;
-  inp1.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
-  inp2.addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+  inp1.onkeydown=function(e){if(e.key==='Enter')go();};
+  inp2.onkeydown=function(e){if(e.key==='Enter')go();};
 }
 
-/* ---- ADMIN SHELL ---- */
+function mkTopbar(title,right){
+  var tb=mkEl('div',{className:'topbar'});
+  var br=mkEl('div',{className:'brand'});
+  var mb=mkEl('button',{className:'mbtn btn',textContent:'☰'});mb.id='mbtn';
+  br.appendChild(mb);
+  br.appendChild(mkEl('div',{className:'bric',textContent:'👕'}));
+  var copy=mkEl('div',{className:'brand-copy'});
+  copy.appendChild(mkEl('div',{className:'company-name',textContent:COMPANY}));
+  copy.appendChild(mkEl('div',{className:'brnm',textContent:title}));
+  br.appendChild(copy);
+  tb.appendChild(br);tb.appendChild(right);return tb;
+}
+function mkFooter(){
+  var f=mkEl('footer',{className:'site-footer'});
+  f.appendChild(mkEl('strong',{textContent:COMPANY}));
+  f.appendChild(document.createTextNode(' / 検品、たたみ管理'));
+  return f;
+}
+
 function renderAdmin(app){
   app.innerHTML='';
-  var pc=pendingBRCount();
-  var confirmPc=0;for(var i=0;i<db.jobs.length;i++){if(db.jobs[i].status==='検品済確認中')confirmPc++;}
-  var tabs=[
-    {id:'jobs',em:'📋',lbl:'案件管理'},
-    {id:'confirm',em:'🛡',lbl:'最終確認',badge:confirmPc},
-    {id:'bdb',em:'🗄',lbl:'B品データベース',badge:pc},
-    {id:'faq',em:'❓',lbl:'FAQ管理'},
-    {id:'partners',em:'🏢',lbl:'外注先管理'},
-    {id:'history',em:'📆',lbl:'完了履歴'}
-  ];
-  /* topbar */
-  var topbar=document.createElement('div');topbar.className='topbar';
-  var brand=document.createElement('div');brand.className='brand';
-  var menuBtn=document.createElement('button');menuBtn.className='menu-btn btn';menuBtn.textContent='☰';menuBtn.id='menu-btn';
-  var brandIc=document.createElement('div');brandIc.className='brand-ic';brandIc.textContent='👕';
-  var brandNm=document.createElement('div');brandNm.className='brand-nm';brandNm.textContent='検品・たたみ 外注管理';
-  brand.appendChild(menuBtn);brand.appendChild(brandIc);brand.appendChild(brandNm);
-  var topR=document.createElement('div');topR.className='topbar-r';
-  var adminBadge=document.createElement('span');adminBadge.style.cssText='font-size:11px;color:var(--txm);background:var(--gyl);padding:4px 10px;border-radius:20px;font-weight:600';adminBadge.textContent='🛡 管理者';
-  var logoutBtn=document.createElement('button');logoutBtn.className='btn btn-sm';logoutBtn.textContent='← ログアウト';logoutBtn.onclick=function(){clearSession();session=null;render();};
-  topR.appendChild(adminBadge);topR.appendChild(logoutBtn);
-  topbar.appendChild(brand);topbar.appendChild(topR);
-  /* sidebar overlay */
-  var sbo=document.createElement('div');sbo.className='sb-overlay';sbo.id='sb-overlay';
-  /* sidebar */
-  var sb=document.createElement('div');sb.className='sidebar';sb.id='sidebar';
+  var cfPc=db.jobs.filter(function(j){return j.status==='検品済確認中';}).length;
+  var brPc=pndBR();
+  var tabs=[{id:'jobs',em:'📋',lbl:'案件管理'},{id:'confirm',em:'🛡',lbl:'最終確認',badge:cfPc},{id:'payments',em:'💴',lbl:'支払い管理'},{id:'bdb',em:'🗄',lbl:'B品データベース',badge:brPc},{id:'faq',em:'❓',lbl:'FAQ管理'},{id:'partners',em:'🏢',lbl:'外注先管理'},{id:'history',em:'📆',lbl:'履歴'}];
+  var topr=mkEl('div',{className:'topr'});
+  topr.appendChild(mkEl('span',{className:'role-badge',textContent:'🛡 管理者'}));
+  var lo=mkEl('button',{className:'btn btn-sm',textContent:'← ログアウト'});lo.onclick=function(){clsn();session=null;render();};
+  topr.appendChild(lo);
+  app.appendChild(mkTopbar('検品、たたみ管理',topr));
+  var sbo=mkEl('div',{className:'sbo'});sbo.id='sbo';app.appendChild(sbo);
+  var outer=mkEl('div',{style:'display:flex;min-height:calc(100vh - var(--tph))'});
+  var sb=mkEl('div',{className:'sb'});sb.id='sb';
   tabs.forEach(function(t){
-    var btn=document.createElement('button');btn.className='nav-it'+(curTab===t.id?' on':'');btn.dataset.tab=t.id;
-    var label=t.em+' '+t.lbl;
-    btn.textContent=label;
-    if(t.badge){var nb=document.createElement('span');nb.className='nav-badge pulse';nb.textContent=t.badge;btn.appendChild(nb);}
-    btn.onclick=function(){curTab=t.id;closeSB();render();};
+    var btn=mkEl('button',{className:'ni'+(curTab===t.id?' on':''),textContent:t.em+' '+t.lbl});
+    if(t.badge){btn.appendChild(mkEl('span',{className:'nbg pu',textContent:t.badge}));}
+    (function(tid){btn.onclick=function(){curTab=tid;closeSB();render();};})(t.id);
     sb.appendChild(btn);
   });
-  var sbFoot=document.createElement('div');sbFoot.style.cssText='margin-top:auto;padding:8px 10px;font-size:11px;color:var(--txh)';sbFoot.textContent='外注管理 v4.1';
-  sb.appendChild(sbFoot);
-  /* main */
-  var main=document.createElement('div');main.className='main fi';main.id='admin-main';
-  var outer=document.createElement('div');outer.style.cssText='display:flex;min-height:calc(100vh - var(--tph))';
-  outer.appendChild(sb);outer.appendChild(main);
-  app.appendChild(topbar);app.appendChild(sbo);app.appendChild(outer);
-  /* sidebar events */
-  menuBtn.onclick=function(){sb.classList.toggle('open');sbo.classList.toggle('on');};
+  var sbf=mkEl('div',{style:'margin-top:auto;padding:8px 10px'});
+  var dlBtn=mkEl('button',{className:'btn btn-sm',style:'width:100%;justify-content:center;margin-bottom:6px;font-size:12px;background:var(--gl);color:var(--gt);border-color:var(--g)',textContent:'📥 データをダウンロード'});
+  dlBtn.onclick=downloadAll;
+  sbf.appendChild(dlBtn);sbf.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:'検品、たたみ管理 v5.0'}));
+  sb.appendChild(sbf);
+  var mn=mkEl('div',{className:'mn fi'});mn.id='mn';
+  outer.appendChild(sb);outer.appendChild(mn);app.appendChild(outer);
+  var mbtn=q('mbtn');if(mbtn){mbtn.onclick=function(){sb.classList.toggle('open');sbo.classList.toggle('on');};}
   sbo.onclick=closeSB;
-  /* render body */
-  var bodies={jobs:adminJobs,confirm:adminConfirm,bdb:adminBDB,faq:adminFAQ,partners:adminPartners,history:adminHistory};
-  (bodies[curTab]||adminJobs)(main);
+  var bodies={jobs:adminJobs,confirm:adminConfirm,payments:adminPayments,bdb:adminBDB,faq:adminFAQ,partners:adminPartners,history:adminHistory};
+  (bodies[curTab]||adminJobs)(mn);
+  app.appendChild(mkFooter());
 }
-function closeSB(){var sb=document.getElementById('sidebar'),sbo=document.getElementById('sb-overlay');if(sb)sb.classList.remove('open');if(sbo)sbo.classList.remove('on');}
+function closeSB(){var sb=q('sb'),sbo=q('sbo');if(sb)sb.classList.remove('open');if(sbo)sbo.classList.remove('on');}
 
-/* --- 管理者: 案件管理 --- */
-function adminJobs(main){
+function statCard(lbl,val,sub,col){
+  var sc=mkEl('div',{className:'sc'});
+  sc.appendChild(mkEl('div',{className:'sl',textContent:lbl}));
+  var sv=mkEl('div',{className:'sv',textContent:val});if(col)sv.style.color=col;
+  sc.appendChild(sv);sc.appendChild(mkEl('div',{className:'ss',textContent:sub}));return sc;
+}
+function sectionHd(title,btn){
+  var d=mkEl('div',{className:'scd'});
+  d.appendChild(mkEl('div',{className:'sct',textContent:title}));
+  if(btn)d.appendChild(btn);return d;
+}
+function mkBtn(cls,txt,fn){var b=mkEl('button',{className:'btn '+cls,textContent:txt});b.onclick=fn;return b;}
+function ntc(cls,txt){return mkEl('div',{className:'nt '+cls,textContent:txt});}
+
+function adminJobs(mn){
+  mn.innerHTML='';
   var active=db.jobs.filter(function(j){return j.status!=='完了';});
-  var tot=0,done=0;db.jobs.forEach(function(j){tot+=j.total;done+=j.done;});
-  var rate=tot?Math.round(done/tot*100):0;
-  var html='<div class="pg-title">案件管理</div>';
-  html+='<div class="stats-grid">';
-  html+='<div class="stat-card"><div class="slbl">進行中</div><div class="sval">'+active.length+'</div><div class="ssub">件</div></div>';
-  html+='<div class="stat-card"><div class="slbl">総依頼枚数</div><div class="sval">'+tot.toLocaleString()+'</div><div class="ssub">枚</div></div>';
-  html+='<div class="stat-card"><div class="slbl">完了枚数</div><div class="sval" style="color:var(--g)">'+done.toLocaleString()+'</div><div class="ssub">枚</div></div>';
-  html+='<div class="stat-card"><div class="slbl">完了率</div><div class="sval">'+rate+'<span style="font-size:13px;color:var(--txm)">%</span></div></div>';
-  html+='</div>';
-  html+='<div class="sec-hd"><div class="sec-title">進行中の案件</div><button class="btn btn-primary btn-sm" onclick="openAdd()">＋ 案件を割り振る</button></div>';
-  html+='<div class="tw" style="overflow-x:auto"><table><thead><tr><th>案件名</th><th>外注先</th><th>納期</th><th style="text-align:right">依頼</th><th style="text-align:right">完了</th><th>進捗</th><th>状態</th><th>操作</th></tr></thead><tbody>';
-  if(active.length===0){html+='<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--txh)">進行中の案件はありません</td></tr>';}
+  var tot=0,dn=0;db.jobs.forEach(function(j){tot+=j.total;dn+=j.done;});
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'案件管理'}));
+  var sg=mkEl('div',{className:'sgr'});
+  sg.appendChild(statCard('進行中',active.length,'件',''));
+  sg.appendChild(statCard('総依頼枚数',tot.toLocaleString(),'枚',''));
+  sg.appendChild(statCard('完了枚数',dn.toLocaleString(),'枚','var(--g)'));
+  sg.appendChild(statCard('完了率',(tot?Math.round(dn/tot*100):0)+'%','',''));
+  mn.appendChild(sg);
+  mn.appendChild(sectionHd('進行中の案件',mkBtn('btn-g btn-sm','＋ 案件を割り振る',openAdd)));
+  var tw=mkEl('div',{className:'tw resp-cards',style:'overflow-x:auto'});
+  var tbl=mkEl('table');
+  var thead=mkEl('thead');var hr=mkEl('tr');
+  ['案件名','外注先','納期','依頼','完了','進捗','状態','操作'].forEach(function(h,i){
+    var th=mkEl('th',{textContent:h});if(i===3||i===4)th.style.textAlign='right';hr.appendChild(th);
+  });
+  thead.appendChild(hr);tbl.appendChild(thead);
+  var tbody=mkEl('tbody');
+  if(!active.length){
+    var etr=mkEl('tr');var etd=mkEl('td',{style:'text-align:center;padding:2rem;color:var(--txh)',textContent:'進行中の案件はありません'});etd.colSpan=8;etr.appendChild(etd);tbody.appendChild(etr);
+  }
   active.forEach(function(j){
-    var p=gp(j.partnerId);var pc=pct(j);
-    var pName=p?('<div style="display:flex;align-items:center;gap:6px"><div class="av" style="background:'+p.color+';width:24px;height:24px;font-size:10px">'+esc(p.name.slice(0,2))+'</div>'+esc(p.name)+'</div>'):'—';
-    var stBg=stBadge(j.status);var stLbl=j.status==='検品済確認中'?'⏱ 確認待':esc(j.status);
-    var ops='';
-    if(j.status==='検品済確認中')ops+='<button class="btn btn-xs btn-purple" onclick="openConfirm('+j.id+')">🛡</button>';
-    ops+='<button class="btn btn-xs" onclick="openInstr('+j.id+')">💬</button>';
-    ops+='<button class="btn btn-xs" onclick="openEdit('+j.id+')">✏</button>';
-    ops+='<button class="btn btn-xs btn-danger" onclick="delJob('+j.id+')">🗑</button>';
-    html+='<tr>';
-    html+='<td><div style="font-weight:600">'+esc(j.name)+'</div><div style="font-size:11px;color:var(--txh)">'+esc(j.type)+(j.maker?' · '+esc(j.maker):'')+'</div></td>';
-    html+='<td>'+pName+'</td>';
-    html+='<td style="font-size:12px;color:var(--txm);white-space:nowrap">'+(j.dueDate||'—')+'</td>';
-    html+='<td style="text-align:right;font-weight:600">'+j.total.toLocaleString()+'</td>';
-    html+='<td style="text-align:right;font-weight:600;color:var(--g)">'+j.done.toLocaleString()+'</td>';
-    html+='<td style="min-width:80px"><div style="display:flex;align-items:center;gap:5px"><div class="pbar" style="flex:1"><div class="pbar-fill" style="width:'+pc+'%;background:'+barClr(pc)+'"></div></div><span style="font-size:11px;font-family:var(--mo);min-width:28px;text-align:right">'+pc+'%</span></div></td>';
-    html+='<td><span class="badge '+stBg+'" style="font-size:10px">'+stLbl+'</span></td>';
-    html+='<td><div style="display:flex;gap:3px;flex-wrap:wrap">'+ops+'</div></td>';
-    html+='</tr>';
+    var p=gp(j.partnerId);var pv=pc(j);var tr=mkEl('tr');
+    var td1=mkEl('td',{className:'mobile-main'});td1.setAttribute('data-label','案件名');td1.appendChild(mkEl('div',{style:'font-weight:600',textContent:j.name}));td1.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:j.type+(j.maker?' · '+j.maker:'')}));
+    var td2=mkEl('td');
+    if(p){var pw=mkEl('div',{style:'display:flex;align-items:center;gap:6px'});var pav=mkEl('div',{className:'av',style:'background:'+p.color+';width:24px;height:24px;font-size:10px',textContent:p.name.slice(0,2)});pw.appendChild(pav);pw.appendChild(document.createTextNode(p.name));td2.appendChild(pw);}else td2.textContent='—';
+    var td3=mkEl('td',{style:'font-size:12px;color:var(--txm);white-space:nowrap',textContent:j.dueDate||'—'});
+    var td4=mkEl('td',{style:'text-align:right;font-weight:600',textContent:j.total.toLocaleString()});
+    var td5=mkEl('td',{style:'text-align:right;font-weight:600;color:var(--g)',textContent:j.done.toLocaleString()});
+    var td6=mkEl('td',{style:'min-width:80px'});
+    var pbw=mkEl('div',{style:'display:flex;align-items:center;gap:5px'});
+    var pb=mkEl('div',{className:'pbar',style:'flex:1'});var pbf=mkEl('div',{className:'pbar-f',style:'width:'+pv+'%;background:'+bc(pv)});pb.appendChild(pbf);
+    pbw.appendChild(pb);pbw.appendChild(mkEl('span',{style:'font-size:11px;font-family:var(--mo);min-width:28px;text-align:right',textContent:pv+'%'}));td6.appendChild(pbw);
+    var td7=mkEl('td');var bg=mkEl('span',{className:'badge '+stB(j.status),style:'font-size:10px',textContent:j.status==='検品済確認中'?'⏱ 確認待':j.status});td7.appendChild(bg);
+    var td8=mkEl('td',{className:'mobile-actions'});var ops=mkEl('div',{style:'display:flex;gap:3px;flex-wrap:wrap'});
+    if(j.status==='検品済確認中'){var b0=mkEl('button',{className:'btn btn-xs btn-p',textContent:'🛡'});(function(jid){b0.onclick=function(){openConfirm(jid);};})(j.id);ops.appendChild(b0);}
+    var b1=mkEl('button',{className:'btn btn-xs',textContent:'💬'});(function(jid){b1.onclick=function(){openInstr(jid);};})(j.id);ops.appendChild(b1);
+    var b2=mkEl('button',{className:'btn btn-xs',textContent:'✏'});(function(jid){b2.onclick=function(){openEdit(jid);};})(j.id);ops.appendChild(b2);
+    var b3=mkEl('button',{className:'btn btn-xs btn-del',textContent:'🗑'});(function(jid){b3.onclick=function(){delJob(jid);};})(j.id);ops.appendChild(b3);
+    td8.appendChild(ops);
+    [td2,td3,td4,td5,td6,td7,td8].forEach(function(td,i){td.setAttribute('data-label',['外注先','納期','依頼','完了','進捗','状態','操作'][i]);});
+    [td1,td2,td3,td4,td5,td6,td7,td8].forEach(function(td){tr.appendChild(td);});tbody.appendChild(tr);
   });
-  html+='</tbody></table></div>';
-  main.innerHTML=html;
+  tbl.appendChild(tbody);tw.appendChild(tbl);mn.appendChild(tw);
 }
 
-/* --- 管理者: 最終確認 --- */
-function adminConfirm(main){
+function adminConfirm(mn){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'最終確認'}));
   var pend=db.jobs.filter(function(j){return j.status==='検品済確認中';});
-  var html='<div class="pg-title">最終確認</div>';
-  if(!pend.length){html+='<div style="text-align:center;padding:3rem;color:var(--txh)">✅<br>確認待ちの案件はありません</div>';main.innerHTML=html;return;}
-  html+='<div class="notice purple" style="margin-bottom:1.1rem">ℹ 外注先から「全て検品済」の報告が届いています。</div>';
+  if(!pend.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:3rem;color:var(--txh)',textContent:'✅ 確認待ちの案件はありません'}));return;}
+  mn.appendChild(ntc('nt-p','ℹ 外注先から「全て検品済」の報告が届いています。'));
   pend.forEach(function(j){
-    var p=gp(j.partnerId);var lr=null;
-    for(var i=j.reports.length-1;i>=0;i--){if(j.reports[i].type==='checked'){lr=j.reports[i];break;}}
-    var szP='';if(j.sizes&&j.sizes.length){j.sizes.forEach(function(r){if(r.count>0)szP+='<span class="size-pill">'+esc(r.name)+': '+r.count+'</span>';});}
-    html+='<div class="card" style="margin-bottom:14px;border:1.5px solid var(--p)">';
-    html+='<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">';
-    html+='<div><div style="font-weight:700;font-size:15px">'+esc(j.name)+'</div><div style="font-size:12px;color:var(--txm)">'+esc(j.type)+(j.maker?' · '+esc(j.maker):'')+'</div>';
-    if(szP)html+='<div class="size-pills" style="margin-top:5px">'+szP+'</div>';
-    html+='</div><span class="badge bg-purple">⏱ 確認待ち</span></div>';
-    if(p)html+='<div style="display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:8px"><div class="av" style="background:'+p.color+';width:22px;height:22px;font-size:9px">'+esc(p.name.slice(0,2))+'</div>'+esc(p.name)+'</div>';
-    if(lr)html+='<div class="notice purple" style="margin-bottom:8px"><span><strong>報告:</strong> '+lr.count.toLocaleString()+' 枚'+(lr.note?' — '+esc(lr.note):'')+'</span></div>';
-    html+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">';
-    html+='<button class="btn btn-primary btn-sm" onclick="openConfirm('+j.id+')">✓ 最終確認して完了</button>';
-    html+='<button class="btn btn-sm" onclick="openInstr('+j.id+')">💬 指示</button>';
-    html+='</div></div>';
+    var p=gp(j.partnerId);var lr=null;for(var i=j.reports.length-1;i>=0;i--){if(j.reports[i].type==='checked'){lr=j.reports[i];break;}}
+    var card=mkEl('div',{className:'card',style:'margin-bottom:14px;border:1.5px solid var(--p)'});
+    var row=mkEl('div',{style:'display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px'});
+    var left=mkEl('div');left.appendChild(mkEl('div',{style:'font-weight:700;font-size:15px',textContent:j.name}));left.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm)',textContent:j.type+(j.maker?' · '+j.maker:'')}));
+    if(j.sizes&&j.sizes.length){var sps=mkEl('div',{className:'sps',style:'margin-top:5px'});j.sizes.forEach(function(r){if(r.count>0)sps.appendChild(mkEl('span',{className:'sp',textContent:r.name+': '+r.count}));});left.appendChild(sps);}
+    row.appendChild(left);row.appendChild(mkEl('span',{className:'badge bp',textContent:'⏱ 確認待ち'}));card.appendChild(row);
+    if(p){var prow=mkEl('div',{style:'display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:8px'});prow.appendChild(mkEl('div',{className:'av',style:'background:'+p.color+';width:22px;height:22px;font-size:9px',textContent:p.name.slice(0,2)}));prow.appendChild(document.createTextNode(p.name));card.appendChild(prow);}
+    if(lr){var ln=ntc('nt-p','報告: '+lr.count.toLocaleString()+' 枚'+(lr.note?' — '+lr.note:''));ln.style.marginBottom='8px';card.appendChild(ln);}
+    var btns=mkEl('div',{style:'display:flex;gap:8px;flex-wrap:wrap;margin-top:10px'});
+    var cb=mkEl('button',{className:'btn btn-g btn-sm',textContent:'✓ 最終確認して完了'});(function(jid){cb.onclick=function(){openConfirm(jid);};})(j.id);
+    var ib=mkEl('button',{className:'btn btn-sm',textContent:'💬 指示'});(function(jid){ib.onclick=function(){openInstr(jid);};})(j.id);
+    btns.appendChild(cb);btns.appendChild(ib);card.appendChild(btns);mn.appendChild(card);
   });
-  main.innerHTML=html;
 }
 
-/* --- 管理者: B品データベース --- */
-function adminBDB(main){
-  var pending=db.breports.filter(function(r){return r.status==='pending';});
+function adminBDB(mn){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'B品データベース'}));
+  var pend=db.breports.filter(function(r){return r.status==='pending';});
   var judged=db.breports.filter(function(r){return r.status!=='pending';});
-  var bhinCt=db.breports.filter(function(r){return r.status==='B品';}).length;
-  var html='<div class="pg-title">B品データベース</div>';
-  html+='<div class="stats-grid">';
-  html+='<div class="stat-card"><div class="slbl">判定待ち</div><div class="sval" style="color:var(--a)">'+pending.length+'</div><div class="ssub">件</div></div>';
-  html+='<div class="stat-card"><div class="slbl">B品判定</div><div class="sval" style="color:var(--r)">'+bhinCt+'</div><div class="ssub">件</div></div>';
-  html+='<div class="stat-card"><div class="slbl">良品判定</div><div class="sval" style="color:var(--g)">'+(judged.length-bhinCt)+'</div><div class="ssub">件</div></div>';
-  html+='<div class="stat-card"><div class="slbl">FAQ掲載</div><div class="sval" style="color:var(--b)">'+db.faqs.length+'</div><div class="ssub">件</div></div>';
-  html+='</div>';
-  function brCard(r,showBtn){
+  var bh=db.breports.filter(function(r){return r.status==='B品';}).length;
+  var sg=mkEl('div',{className:'sgr'});
+  sg.appendChild(statCard('判定待ち',pend.length,'件','var(--a)'));
+  sg.appendChild(statCard('B品判定',bh,'件','var(--r)'));
+  sg.appendChild(statCard('良品判定',judged.length-bh,'件','var(--g)'));
+  sg.appendChild(statCard('FAQ掲載',db.faqs.length,'件','var(--b)'));
+  mn.appendChild(sg);
+  function mkBRCard(r,showBtn){
+    var cls=r.status==='pending'?'pnd':r.status==='B品'?'bh':'ry';
+    var card=mkEl('div',{className:'brc '+cls});
     var p=gp(r.partnerId);var j=gj(r.jobId);
-    var cls=r.status==='pending'?'pending':r.status==='B品'?'bhin':'ryohin';
-    var stBStr=r.status==='pending'?'<span class="badge bg-amber">⏱ 判定待ち</span>':r.status==='B品'?'<span class="badge bg-red">✕ B品</span>':'<span class="badge bg-green">✓ 良品</span>';
-    var catH='';if(r.cats)r.cats.forEach(function(c){catH+=catBadge(c);});
-    var imgH='';if(r.images&&r.images.length){imgH='<div class="img-grid c3" style="margin-top:8px">';r.images.forEach(function(s,i){imgH+='<div class="img-thumb"><img src="'+esc(s)+'" onclick="openBRImg('+r.id+','+i+')"/></div>';});imgH+='</div>';}
-    var jcH=r.judgeComment?('<div class="notice '+(r.status==='B品'?'red':'green')+'" style="margin-top:6px">💬 '+esc(r.judgeComment)+'</div>'):'';
-    var btnH=showBtn?('<div style="margin-top:10px"><button class="btn btn-sm" style="background:var(--al);color:var(--at);border-color:var(--a)" onclick="openJudge('+r.id+')">⚖ B品・良品を判定する</button></div>'):'';
-    var faqH=r.faqPublic?'<span class="badge bg-blue" style="margin-left:5px">📖 FAQ</span>':'';
-    return '<div class="breport-card '+cls+'">'
-      +'<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px">'
-      +'<div><div style="font-weight:600;font-size:13px">'+(j?esc(j.name):'—')+(r.size?' · '+esc(r.size):'')+'</div>'
-      +'<div style="font-size:11px;color:var(--txm)">'+(p?esc(p.name):'—')+' · '+esc(r.date)+'</div></div>'
-      +'<div style="display:flex;align-items:center">'+stBStr+faqH+'</div></div>'
-      +'<div style="margin-bottom:5px">'+catH+'</div>'
-      +'<div style="font-size:13px;margin-bottom:4px">'+esc(r.desc)+'</div>'
-      +jcH+imgH+btnH+'</div>';
+    var top=mkEl('div',{style:'display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px'});
+    var left=mkEl('div');left.appendChild(mkEl('div',{style:'font-weight:600;font-size:13px',textContent:(j?j.name:'—')+(r.size?' · '+r.size:'')}));left.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txm)',textContent:(p?p.name:'—')+' · '+r.date}));
+    var stEl;if(r.status==='pending')stEl=mkEl('span',{className:'badge ba',textContent:'⏱ 判定待ち'});else if(r.status==='B品')stEl=mkEl('span',{className:'badge br',textContent:'✕ B品'});else stEl=mkEl('span',{className:'badge bg',textContent:'✓ 良品'});
+    var right=mkEl('div',{style:'display:flex;align-items:center;gap:5px'});right.appendChild(stEl);if(r.faqPublic)right.appendChild(mkEl('span',{className:'badge bl',textContent:'📖 FAQ'}));
+    top.appendChild(left);top.appendChild(right);card.appendChild(top);
+    var cats=mkEl('div',{style:'margin-bottom:5px'});if(r.cats)r.cats.forEach(function(c){cats.appendChild(catB(c));});card.appendChild(cats);
+    card.appendChild(mkEl('div',{style:'font-size:13px;margin-bottom:4px',textContent:r.desc}));
+    if(r.judgeComment){var jc=ntc('nt-'+(r.status==='B品'?'r':'g'),'💬 '+r.judgeComment);jc.style.marginTop='6px';card.appendChild(jc);}
+    if(r.images&&r.images.length){var ig=mkEl('div',{className:'ig c3',style:'margin-top:8px'});r.images.forEach(function(s,i){var it=mkEl('div',{className:'it'});var img=mkEl('img');img.src=s;(function(src){img.onclick=function(){openLB(src);};})(s);it.appendChild(img);ig.appendChild(it);});card.appendChild(ig);}
+    if(showBtn){var jb=mkEl('button',{className:'btn btn-sm',style:'background:var(--al);color:var(--at);border-color:var(--a);margin-top:10px',textContent:'⚖ B品・良品を判定する'});(function(rid){jb.onclick=function(){openJudge(rid);};})(r.id);card.appendChild(jb);}
+    return card;
   }
-  if(pending.length){
-    html+='<div class="sec-title" style="margin-bottom:.7rem">判定待ち <span class="badge bg-amber" style="font-size:11px">'+pending.length+'件</span></div>';
-    pending.forEach(function(r){html+=brCard(r,true);});
-  } else {
-    html+='<div class="notice green" style="margin-bottom:1rem">✓ 判定待ちはありません。</div>';
-  }
-  if(judged.length){
-    html+='<div class="sec-title" style="margin:1.2rem 0 .7rem">判定済み</div>';
-    judged.forEach(function(r){html+=brCard(r,false);});
-  }
-  main.innerHTML=html;
+  if(pend.length){
+    mn.appendChild(mkEl('div',{className:'sct',style:'margin-bottom:.7rem',textContent:'判定待ち'}));
+    pend.forEach(function(r){mn.appendChild(mkBRCard(r,true));});
+  }else{mn.appendChild(ntc('nt-g','✓ 判定待ちはありません。'));}
+  if(judged.length){mn.appendChild(mkEl('div',{className:'sct',style:'margin:1.2rem 0 .7rem',textContent:'判定済み'}));judged.forEach(function(r){mn.appendChild(mkBRCard(r,false));});}
 }
 
-/* --- 管理者: FAQ管理 --- */
-function adminFAQ(main){
-  var html='<div class="pg-title">FAQ管理</div>';
-  html+='<div class="notice blue" style="margin-bottom:1rem">ℹ B品データベースで「FAQに追加」した項目が外注先のFAQタブに反映されます。</div>';
-  if(!db.faqs.length){html+='<div style="text-align:center;padding:3rem;color:var(--txh)">📖<br>FAQはまだありません。B品判定時に追加できます。</div>';main.innerHTML=html;return;}
+function adminFAQ(mn){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'FAQ管理'}));
+  mn.appendChild(ntc('nt-b','ℹ B品データベースで「FAQに追加」した項目が外注先のFAQタブに反映されます。'));
+  if(!db.faqs.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:3rem;color:var(--txh)',textContent:'📖 FAQはまだありません。B品判定時に追加できます。'}));return;}
   db.faqs.forEach(function(f){
-    var catH='';if(f.cats)f.cats.forEach(function(c){catH+=catBadge(c);});
-    html+='<div class="faq-card">';
-    html+='<div class="faq-q"><div><div style="margin-bottom:4px">'+catH+'</div>Q. '+esc(f.question)+'</div>';
-    html+='<button class="btn btn-xs btn-danger" onclick="delFAQ('+f.id+')">🗑</button></div>';
-    html+='<div class="faq-a">A. '+esc(f.answer)+'<div style="font-size:11px;color:var(--txh);margin-top:5px">登録日: '+esc(f.createdAt)+'</div></div>';
-    html+='</div>';
+    var card=mkEl('div',{className:'fqc'});
+    var qq=mkEl('div',{className:'fqq'});
+    var ql=mkEl('div');var cats=mkEl('div',{style:'margin-bottom:4px'});if(f.cats)f.cats.forEach(function(c){cats.appendChild(catB(c));});
+    ql.appendChild(cats);ql.appendChild(document.createTextNode('Q. '+f.question));
+    var db2=mkEl('button',{className:'btn btn-xs btn-del',textContent:'🗑'});(function(fid){db2.onclick=function(e){e.stopPropagation();delFAQ(fid);};})(f.id);
+    qq.appendChild(ql);qq.appendChild(db2);card.appendChild(qq);
+    var qa=mkEl('div',{className:'fqa'});qa.appendChild(document.createTextNode('A. '+f.answer));qa.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh);margin-top:5px',textContent:'登録日: '+f.createdAt}));
+    card.appendChild(qa);mn.appendChild(card);
   });
-  main.innerHTML=html;
 }
 
-/* --- 管理者: 外注先管理 --- */
-function adminPartners(main){
-  var html='<div class="pg-title">外注先管理</div>';
-  html+='<div class="notice blue" style="margin-bottom:1rem">ℹ 各外注先はIDとパスワードでログインし、自分の案件のみ閲覧できます。他の外注先情報は一切見えません。</div>';
-  html+='<div class="sec-hd"><div class="sec-title">登録済み外注先</div><button class="btn btn-primary btn-sm" onclick="openOv(\'ov-pa\')">＋ 外注先を追加</button></div>';
-  if(!db.partners.length){html+='<div style="text-align:center;padding:3rem;color:var(--txh)">外注先が登録されていません</div>';main.innerHTML=html;return;}
+function adminPartners(mn){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'外注先管理'}));
+  mn.appendChild(ntc('nt-b','ℹ 各外注先はIDとパスワードでログインし、自分の案件のみ閲覧できます。他の外注先情報は一切見えません。'));
+  mn.appendChild(sectionHd('登録済み外注先',mkBtn('btn-g btn-sm','＋ 外注先を追加',function(){openPA();})));
+  if(!db.partners.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:3rem;color:var(--txh)',textContent:'外注先が登録されていません'}));return;}
   db.partners.forEach(function(p){
     var pj=db.jobs.filter(function(j){return j.partnerId===p.id;});
-    var active=pj.filter(function(j){return j.status!=='完了';}).length;
-    var total=0;pj.forEach(function(j){total+=j.done;});
-    html+='<div class="partner-card">';
-    html+='<div class="av" style="background:'+p.color+';width:44px;height:44px;font-size:14px;flex-shrink:0">'+esc(p.name.slice(0,2))+'</div>';
-    html+='<div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">'+esc(p.name)+'</div>';
-    html+='<div style="font-size:12px;color:var(--txm);margin-top:2px">👤 '+esc(p.contact||'—')+'</div>';
-    html+='<div style="font-size:12px;color:var(--txm)">ID: <code style="font-family:var(--mo);background:var(--bg);padding:1px 6px;border-radius:5px;font-size:11px;border:1px solid var(--bd)">'+esc(p.uid)+'</code></div></div>';
-    html+='<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">';
-    html+='<div style="text-align:right"><div style="font-size:10px;color:var(--txh);font-weight:600">進行中</div><div style="font-size:17px;font-weight:700">'+active+'件</div></div>';
-    html+='<div style="text-align:right"><div style="font-size:10px;color:var(--txh);font-weight:600">累計完了</div><div style="font-size:17px;font-weight:700;color:var(--g)">'+total.toLocaleString()+'枚</div></div>';
-    html+='<button class="btn btn-xs" onclick="openEditP('+p.id+')">✏ 編集</button>';
-    html+='<button class="btn btn-xs btn-danger" onclick="delP('+p.id+')">🗑</button>';
-    html+='</div></div>';
+    var ac=pj.filter(function(j){return j.status!=='完了';}).length;
+    var tot=0;pj.forEach(function(j){tot+=j.done;});
+    var card=mkEl('div',{className:'pc'});
+    card.appendChild(mkEl('div',{className:'av',style:'background:'+p.color+';width:44px;height:44px;font-size:14px;flex-shrink:0',textContent:p.name.slice(0,2)}));
+    var info=mkEl('div',{style:'flex:1;min-width:0'});
+    info.appendChild(mkEl('div',{style:'font-weight:700;font-size:14px',textContent:p.name}));
+    info.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm);margin-top:2px',textContent:'👤 '+(p.contact||'—')}));
+    var idr=mkEl('div',{style:'font-size:12px;color:var(--txm)'});idr.appendChild(document.createTextNode('ID: '));var code=mkEl('code',{style:'font-family:var(--mo);background:var(--bg);padding:1px 6px;border-radius:5px;font-size:11px;border:1px solid var(--bd)',textContent:p.uid});idr.appendChild(code);info.appendChild(idr);
+    info.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm);margin-top:2px',textContent:'単価: 袋なし '+yen(p.rateNoPack||0)+' / 袋あり '+yen(p.ratePack||0)+'（1枚）'}));
+    card.appendChild(info);
+    var st=mkEl('div',{style:'display:flex;gap:14px;align-items:center;flex-wrap:wrap'});
+    var s1=mkEl('div',{style:'text-align:right'});s1.appendChild(mkEl('div',{style:'font-size:10px;color:var(--txh);font-weight:600',textContent:'進行中'}));s1.appendChild(mkEl('div',{style:'font-size:17px;font-weight:700',textContent:ac+'件'}));
+    var s2=mkEl('div',{style:'text-align:right'});s2.appendChild(mkEl('div',{style:'font-size:10px;color:var(--txh);font-weight:600',textContent:'累計完了'}));s2.appendChild(mkEl('div',{style:'font-size:17px;font-weight:700;color:var(--g)',textContent:tot.toLocaleString()+'枚'}));
+    var eb=mkEl('button',{className:'btn btn-xs',textContent:'✏ 編集'});(function(pid){eb.onclick=function(){openEditP(pid);};})(p.id);
+    var db2=mkEl('button',{className:'btn btn-xs btn-del',textContent:'🗑'});(function(pid){db2.onclick=function(){delP(pid);};})(p.id);
+    st.appendChild(s1);st.appendChild(s2);st.appendChild(eb);st.appendChild(db2);
+    card.appendChild(st);mn.appendChild(card);
   });
-  main.innerHTML=html;
 }
 
-/* --- 管理者: 完了履歴 --- */
-function adminHistory(main){
-  var done=db.jobs.filter(function(j){return j.status==='完了';});
-  var html='<div class="pg-title">完了履歴</div>';
-  html+='<div class="tw" style="overflow-x:auto"><table><thead><tr><th>案件名</th><th>外注先</th><th>依頼日</th><th>完了日</th><th style="text-align:right">枚数</th><th>最終報告</th></tr></thead><tbody>';
-  if(!done.length){html+='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--txh)">完了案件はありません</td></tr>';}
-  done.forEach(function(j){
-    var p=gp(j.partnerId);var lr=j.reports.length?j.reports[j.reports.length-1]:null;
-    html+='<tr><td><div style="font-weight:600">'+esc(j.name)+'</div><div style="font-size:11px;color:var(--txh)">'+esc(j.type)+(j.maker?' · '+esc(j.maker):'')+'</div></td>';
-    html+='<td>'+(p?esc(p.name):'—')+'</td><td style="font-size:12px;white-space:nowrap">'+esc(j.date)+'</td>';
-    html+='<td style="font-size:12px;white-space:nowrap">'+(j.completedAt||'—')+'</td>';
-    html+='<td style="text-align:right"><strong style="color:var(--g)">'+j.done.toLocaleString()+'</strong>/'+j.total.toLocaleString()+'</td>';
-    html+='<td style="font-size:12px;color:var(--txm)">'+(lr?esc(lr.note):'—')+'</td></tr>';
+function adminHistory(mn){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'月別履歴'}));
+  var months=recentMonths(3);var m=session.histMonth||months[0];if(months.indexOf(m)<0)m=months[0];
+  var row=mkEl('div',{style:'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem'});months.forEach(function(mm){var b=mkEl('button',{className:'btn btn-sm'+(m===mm?' btn-g':''),textContent:monthLabel(mm)});b.onclick=function(){session.histMonth=mm;svsn(session);render();};row.appendChild(b);});mn.appendChild(row);
+  var pid=session.histPartner||'all';
+  if(pid!=='all'&&!gp(parseInt(pid)))pid='all';
+  var prow=mkEl('div',{style:'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem'});
+  var allBtn=mkEl('button',{className:'btn btn-sm'+(pid==='all'?' btn-g':''),textContent:'すべての外注先'});
+  allBtn.onclick=function(){session.histPartner='all';svsn(session);render();};prow.appendChild(allBtn);
+  db.partners.forEach(function(p){var b=mkEl('button',{className:'btn btn-sm'+(String(p.id)===String(pid)?' btn-g':''),textContent:p.name});b.onclick=function(){session.histPartner=String(p.id);svsn(session);render();};prow.appendChild(b);});
+  mn.appendChild(prow);
+  var selectedPartner=pid==='all'?null:gp(parseInt(pid));
+  var jobs=monthlyJobs(m,selectedPartner?selectedPartner.id:null);
+  var total=0,done=0,pay=0;jobs.forEach(function(j){total+=j.total;done+=j.done;pay+=jobPay(j);});
+  var scope=selectedPartner?selectedPartner.name:'全外注先';
+  var sg=mkEl('div',{className:'sgr'});sg.appendChild(statCard('振った案件',jobs.length+'件',monthLabel(m)+' / '+scope,''));sg.appendChild(statCard('依頼枚数',total.toLocaleString(),'枚',''));sg.appendChild(statCard('完了枚数',done.toLocaleString(),'枚','var(--g)'));sg.appendChild(statCard('支払い見込',yen(pay),'進捗枚数ベース','var(--a)'));mn.appendChild(sg);
+  if(!selectedPartner&&jobs.length){
+    var sum=mkEl('div',{className:'sgr'});
+    db.partners.forEach(function(p){var pj=monthlyJobs(m,p.id);if(!pj.length)return;var pd=0,pp=0;pj.forEach(function(j){pd+=j.done;pp+=jobPay(j);});sum.appendChild(statCard(p.name, yen(pp), pj.length+'件 / '+pd.toLocaleString()+'枚','var(--a)'));});
+    if(sum.children.length)mn.appendChild(sum);
+  }
+  var tw=mkEl('div',{className:'tw resp-cards',style:'overflow-x:auto'});var tbl=mkEl('table');
+  var thead=mkEl('thead');var hr=mkEl('tr');['案件名','外注先','依頼日','袋詰め','依頼/完了','単価','金額','状態'].forEach(function(h,i){var th=mkEl('th',{textContent:h});if(i>=4&&i<=6)th.style.textAlign='right';hr.appendChild(th);});thead.appendChild(hr);tbl.appendChild(thead);
+  var tbody=mkEl('tbody');
+  if(!jobs.length){var et=mkEl('tr');var ed=mkEl('td',{style:'text-align:center;padding:2rem;color:var(--txh)',textContent:'この月の案件はありません'});ed.colSpan=8;et.appendChild(ed);tbody.appendChild(et);}
+  jobs.forEach(function(j){var p=gp(j.partnerId);var tr=mkEl('tr');
+    var td1=mkEl('td',{className:'mobile-main'});td1.setAttribute('data-label','案件名');td1.appendChild(mkEl('div',{style:'font-weight:600',textContent:j.name}));td1.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:j.type+(j.maker?' · '+j.maker:'')}));
+    var cells=[mkEl('td',{textContent:p?p.name:'—'}),mkEl('td',{style:'font-size:12px;white-space:nowrap',textContent:j.date}),mkEl('td',{textContent:j.pack?'あり':'なし'}),mkEl('td',{style:'text-align:right',textContent:j.total.toLocaleString()+' / '+j.done.toLocaleString()}),mkEl('td',{style:'text-align:right',textContent:yen(jobRate(j))}),mkEl('td',{style:'text-align:right;font-weight:700;color:var(--a)',textContent:yen(jobPay(j))}),mkEl('td')];
+    cells[6].appendChild(mkEl('span',{className:'badge '+stB(j.status),textContent:j.status}));
+    cells.forEach(function(td,i){td.setAttribute('data-label',['外注先','依頼日','袋詰め','依頼/完了','単価','金額','状態'][i]);});
+    tr.appendChild(td1);cells.forEach(function(td){tr.appendChild(td);});tbody.appendChild(tr);
   });
-  html+='</tbody></table></div>';
-  main.innerHTML=html;
+  tbl.appendChild(tbody);tw.appendChild(tbl);mn.appendChild(tw);
 }
 
-/* ---- PARTNER VIEW ---- */
+function adminPayments(mn){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'支払い管理'}));
+  var months=recentMonths(3);var m=session.payMonth||months[0];if(months.indexOf(m)<0)m=months[0];
+  var row=mkEl('div',{style:'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem'});months.forEach(function(mm){var b=mkEl('button',{className:'btn btn-sm'+(m===mm?' btn-g':''),textContent:monthLabel(mm)});b.onclick=function(){session.payMonth=mm;svsn(session);render();};row.appendChild(b);});mn.appendChild(row);
+  var total=monthlyPay(m);
+  mn.appendChild(statCard(monthLabel(m)+' 支払い見込',yen(total),'進捗枚数 × 外注先別単価','var(--a)'));
+  var tw=mkEl('div',{className:'tw resp-cards',style:'overflow-x:auto;margin-top:1rem'});var tbl=mkEl('table');var thead=mkEl('thead');var hr=mkEl('tr');
+  ['外注先','案件数','完了枚数','袋なし単価','袋あり単価','支払い見込'].forEach(function(h,i){var th=mkEl('th',{textContent:h});if(i>0)th.style.textAlign='right';hr.appendChild(th);});thead.appendChild(hr);tbl.appendChild(thead);
+  var tbody=mkEl('tbody');
+  db.partners.forEach(function(p){var jobs=monthlyJobs(m,p.id);if(!jobs.length)return;var done=0,pay=0;jobs.forEach(function(j){done+=j.done;pay+=jobPay(j);});var tr=mkEl('tr');
+    var cells=[mkEl('td',{className:'mobile-main',textContent:p.name}),mkEl('td',{style:'text-align:right',textContent:jobs.length+'件'}),mkEl('td',{style:'text-align:right',textContent:done.toLocaleString()+'枚'}),mkEl('td',{style:'text-align:right',textContent:yen(p.rateNoPack||0)}),mkEl('td',{style:'text-align:right',textContent:yen(p.ratePack||0)}),mkEl('td',{style:'text-align:right;font-weight:700;color:var(--a)',textContent:yen(pay)})];
+    cells.forEach(function(td,i){td.setAttribute('data-label',['外注先','案件数','完了枚数','袋なし単価','袋あり単価','支払い見込'][i]);tr.appendChild(td);});tbody.appendChild(tr);
+  });
+  if(!tbody.children.length){var tr=mkEl('tr');var td=mkEl('td',{style:'text-align:center;padding:2rem;color:var(--txh)',textContent:'この月の支払い対象はありません'});td.colSpan=6;tr.appendChild(td);tbody.appendChild(tr);}
+  tbl.appendChild(tbody);tw.appendChild(tbl);mn.appendChild(tw);
+}
+
 function renderPartner(app){
   app.innerHTML='';
-  var p=gp(session.partnerId);
-  if(!p){clearSession();session=null;render();return;}
+  var p=gp(session.partnerId);if(!p){clsn();session=null;render();return;}
   var ptab=session.ptab||'myjobs';
-  var ptabs=[{id:'myjobs',em:'📋',lbl:'担当案件'},{id:'breport',em:'⚠',lbl:'B品報告'},{id:'pfaq',em:'❓',lbl:'FAQ'}];
-  var topbar=document.createElement('div');topbar.className='topbar';
-  var brand=document.createElement('div');brand.className='brand';
-  var bic=document.createElement('div');bic.className='brand-ic';bic.textContent='👕';
-  var bnm=document.createElement('div');bnm.className='brand-nm';bnm.textContent='検品・たたみ 管理';
-  brand.appendChild(bic);brand.appendChild(bnm);
-  var topR=document.createElement('div');topR.className='topbar-r';
-  var avWrap=document.createElement('div');avWrap.style.cssText='display:flex;align-items:center;gap:7px';
-  var av=document.createElement('div');av.className='av';av.style.cssText='background:'+p.color+';width:28px;height:28px;font-size:11px';av.textContent=p.name.slice(0,2);
-  var nm=document.createElement('span');nm.style.cssText='font-size:13px;font-weight:600';nm.textContent=p.name;
-  avWrap.appendChild(av);avWrap.appendChild(nm);
-  var lo=document.createElement('button');lo.className='btn btn-sm';lo.textContent='← ログアウト';lo.onclick=function(){clearSession();session=null;render();};
-  topR.appendChild(avWrap);topR.appendChild(lo);
-  topbar.appendChild(brand);topbar.appendChild(topR);
-  var sb=document.createElement('div');sb.className='sidebar';sb.id='p-sidebar';
-  ptabs.forEach(function(t){
-    var btn=document.createElement('button');btn.className='nav-it'+(ptab===t.id?' on':'');btn.textContent=t.em+' '+t.lbl;
-    btn.onclick=function(){session.ptab=t.id;saveSession(session);renderPartner(app);};
+  var topr=mkEl('div',{className:'topr'});
+  var av=mkEl('div',{className:'partner-pill'});
+  av.appendChild(mkEl('div',{className:'av',style:'background:'+p.color+';width:28px;height:28px;font-size:11px',textContent:p.name.slice(0,2)}));
+  av.appendChild(mkEl('span',{className:'partner-name',textContent:p.name}));
+  topr.appendChild(av);
+  var lo=mkEl('button',{className:'btn btn-sm',textContent:'← ログアウト'});lo.onclick=function(){clsn();session=null;render();};topr.appendChild(lo);
+  app.appendChild(mkTopbar('検品、たたみ管理',topr));
+  var sbo=mkEl('div',{className:'sbo'});sbo.id='sbo';app.appendChild(sbo);
+  var outer=mkEl('div',{style:'display:flex;min-height:calc(100vh - var(--tph))'});
+  var sb=mkEl('div',{className:'sb'});sb.id='sb';
+  [{id:'myjobs',em:'📋',lbl:'担当案件'},{id:'phistory',em:'📆',lbl:'履歴'},{id:'breport',em:'⚠',lbl:'B品報告'},{id:'pfaq',em:'❓',lbl:'FAQ'}].forEach(function(t){
+    var btn=mkEl('button',{className:'ni'+(ptab===t.id?' on':''),textContent:t.em+' '+t.lbl});
+    (function(tid){btn.onclick=function(){session.ptab=tid;svsn(session);closeSB();renderPartner(app);};})(t.id);
     sb.appendChild(btn);
   });
-  var main=document.createElement('div');main.className='main fi';
-  var outer=document.createElement('div');outer.style.cssText='display:flex;min-height:calc(100vh - var(--tph))';
-  outer.appendChild(sb);outer.appendChild(main);
-  app.appendChild(topbar);app.appendChild(outer);
-  if(ptab==='myjobs')partnerJobs(main,p);
-  else if(ptab==='breport')partnerBReport(main,p);
-  else partnerFAQ(main);
+  var mn=mkEl('div',{className:'mn fi'});
+  outer.appendChild(sb);outer.appendChild(mn);app.appendChild(outer);
+  var mbtn=q('mbtn');if(mbtn){mbtn.onclick=function(){sb.classList.toggle('open');sbo.classList.toggle('on');};}
+  sbo.onclick=closeSB;
+  if(ptab==='myjobs')ptJobs(mn,p);else if(ptab==='phistory')ptHistory(mn,p);else if(ptab==='breport')ptBR(mn,p);else ptFAQ(mn);
+  app.appendChild(mkFooter());
 }
 
-function partnerJobs(main,p){
-  var myJobs=db.jobs.filter(function(j){return j.partnerId===session.partnerId&&j.status!=='完了';});
-  var doneJobs=db.jobs.filter(function(j){return j.partnerId===session.partnerId&&j.status==='完了';});
-  var totPcs=0,donePcs=0;myJobs.forEach(function(j){totPcs+=j.total;donePcs+=j.done;});
-  var rate=totPcs?Math.round(donePcs/totPcs*100):0;
-  var html='<div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">';
-  html+='<div class="stat-card"><div class="slbl">担当中</div><div class="sval">'+myJobs.length+'</div><div class="ssub">件</div></div>';
-  html+='<div class="stat-card"><div class="slbl">担当総枚数</div><div class="sval">'+totPcs.toLocaleString()+'</div><div class="ssub">枚</div></div>';
-  html+='<div class="stat-card"><div class="slbl">完了率</div><div class="sval">'+rate+'<span style="font-size:13px;color:var(--txm)">%</span></div></div>';
-  html+='</div>';
-  html+='<div class="sec-title" style="margin-bottom:.8rem">担当中の案件</div>';
-  if(!myJobs.length){html+='<div style="text-align:center;padding:3rem;color:var(--txh)">📥<br>担当案件はありません</div>';}
-  myJobs.forEach(function(j){
-    var pc=pct(j);var isChk=j.status==='検品済確認中';
-    var szP='';if(j.sizes&&szTotal(j.sizes)){j.sizes.forEach(function(r){if(r.count>0)szP+='<span class="size-pill">'+esc(r.name)+': '+r.count+'</span>';});}
-    var imgs='';if(j.images&&j.images.length){imgs='<div class="img-grid c3" style="margin-bottom:8px">';j.images.forEach(function(s,i){imgs+='<div class="img-thumb"><img src="'+esc(s)+'" onclick="openJobImg('+j.id+','+i+')"/></div>';});imgs+='</div>';}
-    var stBg=stBadge(j.status);var stLbl=isChk?'⏱ 確認待ち':esc(j.status);
-    var actionH=isChk
-      ?'<div class="notice purple">🛡 全て検品済として報告済です。管理者の最終確認をお待ちください。</div>'
-      :'<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sm" onclick="openReport('+j.id+')">✏ 進捗を報告</button><button class="btn btn-purple btn-sm" onclick="openChecked('+j.id+')">☑ 全て検品済として報告</button></div>';
-    html+='<div class="job-card fi"'+(isChk?' style="border-color:var(--p)"':'')+'>';
-    html+='<div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap">';
-    html+='<div><div style="font-weight:700;font-size:15px">'+esc(j.name)+'</div>';
-    html+='<div style="font-size:12px;color:var(--txm)">'+esc(j.type)+(j.dueDate?' · 納期: <strong>'+esc(j.dueDate)+'</strong>':'')+'</div>';
-    if(j.maker)html+='<div style="font-size:12px;color:var(--txm)">🏷 '+esc(j.maker)+(j.sku?' 品番:'+esc(j.sku):'')+'</div>';
-    html+='</div><span class="badge '+stBg+'">'+stLbl+'</span></div>';
-    if(szP)html+='<div class="size-pills" style="margin-bottom:8px">'+szP+'</div>';
-    if(j.detail)html+='<div style="font-size:12px;color:var(--txm);background:var(--bg);padding:7px 10px;border-radius:var(--rr);margin-bottom:8px;border:1px solid var(--bd)">📋 '+esc(j.detail)+'</div>';
-    if(j.instruction)html+='<div class="notice blue" style="margin-bottom:8px">💬 <span><strong>指示：</strong>'+esc(j.instruction)+'</span></div>';
-    html+=imgs;
-    html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><div class="pbar" style="flex:1;height:8px"><div class="pbar-fill" style="width:'+pc+'%;background:'+barClr(pc)+'"></div></div><span style="font-size:13px;font-weight:700;font-family:var(--mo);min-width:36px;text-align:right">'+pc+'%</span></div>';
-    html+='<div style="font-size:12px;color:var(--txm);margin-bottom:12px">完了: '+j.done.toLocaleString()+' / '+j.total.toLocaleString()+' 枚</div>';
-    html+=actionH;
-    html+='</div>';
+function ptJobs(mn,p){
+  var myJ=db.jobs.filter(function(j){return j.partnerId===session.partnerId&&j.status!=='完了';});
+  var dJ=db.jobs.filter(function(j){return j.partnerId===session.partnerId&&j.status==='完了';});
+  var tot=0,dn=0;myJ.forEach(function(j){tot+=j.total;dn+=j.done;});
+  var sg=mkEl('div',{className:'sgr',style:'grid-template-columns:repeat(3,1fr)'});
+  sg.appendChild(statCard('担当中',myJ.length,'件',''));
+  sg.appendChild(statCard('担当総枚数',tot.toLocaleString(),'枚',''));
+  sg.appendChild(statCard('完了率',(tot?Math.round(dn/tot*100):0)+'%','',''));
+  mn.appendChild(sg);mn.appendChild(mkEl('div',{className:'sct',style:'margin-bottom:.8rem',textContent:'担当中の案件'}));
+  if(!myJ.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:3rem;color:var(--txh)',textContent:'📥 担当案件はありません'}));return;}
+  myJ.forEach(function(j){
+    var pv=pc(j);var isChk=j.status==='検品済確認中';
+    var card=mkEl('div',{className:'jc fi'});if(isChk)card.style.borderColor='var(--p)';
+    var top=mkEl('div',{style:'display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap'});
+    var left=mkEl('div');left.appendChild(mkEl('div',{style:'font-weight:700;font-size:15px',textContent:j.name}));left.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm)',textContent:j.type+(j.dueDate?' · 納期: '+j.dueDate:'')}));
+    if(j.maker)left.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm)',textContent:'🏷 '+j.maker+(j.sku?' 品番:'+j.sku:'')}));
+    var stEl=mkEl('span',{className:'badge '+stB(j.status),textContent:isChk?'⏱ 確認待ち':j.status});
+    top.appendChild(left);top.appendChild(stEl);card.appendChild(top);
+    if(j.sizes&&szTot(j.sizes)){var sps=mkEl('div',{className:'sps',style:'margin-bottom:8px'});j.sizes.forEach(function(r){if(r.count>0)sps.appendChild(mkEl('span',{className:'sp',textContent:r.name+': '+r.count}));});card.appendChild(sps);}
+    if(j.detail){var dt=mkEl('div',{style:'font-size:12px;color:var(--txm);background:var(--bg);padding:7px 10px;border-radius:var(--rr);margin-bottom:8px;border:1px solid var(--bd)',textContent:'📋 '+j.detail});card.appendChild(dt);}
+    if(j.instruction){var ins=ntc('nt-b','💬 指示: '+j.instruction);ins.style.marginBottom='8px';card.appendChild(ins);}
+    if(j.images&&j.images.length){var ig=mkEl('div',{className:'ig c3',style:'margin-bottom:8px'});j.images.forEach(function(s){var it=mkEl('div',{className:'it'});var img=mkEl('img');img.src=s;(function(src){img.onclick=function(){openLB(src);};})(s);it.appendChild(img);ig.appendChild(it);});card.appendChild(ig);}
+    var pbw=mkEl('div',{style:'display:flex;align-items:center;gap:8px;margin-bottom:4px'});
+    var pb=mkEl('div',{className:'pbar',style:'flex:1;height:8px'});var pbf=mkEl('div',{className:'pbar-f',style:'width:'+pv+'%;background:'+bc(pv)});pb.appendChild(pbf);
+    pbw.appendChild(pb);pbw.appendChild(mkEl('span',{style:'font-size:13px;font-weight:700;font-family:var(--mo);min-width:36px;text-align:right',textContent:pv+'%'}));card.appendChild(pbw);
+    card.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm);margin-bottom:12px',textContent:'完了: '+j.done.toLocaleString()+' / '+j.total.toLocaleString()+' 枚'}));
+    if(isChk){card.appendChild(ntc('nt-p','🛡 全て検品済として報告済です。管理者の最終確認をお待ちください。'));}
+    else{
+      var btns=mkEl('div',{style:'display:flex;gap:8px;flex-wrap:wrap'});
+      var rb=mkEl('button',{className:'btn btn-sm',textContent:'✏ 進捗を報告'});(function(jid){rb.onclick=function(){openRep(jid);};})(j.id);
+      var bb=mkEl('button',{className:'btn btn-r btn-sm',textContent:'⚠ B品を報告'});(function(jid){bb.onclick=function(){openBR(jid);};})(j.id);
+      var cb=mkEl('button',{className:'btn btn-p btn-sm',textContent:'☑ 全て検品済として報告'});(function(jid){cb.onclick=function(){openChk(jid);};})(j.id);
+      btns.appendChild(rb);btns.appendChild(bb);btns.appendChild(cb);card.appendChild(btns);
+    }
+    mn.appendChild(card);
   });
-  if(doneJobs.length){
-    html+='<div class="sec-title" style="margin:1.2rem 0 .8rem">完了済み</div>';
-    doneJobs.forEach(function(j){
-      html+='<div class="job-card" style="opacity:.7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">';
-      html+='<div><div style="font-weight:600">'+esc(j.name)+'</div><div style="font-size:11px;color:var(--txh)">'+esc(j.type)+' · 完了日: '+(j.completedAt||'—')+'</div></div>';
-      html+='<div style="display:flex;align-items:center;gap:8px"><span class="badge bg-green">完了</span><span style="font-size:13px;color:var(--g);font-weight:700">'+j.done.toLocaleString()+' 枚</span></div>';
-      html+='</div>';
+  if(dJ.length){
+    mn.appendChild(mkEl('div',{className:'sct',style:'margin:1.2rem 0 .8rem',textContent:'完了済み'}));
+    dJ.forEach(function(j){
+      var card=mkEl('div',{className:'jc',style:'opacity:.7;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px'});
+      var left=mkEl('div');left.appendChild(mkEl('div',{style:'font-weight:600',textContent:j.name}));left.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:j.type+' · 完了日: '+(j.completedAt||'—')}));
+      var right=mkEl('div',{style:'display:flex;align-items:center;gap:8px'});right.appendChild(mkEl('span',{className:'badge bg',textContent:'完了'}));right.appendChild(mkEl('span',{style:'font-size:13px;color:var(--g);font-weight:700',textContent:j.done.toLocaleString()+' 枚'}));
+      card.appendChild(left);card.appendChild(right);mn.appendChild(card);
     });
   }
-  main.innerHTML=html;
 }
 
-function partnerBReport(main,p){
-  var myBR=db.breports.filter(function(r){return r.partnerId===session.partnerId;});
-  var html='<div class="pg-title">B品疑い報告</div>';
-  html+='<div class="notice red" style="margin-bottom:1rem">⚠ B品と思われる商品を写真付きで報告してください。管理者が判定します。</div>';
-  html+='<div class="sec-hd"><div class="sec-title">報告を送る</div><button class="btn btn-red btn-sm" onclick="openBReport()">📷 B品疑いを報告する</button></div>';
-  if(!myBR.length){html+='<div style="text-align:center;padding:2rem;color:var(--txh);font-size:13px">まだ報告はありません</div>';main.innerHTML=html;return;}
-  html+='<div class="sec-title" style="margin-bottom:.8rem">報告履歴</div>';
-  myBR.forEach(function(r){
-    var j=gj(r.jobId);
-    var cls=r.status==='pending'?'pending':r.status==='B品'?'bhin':'ryohin';
-    var stBStr=r.status==='pending'?'<span class="badge bg-amber">⏱ 判定待ち</span>':r.status==='B品'?'<span class="badge bg-red">✕ B品</span>':'<span class="badge bg-green">✓ 良品</span>';
-    var catH='';if(r.cats)r.cats.forEach(function(c){catH+=catBadge(c);});
-    var imgs='';if(r.images&&r.images.length){imgs='<div class="img-grid c3" style="margin-top:6px">';r.images.forEach(function(s,i){imgs+='<div class="img-thumb"><img src="'+esc(s)+'" onclick="openBRImg('+r.id+','+i+')"/></div>';});imgs+='</div>';}
-    var jcH=r.judgeComment?('<div class="notice '+(r.status==='B品'?'red':'green')+'" style="margin-top:6px">💬 <span><strong>管理者コメント：</strong>'+esc(r.judgeComment)+'</span></div>'):'';
-    html+='<div class="breport-card '+cls+'">';
-    html+='<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px">';
-    html+='<div><div style="font-weight:600;font-size:13px">'+(j?esc(j.name):'—')+(r.size?' · サイズ: '+esc(r.size):'')+'</div><div style="font-size:11px;color:var(--txh)">'+esc(r.date)+'</div></div>'+stBStr+'</div>';
-    html+='<div style="margin-bottom:5px">'+catH+'</div>';
-    html+='<div style="font-size:13px;margin-bottom:4px">'+esc(r.desc)+'</div>';
-    html+=jcH+imgs+'</div>';
+function ptHistory(mn,p){
+  mn.innerHTML='';
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'月別履歴'}));
+  var months=recentMonths(3);var m=session.pHistMonth||months[0];if(months.indexOf(m)<0)m=months[0];
+  var row=mkEl('div',{style:'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem'});
+  months.forEach(function(mm){var b=mkEl('button',{className:'btn btn-sm'+(m===mm?' btn-g':''),textContent:monthLabel(mm)});b.onclick=function(){session.pHistMonth=mm;svsn(session);renderPartner(q('app'));};row.appendChild(b);});
+  mn.appendChild(row);
+  var jobs=monthlyJobs(m,session.partnerId);
+  var total=0,done=0;jobs.forEach(function(j){total+=j.total;done+=j.done;});
+  var sg=mkEl('div',{className:'sgr',style:'grid-template-columns:repeat(3,1fr)'});
+  sg.appendChild(statCard('案件数',jobs.length,'件',''));
+  sg.appendChild(statCard('依頼枚数',total.toLocaleString(),'枚',''));
+  sg.appendChild(statCard('完了枚数',done.toLocaleString(),'枚','var(--g)'));
+  mn.appendChild(sg);
+  if(!jobs.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:3rem;color:var(--txh)',textContent:'この月の案件はありません'}));return;}
+  jobs.forEach(function(j){
+    var pv=pc(j);var card=mkEl('div',{className:'jc'});
+    var top=mkEl('div',{style:'display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap'});
+    var left=mkEl('div');left.appendChild(mkEl('div',{style:'font-weight:700;font-size:15px',textContent:j.name}));left.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm)',textContent:j.type+' · 依頼日: '+j.date+(j.completedAt?' · 完了日: '+j.completedAt:'')}));
+    top.appendChild(left);top.appendChild(mkEl('span',{className:'badge '+stB(j.status),textContent:j.status}));card.appendChild(top);
+    card.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm);margin-bottom:8px',textContent:'袋詰め: '+(j.pack?'あり':'なし')+' / 完了: '+j.done.toLocaleString()+' / '+j.total.toLocaleString()+' 枚'}));
+    var pb=mkEl('div',{className:'pbar',style:'height:8px'});pb.appendChild(mkEl('div',{className:'pbar-f',style:'width:'+pv+'%;background:'+bc(pv)}));card.appendChild(pb);
+    mn.appendChild(card);
   });
-  main.innerHTML=html;
 }
 
-function partnerFAQ(main){
-  var html='<div class="pg-title">FAQ — よくある判定事例</div>';
-  if(!db.faqs.length){html+='<div style="text-align:center;padding:3rem;color:var(--txh)">❓<br>まだFAQは登録されていません</div>';main.innerHTML=html;return;}
-  html+='<div class="notice green" style="margin-bottom:1rem">💡 管理者が判定した事例を参考に、自己判断の精度を上げましょう。</div>';
+function ptBR(mn,p){
+  var myBR=db.breports.filter(function(r){return r.partnerId===session.partnerId;});
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'B品疑い報告'}));
+  mn.appendChild(ntc('nt-r','⚠ B品と思われる商品を写真付きで報告してください。管理者が判定します。'));
+  var shd=mkEl('div',{className:'scd'});shd.appendChild(mkEl('div',{className:'sct',textContent:'報告を送る'}));
+  var rb=mkEl('button',{className:'btn btn-r btn-sm',textContent:'📷 B品疑いを報告する'});rb.onclick=function(){openBR();};shd.appendChild(rb);mn.appendChild(shd);
+  if(!myBR.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:2rem;color:var(--txh)',textContent:'まだ報告はありません'}));return;}
+  mn.appendChild(mkEl('div',{className:'sct',style:'margin-bottom:.8rem',textContent:'報告履歴'}));
+  myBR.forEach(function(r){
+    var cls=r.status==='pending'?'pnd':r.status==='B品'?'bh':'ry';
+    var card=mkEl('div',{className:'brc '+cls});var j=gj(r.jobId);
+    var top=mkEl('div',{style:'display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:6px'});
+    var left=mkEl('div');left.appendChild(mkEl('div',{style:'font-weight:600;font-size:13px',textContent:(j?j.name:'—')+(r.size?' · サイズ: '+r.size:'')}));left.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh)',textContent:r.date}));
+    var stEl;if(r.status==='pending')stEl=mkEl('span',{className:'badge ba',textContent:'⏱ 判定待ち'});else if(r.status==='B品')stEl=mkEl('span',{className:'badge br',textContent:'✕ B品'});else stEl=mkEl('span',{className:'badge bg',textContent:'✓ 良品'});
+    top.appendChild(left);top.appendChild(stEl);card.appendChild(top);
+    var cats=mkEl('div',{style:'margin-bottom:5px'});if(r.cats)r.cats.forEach(function(c){cats.appendChild(catB(c));});card.appendChild(cats);
+    card.appendChild(mkEl('div',{style:'font-size:13px;margin-bottom:4px',textContent:r.desc}));
+    if(r.judgeComment){var jc=ntc('nt-'+(r.status==='B品'?'r':'g'),'💬 管理者コメント: '+r.judgeComment);jc.style.marginTop='6px';card.appendChild(jc);}
+    if(r.images&&r.images.length){var ig=mkEl('div',{className:'ig c3',style:'margin-top:6px'});r.images.forEach(function(s){var it=mkEl('div',{className:'it'});var img=mkEl('img');img.src=s;(function(src){img.onclick=function(){openLB(src);};})(s);it.appendChild(img);ig.appendChild(it);});card.appendChild(ig);}
+    mn.appendChild(card);
+  });
+}
+
+function ptFAQ(mn){
+  mn.appendChild(mkEl('div',{className:'pgt',textContent:'FAQ — よくある判定事例'}));
+  if(!db.faqs.length){mn.appendChild(mkEl('div',{style:'text-align:center;padding:3rem;color:var(--txh)',textContent:'❓ まだFAQは登録されていません'}));return;}
+  mn.appendChild(ntc('nt-g','💡 管理者が判定した事例を参考に、自己判断の精度を上げましょう。'));
   var allCats=[];db.faqs.forEach(function(f){if(f.cats)f.cats.forEach(function(c){if(allCats.indexOf(c)<0)allCats.push(c);});});
   var fc=session.faqCat||'all';
-  html+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem">';
-  html+='<button class="btn btn-sm'+(fc==='all'?' btn-primary':'')+'" onclick="setFAQCat(\'all\')">すべて</button>';
-  allCats.forEach(function(c){html+='<button class="btn btn-sm'+(fc===c?' btn-primary':'')+'" onclick="setFAQCat(\''+esc(c)+'\')">'+esc(c)+'</button>';});
-  html+='</div>';
+  var catRow=mkEl('div',{style:'display:flex;flex-wrap:wrap;gap:6px;margin:1rem 0'});
+  function mkCatBtn(lbl,val){var b=mkEl('button',{className:'btn btn-sm'+(fc===val?' btn-g':''),textContent:lbl});b.onclick=function(){session.faqCat=val;svsn(session);mn.innerHTML='';ptFAQ(mn);};catRow.appendChild(b);}
+  mkCatBtn('すべて','all');allCats.forEach(function(c){mkCatBtn(c,c);});
+  mn.appendChild(catRow);
   var filtered=fc==='all'?db.faqs:db.faqs.filter(function(f){return f.cats&&f.cats.indexOf(fc)>=0;});
-  if(!filtered.length){html+='<div style="text-align:center;padding:2rem;color:var(--txh)">該当するFAQはありません</div>';main.innerHTML=html;return;}
   filtered.forEach(function(f){
+    var card=mkEl('div',{className:'fqc'});
     var isOpen=session.openFaq===f.id;
-    var catH='';if(f.cats)f.cats.forEach(function(c){catH+=catBadge(c);});
-    html+='<div class="faq-card'+(isOpen?' open-faq':'')+'" onclick="toggleFAQ('+f.id+')">';
-    html+='<div class="faq-q"><div><div style="margin-bottom:4px">'+catH+'</div>Q. '+esc(f.question)+'</div>';
-    html+='<span style="color:var(--txm);flex-shrink:0">'+(isOpen?'▴':'▾')+'</span></div>';
-    if(isOpen)html+='<div class="faq-a">A. '+esc(f.answer)+'<div style="font-size:11px;color:var(--txh);margin-top:5px">登録日: '+esc(f.createdAt)+'</div></div>';
-    html+='</div>';
+    var qq=mkEl('div',{className:'fqq'});
+    var ql=mkEl('div');var cats=mkEl('div',{style:'margin-bottom:4px'});if(f.cats)f.cats.forEach(function(c){cats.appendChild(catB(c));});ql.appendChild(cats);ql.appendChild(document.createTextNode('Q. '+f.question));
+    qq.appendChild(ql);qq.appendChild(mkEl('span',{style:'color:var(--txm);flex-shrink:0',textContent:isOpen?'▴':'▾'}));
+    card.appendChild(qq);
+    if(isOpen){var qa=mkEl('div',{className:'fqa'});qa.appendChild(document.createTextNode('A. '+f.answer));qa.appendChild(mkEl('div',{style:'font-size:11px;color:var(--txh);margin-top:5px',textContent:'登録日: '+f.createdAt}));card.appendChild(qa);}
+    (function(fid){card.onclick=function(){session.openFaq=session.openFaq===fid?null:fid;svsn(session);mn.innerHTML='';ptFAQ(mn);};})(f.id);
+    mn.appendChild(card);
   });
-  main.innerHTML=html;
 }
-
-function setFAQCat(c){session.faqCat=c;saveSession(session);var m=document.querySelector('.main.fi');if(m)partnerFAQ(m);}
-function toggleFAQ(id){session.openFaq=session.openFaq===id?null:id;saveSession(session);var m=document.querySelector('.main.fi');if(m)partnerFAQ(m);}
-
-/* ---- ACTIONS ---- */
 function openAdd(){
-  editJobId=null;pendingImages=[];
-  modalSizes=[{name:'S',count:''},{name:'M',count:''},{name:'L',count:''},{name:'XL',count:''}];
-  document.getElementById('jm-title').textContent='案件を割り振る';
-  document.getElementById('j-save-lbl').textContent='割り振る';
-  var sel=document.getElementById('j-partner');sel.innerHTML='';
-  db.partners.forEach(function(p){var o=document.createElement('option');o.value=p.id;o.textContent=p.name;sel.appendChild(o);});
-  ['j-name','j-maker','j-sku','j-detail','j-instr'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
-  document.getElementById('j-date').value=today();document.getElementById('j-due').value='';
-  renderSizeRows();renderPreview();openOv('ov-job');
+  editJobId=null;pImgs=[];mSizes=[{name:'S',count:''},{name:'M',count:''},{name:'L',count:''},{name:'XL',count:''}];
+  q('jm-t').textContent='案件を割り振る';q('j-sl').textContent='割り振る';
+  var sel=q('j-partner');sel.innerHTML='';db.partners.forEach(function(p){var o=document.createElement('option');o.value=p.id;o.textContent=p.name;sel.appendChild(o);});
+  ['j-name','j-maker','j-sku','j-detail','j-instr'].forEach(function(id){var e=q(id);if(e)e.value='';});
+  q('j-date').value=td();q('j-due').value='';q('j-pack').value='no';
+  renderSzRows();renderPrev();ov('ov-job');
 }
 function openEdit(id){
-  editJobId=id;var j=gj(id);
-  pendingImages=j.images?j.images.slice():[];
-  modalSizes=j.sizes?j.sizes.map(function(r){return {name:r.name,count:r.count};}):[];
-  document.getElementById('jm-title').textContent='案件を編集';
-  document.getElementById('j-save-lbl').textContent='更新する';
-  var sel=document.getElementById('j-partner');sel.innerHTML='';
-  db.partners.forEach(function(p){var o=document.createElement('option');o.value=p.id;if(p.id===j.partnerId)o.selected=true;o.textContent=p.name;sel.appendChild(o);});
-  document.getElementById('j-name').value=j.name;
-  document.getElementById('j-date').value=j.date;
-  document.getElementById('j-due').value=j.dueDate||'';
-  document.getElementById('j-maker').value=j.maker||'';
-  document.getElementById('j-sku').value=j.sku||'';
-  document.getElementById('j-detail').value=j.detail;
-  document.getElementById('j-instr').value=j.instruction;
-  renderSizeRows();renderPreview();openOv('ov-job');
+  editJobId=id;var j=gj(id);pImgs=j.images?j.images.slice():[];mSizes=j.sizes?j.sizes.map(function(r){return{name:r.name,count:r.count};}):[];
+  q('jm-t').textContent='案件を編集';q('j-sl').textContent='更新する';
+  var sel=q('j-partner');sel.innerHTML='';db.partners.forEach(function(p){var o=document.createElement('option');o.value=p.id;if(p.id===j.partnerId)o.selected=true;o.textContent=p.name;sel.appendChild(o);});
+  q('j-name').value=j.name;q('j-date').value=j.date;q('j-due').value=j.dueDate||'';q('j-pack').value=j.pack?'yes':'no';q('j-maker').value=j.maker||'';q('j-sku').value=j.sku||'';q('j-detail').value=j.detail;q('j-instr').value=j.instruction;
+  renderSzRows();renderPrev();ov('ov-job');
 }
 function saveJob(){
-  var name=document.getElementById('j-name').value.trim();
-  var partnerId=parseInt(document.getElementById('j-partner').value);
-  var date=document.getElementById('j-date').value;
-  var dueDate=document.getElementById('j-due').value;
-  var type=document.getElementById('j-type').value;
-  var maker=document.getElementById('j-maker').value.trim();
-  var sku=document.getElementById('j-sku').value.trim();
-  var detail=document.getElementById('j-detail').value.trim();
-  var instruction=document.getElementById('j-instr').value.trim();
-  var sizes=modalSizes.filter(function(r){return r.name;}).map(function(r){return {name:r.name,count:parseInt(r.count)||0};});
-  var total=szTotal(sizes);
+  var name=q('j-name').value.trim();var partnerId=parseInt(q('j-partner').value);var date=q('j-date').value;var dueDate=q('j-due').value;var type=q('j-type').value;var pack=q('j-pack').value==='yes';var maker=q('j-maker').value.trim();var sku=q('j-sku').value.trim();var detail=q('j-detail').value.trim();var instruction=q('j-instr').value.trim();
+  var sizes=mSizes.filter(function(r){return r.name;}).map(function(r){return{name:r.name,count:parseInt(r.count)||0};});
+  var total=szTot(sizes);
   if(!name||!partnerId||!date){alert('案件名・外注先・依頼日は必須です');return;}
   if(!total){alert('サイズ別枚数を入力してください');return;}
-  var images=pendingImages.slice();
-  if(editJobId){
-    var j=gj(editJobId);
-    j.name=name;j.partnerId=partnerId;j.date=date;j.dueDate=dueDate;j.total=total;
-    j.type=type;j.maker=maker;j.sku=sku;j.detail=detail;j.instruction=instruction;j.sizes=sizes;j.images=images;
-  } else {
-    db.jobs.push({id:db.nextJobId++,name:name,partnerId:partnerId,date:date,dueDate:dueDate,total:total,done:0,type:type,maker:maker,sku:sku,detail:detail,status:'進行中',checkedAt:'',completedAt:'',instruction:instruction,sizes:sizes,images:images,reports:[]});
-  }
-  closeOv('ov-job');saveDB();render();
+  var images=pImgs.slice();
+  if(editJobId){var j=gj(editJobId);j.name=name;j.partnerId=partnerId;j.date=date;j.dueDate=dueDate;j.total=total;j.type=type;j.pack=pack;j.maker=maker;j.sku=sku;j.detail=detail;j.instruction=instruction;j.sizes=sizes;j.images=images;}
+  else db.jobs.push({id:db.nextJobId++,name:name,partnerId:partnerId,date:date,dueDate:dueDate,total:total,done:0,type:type,pack:pack,maker:maker,sku:sku,detail:detail,status:'進行中',checkedAt:'',completedAt:'',instruction:instruction,sizes:sizes,images:images,reports:[]});
+  cv('ov-job');svdb();render();
 }
-function delJob(id){if(!confirm('この案件を削除しますか？'))return;db.jobs=db.jobs.filter(function(j){return j.id!==id;});saveDB();render();}
-
-function openInstr(id){
-  instrJobId=id;var j=gj(id);var p=gp(j.partnerId);
-  var el2=document.getElementById('instr-to');
-  if(el2)el2.textContent='🏢 送信先: '+(p?p.name:'—')+' · '+j.name;
-  document.getElementById('instr-text').value=j.instruction||'';openOv('ov-instr');
-}
-function saveInstr(){var j=gj(instrJobId);if(j)j.instruction=document.getElementById('instr-text').value.trim();closeOv('ov-instr');saveDB();render();}
-
+function delJob(id){if(!confirm('この案件を削除しますか？'))return;db.jobs=db.jobs.filter(function(j){return j.id!==id;});svdb();render();}
+function openInstr(id){instrJobId=id;var j=gj(id);var p=gp(j.partnerId);q('instr-to').textContent='送信先: '+(p?p.name:'')+'  '+j.name;q('instr-text').value=j.instruction||'';ov('ov-instr');}
+function saveInstr(){var j=gj(instrJobId);if(j)j.instruction=q('instr-text').value.trim();cv('ov-instr');svdb();render();}
+function openPA(){['pa-name','pa-contact','pa-id','pa-pass'].forEach(function(id){q(id).value='';});q('pa-rate-no').value='20';q('pa-rate-yes').value='35';ov('ov-pa');}
 function savePA(){
-  var name=document.getElementById('pa-name').value.trim();
-  var contact=document.getElementById('pa-contact').value.trim();
-  var uid=document.getElementById('pa-id').value.trim();
-  var pass=document.getElementById('pa-pass').value.trim();
+  var name=q('pa-name').value.trim();var contact=q('pa-contact').value.trim();var uid=q('pa-id').value.trim();var pass=q('pa-pass').value.trim();var rateNo=parseInt(q('pa-rate-no').value)||0;var rateYes=parseInt(q('pa-rate-yes').value)||0;
   if(!name||!uid||!pass){alert('外注先名・ID・パスワードは必須です');return;}
-  if(uid==='admin'){alert('"admin"は使用できません');return;}
-  var dup=false;db.partners.forEach(function(p){if(p.uid===uid)dup=true;});
-  if(dup){alert('このIDはすでに使用されています');return;}
-  db.partners.push({id:db.nextPartnerId++,name:name,contact:contact,uid:uid,pass:pass,color:COLORS[db.partners.length%COLORS.length]});
-  closeOv('ov-pa');saveDB();render();
+  if(uid==='admin'){alert('このIDは使用できません');return;}
+  var dup=false;db.partners.forEach(function(p){if(p.uid===uid)dup=true;});if(dup){alert('このIDはすでに使用されています');return;}
+  db.partners.push({id:db.nextPartnerId++,name:name,contact:contact,uid:uid,pass:pass,color:COLORS[db.partners.length%COLORS.length],rateNoPack:rateNo,ratePack:rateYes});
+  cv('ov-pa');svdb();render();
 }
-function openEditP(id){
-  editPartnerId=id;var p=gp(id);
-  document.getElementById('pe-name').value=p.name;
-  document.getElementById('pe-contact').value=p.contact||'';
-  document.getElementById('pe-id').value=p.uid;
-  document.getElementById('pe-pass').value='';
-  openOv('ov-pe');
-}
+function openEditP(id){editPid=id;var p=gp(id);q('pe-name').value=p.name;q('pe-contact').value=p.contact||'';q('pe-id').value=p.uid;q('pe-pass').value='';q('pe-rate-no').value=p.rateNoPack||0;q('pe-rate-yes').value=p.ratePack||0;ov('ov-pe');}
 function savePE(){
-  var name=document.getElementById('pe-name').value.trim();
-  var contact=document.getElementById('pe-contact').value.trim();
-  var uid=document.getElementById('pe-id').value.trim();
-  var pass=document.getElementById('pe-pass').value.trim();
+  var name=q('pe-name').value.trim();var contact=q('pe-contact').value.trim();var uid=q('pe-id').value.trim();var pass=q('pe-pass').value.trim();var rateNo=parseInt(q('pe-rate-no').value)||0;var rateYes=parseInt(q('pe-rate-yes').value)||0;
   if(!name||!uid){alert('名前とIDは必須です');return;}
-  if(uid==='admin'){alert('"admin"は使用できません');return;}
-  var dup=false;db.partners.forEach(function(p){if(p.uid===uid&&p.id!==editPartnerId)dup=true;});
-  if(dup){alert('このIDはすでに使用されています');return;}
-  var p=gp(editPartnerId);p.name=name;p.contact=contact;p.uid=uid;if(pass)p.pass=pass;
-  closeOv('ov-pe');saveDB();render();
+  if(uid==='admin'){alert('このIDは使用できません');return;}
+  var dup=false;db.partners.forEach(function(p){if(p.uid===uid&&p.id!==editPid)dup=true;});if(dup){alert('このIDはすでに使用されています');return;}
+  var p=gp(editPid);p.name=name;p.contact=contact;p.uid=uid;p.rateNoPack=rateNo;p.ratePack=rateYes;if(pass)p.pass=pass;
+  cv('ov-pe');svdb();render();
 }
-function delP(id){if(!confirm('この外注先を削除しますか？'))return;db.partners=db.partners.filter(function(p){return p.id!==id;});saveDB();render();}
-
-function openReport(id){
-  reportJobId=id;var j=gj(id);
-  var el2=document.getElementById('rep-job-nm');
-  if(el2)el2.textContent='👕 '+j.name+' · 依頼: '+j.total.toLocaleString()+' 枚';
-  document.getElementById('rep-done').value=j.done;
-  document.getElementById('rep-done').max=j.total;
-  document.getElementById('rep-note').value='';openOv('ov-report');
-}
-function saveReport(){
-  var j=gj(reportJobId);
-  j.done=Math.min(parseInt(document.getElementById('rep-done').value)||0,j.total);
-  j.reports.push({date:today(),count:j.done,note:document.getElementById('rep-note').value.trim(),type:'progress'});
-  closeOv('ov-report');saveDB();render();
-}
-function openChecked(id){
-  checkedJobId=id;var j=gj(id);
-  var el2=document.getElementById('chk-job-nm');
-  if(el2)el2.textContent='👕 '+j.name+' · 依頼: '+j.total.toLocaleString()+' 枚';
-  document.getElementById('chk-done').value=j.total;
-  document.getElementById('chk-note').value='';openOv('ov-checked');
-}
-function submitChecked(){
-  var j=gj(checkedJobId);
-  j.done=Math.min(parseInt(document.getElementById('chk-done').value)||0,j.total);
-  j.status='検品済確認中';j.checkedAt=today();
-  j.reports.push({date:today(),count:j.done,note:document.getElementById('chk-note').value.trim()||'全て検品済として報告',type:'checked'});
-  closeOv('ov-checked');saveDB();render();
-}
+function delP(id){if(!confirm('この外注先を削除しますか？'))return;db.partners=db.partners.filter(function(p){return p.id!==id;});svdb();render();}
+function openRep(id){repJobId=id;var j=gj(id);q('rep-nm').textContent='  '+j.name+'  依頼: '+j.total.toLocaleString()+' 枚';q('rep-done').value=j.done;q('rep-done').max=j.total;q('rep-note').value='';ov('ov-rep');}
+function saveRep(){var j=gj(repJobId);j.done=Math.min(parseInt(q('rep-done').value)||0,j.total);j.reports.push({date:td(),count:j.done,note:q('rep-note').value.trim(),type:'progress'});cv('ov-rep');svdb();render();}
+function openChk(id){chkJobId=id;var j=gj(id);q('chk-nm').textContent='  '+j.name+'  依頼: '+j.total.toLocaleString()+' 枚';q('chk-done').value=j.total;q('chk-note').value='';ov('ov-chk');}
+function submitChk(){var j=gj(chkJobId);j.done=Math.min(parseInt(q('chk-done').value)||0,j.total);j.status='検品済確認中';j.checkedAt=td();j.reports.push({date:td(),count:j.done,note:q('chk-note').value.trim()||'全て検品済として報告',type:'checked'});cv('ov-chk');svdb();render();}
 function openConfirm(id){
-  confirmJobId=id;var j=gj(id);var p=gp(j.partnerId);
-  var lr=null;for(var i=j.reports.length-1;i>=0;i--){if(j.reports[i].type==='checked'){lr=j.reports[i];break;}}
-  var el2=document.getElementById('confirm-info');
-  if(el2){
-    el2.innerHTML='<div style="font-weight:700;font-size:15px;margin-bottom:4px">'+esc(j.name)+'</div>'
-      +'<div style="font-size:13px;color:var(--txm)">'+esc(j.type)+(j.maker?' · '+esc(j.maker):'')+'</div>'
-      +(p?'<div style="font-size:13px;color:var(--txm)">外注先: '+esc(p.name)+'</div>':'')
-      +(lr?'<div style="font-size:13px;margin-top:4px">報告枚数: <strong style="color:var(--g)">'+lr.count.toLocaleString()+' 枚</strong></div>':'');
-  }
-  document.getElementById('confirm-note').value='';openOv('ov-confirm');
+  cfJobId=id;var j=gj(id);var p=gp(j.partnerId);var lr=null;for(var i=j.reports.length-1;i>=0;i--){if(j.reports[i].type==='checked'){lr=j.reports[i];break;}}
+  var el=q('cf-info');el.innerHTML='';
+  el.appendChild(mkEl('div',{style:'font-weight:700;font-size:15px;margin-bottom:4px',textContent:j.name}));
+  el.appendChild(mkEl('div',{style:'font-size:13px;color:var(--txm)',textContent:j.type+(j.maker?' - '+j.maker:'')}));
+  if(p)el.appendChild(mkEl('div',{style:'font-size:13px;color:var(--txm)',textContent:'外注先: '+p.name}));
+  if(lr)el.appendChild(mkEl('div',{style:'font-size:13px;margin-top:4px',textContent:'報告枚数: '+lr.count.toLocaleString()+' 枚'}));
+  q('cf-note').value='';ov('ov-confirm');
 }
-function finalComplete(){
-  var j=gj(confirmJobId);j.status='完了';j.completedAt=today();
-  j.reports.push({date:today(),count:j.done,note:document.getElementById('confirm-note').value.trim()||'管理者最終確認OK',type:'final'});
-  closeOv('ov-confirm');saveDB();render();
+function finalComplete(){var j=gj(cfJobId);j.status='完了';j.completedAt=td();j.reports.push({date:td(),count:j.done,note:q('cf-note').value.trim()||'管理者最終確認OK',type:'final'});cv('ov-confirm');svdb();render();}
+function openBR(jobId){
+  brImgs=[];
+  brJobLocked=!!jobId;
+  var myJ=db.jobs.filter(function(j){return j.partnerId===session.partnerId&&j.status==='進行中';});
+  if(jobId)myJ=myJ.filter(function(j){return j.id===jobId;});
+  if(!myJ.length){alert('進行中の案件がありません');return;}
+  var sel=q('br-job');sel.innerHTML='';myJ.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.name;sel.appendChild(o);});
+  if(jobId)sel.value=jobId;
+  sel.disabled=brJobLocked;
+  q('br-cats').querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.checked=false;});
+  q('br-desc').value='';q('br-size').value='';renderBRPrev();ov('ov-br');
 }
-
-function openBReport(){
-  brPendingImages=[];
-  var myJobs=db.jobs.filter(function(j){return j.partnerId===session.partnerId&&j.status==='進行中';});
-  if(!myJobs.length){alert('進行中の案件がありません');return;}
-  var sel=document.getElementById('br-job');sel.innerHTML='';
-  myJobs.forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent=j.name;sel.appendChild(o);});
-  var cbs=document.querySelectorAll('#ov-breport input[type=checkbox]');cbs.forEach(function(cb){cb.checked=false;});
-  document.getElementById('br-desc').value='';document.getElementById('br-size').value='';
-  renderBRPrev();openOv('ov-breport');
-}
-function submitBReport(){
-  var jobId=parseInt(document.getElementById('br-job').value);
-  var cats=[];var cbs=document.querySelectorAll('#ov-breport input[type=checkbox]:checked');cbs.forEach(function(cb){cats.push(cb.value);});
-  var desc=document.getElementById('br-desc').value.trim();
-  var size=document.getElementById('br-size').value.trim();
+function submitBR(){
+  var jobId=parseInt(q('br-job').value);
+  var cats=[];q('br-cats').querySelectorAll('input:checked').forEach(function(cb){cats.push(cb.value);});
+  var desc=q('br-desc').value.trim();var size=q('br-size').value.trim();
   if(!cats.length){alert('カテゴリを1つ以上選択してください');return;}
   if(!desc){alert('詳細説明を入力してください');return;}
-  if(!brPendingImages.length){alert('写真を1枚以上追加してください');return;}
-  db.breports.push({id:db.nextBRId++,jobId:jobId,partnerId:session.partnerId,date:today(),cats:cats,desc:desc,size:size,images:brPendingImages.slice(),status:'pending',judgeComment:'',faqPublic:false,judgedAt:''});
-  closeOv('ov-breport');saveDB();render();
+  if(!brImgs.length){alert('写真を1枚以上追加してください');return;}
+  db.breports.push({id:db.nextBRId++,jobId:jobId,partnerId:session.partnerId,date:td(),cats:cats,desc:desc,size:size,images:brImgs.slice(),status:'pending',judgeComment:'',faqPublic:false,judgedAt:''});
+  q('br-job').disabled=false;brJobLocked=false;cv('ov-br');svdb();render();
 }
 function openJudge(id){
-  judgeRId=id;var r=gbr(id);var j=gj(r.jobId);var p=gp(r.partnerId);
-  var catH='';if(r.cats)r.cats.forEach(function(c){catH+=catBadge(c);});
-  var imgs='';if(r.images&&r.images.length){imgs='<div class="img-grid c3" style="margin-bottom:1rem">';r.images.forEach(function(s,i){imgs+='<div class="img-thumb"><img src="'+esc(s)+'" onclick="openBRImg('+r.id+','+i+')"/></div>';});imgs+='</div>';}
-  var el2=document.getElementById('judge-content');
-  if(el2){
-    el2.innerHTML='<div style="margin-bottom:.85rem">'
-      +'<div style="font-size:12px;color:var(--txm);margin-bottom:4px">'+(p?esc(p.name):'—')+' · '+(j?esc(j.name):'—')+(r.size?' · サイズ: '+esc(r.size):'')+' · '+esc(r.date)+'</div>'
-      +'<div style="margin-bottom:6px">'+catH+'</div>'
-      +'<div class="card" style="font-size:13px;margin-bottom:8px">'+esc(r.desc)+'</div>'
-      +'</div>'+imgs;
-  }
-  document.getElementById('judge-comment').value='';document.getElementById('judge-faq').value='no';openOv('ov-judge');
+  jgRid=id;var r=gbr(id);var j=gj(r.jobId);var p=gp(r.partnerId);
+  var el=q('jg-content');el.innerHTML='';
+  var info=mkEl('div',{style:'margin-bottom:.85rem'});
+  info.appendChild(mkEl('div',{style:'font-size:12px;color:var(--txm);margin-bottom:4px',textContent:(p?p.name:'')+'  '+(j?j.name:'')+(r.size?' - サイズ: '+r.size:'')+' '+r.date}));
+  var cats=mkEl('div',{style:'margin-bottom:6px'});if(r.cats)r.cats.forEach(function(c){cats.appendChild(catB(c));});info.appendChild(cats);
+  info.appendChild(mkEl('div',{className:'card',style:'font-size:13px;margin-bottom:8px',textContent:r.desc}));
+  el.appendChild(info);
+  if(r.images&&r.images.length){var ig=mkEl('div',{className:'ig c3',style:'margin-bottom:1rem'});r.images.forEach(function(s){var it=mkEl('div',{className:'it'});var img=mkEl('img');img.src=s;(function(src){img.onclick=function(){openLB(src);};})(s);it.appendChild(img);ig.appendChild(it);});el.appendChild(ig);}
+  q('jg-comment').value='';q('jg-faq').value='no';ov('ov-jg');
 }
 function doJudge(verdict){
-  var r=gbr(judgeRId);
-  var comment=document.getElementById('judge-comment').value.trim();
-  var faqPub=document.getElementById('judge-faq').value==='yes';
-  r.status=verdict;r.judgeComment=comment;r.faqPublic=faqPub;r.judgedAt=today();
-  if(faqPub&&verdict==='B品'){
-    var q=r.desc.length>60?r.desc.slice(0,60)+'…':r.desc;
-    db.faqs.push({id:db.nextFaqId++,cats:r.cats||[],question:q,answer:comment||'B品として仕分けてください。',images:r.images,createdAt:today(),sourceReportId:r.id});
-  }
-  closeOv('ov-judge');saveDB();render();
+  var r=gbr(jgRid);var comment=q('jg-comment').value.trim();var faqPub=q('jg-faq').value==='yes';
+  r.status=verdict;r.judgeComment=comment;r.faqPublic=faqPub;r.judgedAt=td();
+  if(faqPub&&verdict==='B品'){var qv=r.desc.length>60?r.desc.slice(0,60)+'...':r.desc;db.faqs.push({id:db.nextFaqId++,cats:r.cats||[],question:qv,answer:comment||'B品として仕分けてください。',images:r.images,createdAt:td(),sourceReportId:r.id});}
+  cv('ov-jg');svdb();render();
 }
-function delFAQ(id){if(!confirm('このFAQを削除しますか？'))return;db.faqs=db.faqs.filter(function(f){return f.id!==id;});saveDB();render();}
-
-function downloadAllData(){
-  var now=new Date();
-  var pad=function(n){return n<10?'0'+n:String(n);};
+function delFAQ(id){if(!confirm('このFAQを削除しますか？'))return;db.faqs=db.faqs.filter(function(f){return f.id!==id;});svdb();render();}
+function downloadAll(){
+  var now=new Date();var pad=function(n){return n<10?'0'+n:String(n);};
   var ts=now.getFullYear()+pad(now.getMonth()+1)+pad(now.getDate())+'_'+pad(now.getHours())+pad(now.getMinutes());
-
-  /* --- CSV helper --- */
-  function toCSV(headers, rows){
-    var lines=[headers.map(function(h){return '"'+String(h).replace(/"/g,'""')+'"';}).join(',')];
-    rows.forEach(function(row){
-      lines.push(row.map(function(v){
-        var s=v===null||v===undefined?'':String(v);
-        return '"'+s.replace(/"/g,'""')+'"';
-      }).join(','));
-    });
-    return '\uFEFF'+lines.join('\r\n'); /* BOM for Excel */
+  function csv(headers,rows){
+    var lines=[headers.map(function(h){return'"'+String(h).replace(/"/g,'""')+'"';}).join(',')];
+    rows.forEach(function(row){lines.push(row.map(function(v){var s=v===null||v===undefined?'':String(v);return'"'+s.replace(/"/g,'""')+'"';}).join(','));});
+    return '﻿'+lines.join('\r\n');
   }
-
-  /* --- Sheet 1: 案件一覧 --- */
-  var jobHeaders=['案件ID','案件名','外注先','外注先ID','依頼日','納期','作業内容','メーカー','品番',
-    'サイズ別枚数','依頼枚数','完了枚数','完了率(%)','状態','指示','検品詳細','完了日'];
-  var jobRows=db.jobs.map(function(j){
-    var p=gp(j.partnerId);
-    var szStr=j.sizes?j.sizes.filter(function(r){return r.count>0;}).map(function(r){return r.name+':'+r.count;}).join(' / '):'';
-    var pc=j.total?Math.round(j.done/j.total*100):0;
-    return [j.id,j.name,p?p.name:'',p?p.uid:'',j.date,j.dueDate||'',j.type,j.maker||'',j.sku||'',
-      szStr,j.total,j.done,pc,j.status,j.instruction||'',j.detail||'',j.completedAt||''];
-  });
-  downloadCSV(toCSV(jobHeaders,jobRows),'案件一覧_'+ts+'.csv');
-
-  /* --- Sheet 2: 外注先一覧 (PW除く) --- */
-  setTimeout(function(){
-    var pHeaders=['外注先ID','外注先名','担当者名','ログインID','進行中案件数','累計完了枚数'];
-    var pRows=db.partners.map(function(p){
-      var pj=db.jobs.filter(function(j){return j.partnerId===p.id;});
-      var active=pj.filter(function(j){return j.status!=='完了';}).length;
-      var total=0;pj.forEach(function(j){total+=j.done;});
-      return [p.id,p.name,p.contact||'',p.uid,active,total];
-    });
-    downloadCSV(toCSV(pHeaders,pRows),'外注先一覧_'+ts+'.csv');
-  },300);
-
-  /* --- Sheet 3: B品レポート --- */
-  setTimeout(function(){
-    var brHeaders=['報告ID','案件名','外注先','報告日','カテゴリ','詳細説明','サイズ','判定結果','判定コメント','FAQ掲載','判定日'];
-    var brRows=db.breports.map(function(r){
-      var j=gj(r.jobId);var p=gp(r.partnerId);
-      return [r.id,j?j.name:'',p?p.name:'',r.date,(r.cats||[]).join(' / '),r.desc,r.size||'',
-        r.status==='pending'?'判定待ち':r.status,r.judgeComment||'',r.faqPublic?'はい':'いいえ',r.judgedAt||''];
-    });
-    downloadCSV(toCSV(brHeaders,brRows),'B品レポート_'+ts+'.csv');
-  },600);
-
-  /* --- Sheet 4: FAQ一覧 --- */
-  setTimeout(function(){
-    var faqHeaders=['FAQ_ID','カテゴリ','質問','回答','登録日','元報告ID'];
-    var faqRows=db.faqs.map(function(f){
-      return [f.id,(f.cats||[]).join(' / '),f.question,f.answer,f.createdAt,f.sourceReportId||''];
-    });
-    downloadCSV(toCSV(faqHeaders,faqRows),'FAQ一覧_'+ts+'.csv');
-  },900);
+  function dl(str,fname){var b=new Blob([str],{type:'text/csv;charset=utf-8;'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=fname;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(u);},1000);}
+  dl(csv(['案件ID','案件名','外注先','依頼日','納期','作業内容','メーカー','品番','サイズ別枚数','依頼枚数','完了枚数','状態','完了日'],db.jobs.map(function(j){var p=gp(j.partnerId);var sz=j.sizes?j.sizes.filter(function(r){return r.count>0;}).map(function(r){return r.name+':'+r.count;}).join(' / '):'';return[j.id,j.name,p?p.name:'',j.date,j.dueDate||'',j.type,j.maker||'',j.sku||'',sz,j.total,j.done,j.status,j.completedAt||''];})),'案件一覧_'+ts+'.csv');
+  setTimeout(function(){dl(csv(['外注先名','担当者名','ログインID','進行中件数','累計完了枚数'],db.partners.map(function(p){var pj=db.jobs.filter(function(j){return j.partnerId===p.id;});var ac=pj.filter(function(j){return j.status!=='完了';}).length;var tot=0;pj.forEach(function(j){tot+=j.done;});return[p.name,p.contact||'',p.uid,ac,tot];})),'外注先一覧_'+ts+'.csv');},400);
+  setTimeout(function(){dl(csv(['報告ID','案件名','外注先','報告日','カテゴリ','詳細','サイズ','判定結果','コメント','FAQ掲載','判定日'],db.breports.map(function(r){var j=gj(r.jobId);var p=gp(r.partnerId);return[r.id,j?j.name:'',p?p.name:'',r.date,(r.cats||[]).join(' / '),r.desc,r.size||'',r.status==='pending'?'判定待ち':r.status,r.judgeComment||'',r.faqPublic?'はい':'いいえ',r.judgedAt||''];})),'B品レポート_'+ts+'.csv');},800);
+  setTimeout(function(){dl(csv(['カテゴリ','質問','回答','登録日'],db.faqs.map(function(f){return[(f.cats||[]).join(' / '),f.question,f.answer,f.createdAt];})),'FAQ一覧_'+ts+'.csv');},1200);
 }
 
-function downloadCSV(csvStr,filename){
-  var blob=new Blob([csvStr],{type:'text/csv;charset=utf-8;'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');
-  a.href=url;a.download=filename;a.style.display='none';
-  document.body.appendChild(a);a.click();
-  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},1000);
+// Clear old localStorage
+['insp_v5','insp_db_v5','insp_v4','insp_db_v4','insp_v6_old'].forEach(function(k){try{localStorage.removeItem(k);}catch(e){}});
+
+var _app=document.getElementById('app');
+function _showErr(label,err){
+  _app.textContent=label+': '+(err&&err.message?err.message:'unknown')+' | '+(err&&err.stack?err.stack.split('\n')[0]:'');
 }
 
-document.querySelectorAll('.overlay').forEach(function(ov){
-  ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open');});
-});
+try{ initModals(); }
+catch(e){ _showErr('initModals FAILED',e); }
 
-render();
+try{ render(); }
+catch(e){ _showErr('render FAILED',e); }
 </script>
 </body>
 </html>
